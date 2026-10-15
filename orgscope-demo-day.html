@@ -18,7 +18,7 @@ body{background:var(--ink);color:var(--ink);font-family:var(--sans);overflow:hid
 .eyebrow{font-size:22px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin:0}
 h2{font-family:var(--display);font-size:64px;font-weight:600;line-height:1.08;margin:0;text-wrap:balance;color:var(--ink)}
 .human{font-size:30px;color:var(--ink-2);margin:0}
-.art{position:relative;flex:1;min-height:0}
+.art{position:relative;flex:1;min-height:0;container-type:inline-size}
 .art>svg{width:100%;height:100%;display:block}
 .full .art{position:absolute;inset:0}
 text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
@@ -27,6 +27,11 @@ text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
 .hud button{background:#2A2927;color:#F5F4EF;border:1px solid #3a3937;border-radius:8px;padding:6px 12px;font:inherit;cursor:pointer}
 .hud button:focus-visible{outline:2px solid var(--accent-soft);outline-offset:2px}
 .hud button.lang{min-width:64px;font-weight:700}
+.hud a.home{color:#F5F4EF;text-decoration:none;background:#2A2927;border:1px solid #3a3937;border-radius:8px;padding:6px 12px;font-weight:600}
+.hud a.home:focus-visible{outline:2px solid var(--accent-soft);outline-offset:2px}
+.hud button.fs{font-weight:600}
+.hud button.fs[hidden]{display:none}
+html.doc .hud{flex-wrap:wrap;justify-content:flex-end;max-width:calc(100vw - 24px)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}.card{opacity:1;offset-distance:60%}}
 
 /* ---------- 1 cover (variant 1B) ---------- */
@@ -69,7 +74,7 @@ text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
 .s3b .ov{right:2%;top:2%;width:44%;animation:rise .8s ease-out 1.4s both}
 .s3b .arrow{position:absolute;left:45%;top:42%;width:8%;height:10%;animation:fade .5s ease-out 1.1s both}
 .s3b .ring{position:absolute;border:4px solid;border-radius:12px;animation:popin .5s ease-out both}
-.s3b .cap{position:absolute;font-size:26px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+.s3b .cap{position:absolute;font-size:1.56cqw;font-weight:600;color:var(--ink-2);white-space:nowrap}
 
 /* ---------- 4 how (reader & inspector) ---------- */
 @keyframes toReader{0%{transform:translate(0,0);opacity:0}6%{opacity:1}22%{transform:translate(300px,0)}40%{transform:translate(300px,0)}58%{transform:translate(660px,0)}80%{transform:translate(660px,0)}100%{transform:translate(1000px,-120px);opacity:1}}
@@ -192,10 +197,44 @@ table.app{border-collapse:collapse;width:100%;font-size:26px;background:var(--pa
 table.app th,table.app td{text-align:left;padding:16px 22px;border-bottom:1px solid var(--line);vertical-align:top}
 table.app th{background:var(--chip);font-size:22px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
 table.app td:first-child{width:24%;font-weight:600}
+
+/* ---------- document mode: phones and portrait tablets (stage scale would drop under 0.5) ---------- */
+.mobnote{display:none}
+html.doc,html.doc body{overflow:auto;height:auto}
+html.doc body{background:var(--page)}
+html.doc #viewport{position:static;overflow:visible;background:var(--page)}
+html.doc #stage{position:static;width:100%;height:auto;transform:none!important;left:auto!important;top:auto!important;box-shadow:none}
+html.doc .mobnote{display:block;margin:0;padding:12px 16px;background:var(--chip);color:var(--ink-2);font-size:13px;line-height:1.4;border-bottom:1px solid var(--line)}
+html.doc .slide{position:static;display:flex;padding:26px 16px 32px;gap:12px;border-bottom:1px solid var(--line)}
+html.doc .slide.full{padding:0;border-bottom:none}
+html.doc .eyebrow{font-size:clamp(11px,3vw,14px);letter-spacing:2px}
+html.doc h2{font-size:clamp(24px,6.5vw,40px)}
+html.doc .human{font-size:clamp(15px,4vw,20px);line-height:1.4}
+html.doc .art{flex:none;width:100%;min-height:0}
+html.doc .art.ratio{aspect-ratio:1664/640}
+html.doc .full .art{position:relative;inset:auto;aspect-ratio:16/9}
+html.doc .proof{display:flex;flex-direction:column;gap:18px;height:auto}
+html.doc .finding{padding:16px 18px 22px;gap:8px;border-left-width:6px;border-radius:12px}
+html.doc .badge{font-size:11px;padding:4px 8px}
+html.doc .ftitle{font-size:18px}
+html.doc .src{font-size:12px;padding:4px 8px}
+html.doc .quote{font-size:15px;padding:10px 12px}
+html.doc .stamp{font-size:14px;padding:4px 8px;border-width:3px;right:12px;bottom:-14px}
+html.doc .sheet{height:auto;padding:26px 14px 16px;font-size:11px;line-height:1.5}
+html.doc .sheet .pg{top:7px;right:14px;font-size:9px}
+html.doc .sheet .n{width:18px;font-size:9px}
+html.doc .sheet .bar{height:6px;margin:6px 0}
+html.doc .proof .pin{width:10px;height:10px}
+html.doc table.app{font-size:13px}
+html.doc table.app th,html.doc table.app td{padding:8px 10px}
+html.doc table.app th{font-size:11px}
+html.doc .hud{left:auto;right:12px;transform:none;bottom:12px}
+html.doc #prev,html.doc #next,html.doc #counter,html.doc #hint{display:none}
 </style>
 
 <div id="viewport">
 <div id="stage">
+<p class="mobnote" data-en="Mobile view: slides follow one another; artifacts are shown smaller, pinch to zoom. The full experience is on a wider screen.">Мобильный режим: слайды идут подряд, артефакты уменьшены, их можно увеличить двумя пальцами. Полный вид — на широком экране.</p>
 
 <!-- hidden sprite -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -599,10 +638,12 @@ table.app td:first-child{width:24%;font-weight:600}
 </div>
 
 <div class="hud">
+  <a class="home" id="home" href="index.html" target="_top" data-en="Home">Главная</a>
   <button type="button" id="prev" aria-label="Предыдущий слайд">←</button>
   <span id="counter">1 / 14</span>
   <button type="button" id="next" aria-label="Следующий слайд">→</button>
   <button type="button" id="lang" class="lang" aria-label="Переключить язык">EN</button>
+  <button type="button" id="fs" class="fs" aria-label="Во весь экран" title="F" data-en="Full screen">Во весь экран</button>
   <span style="opacity:.6" id="hint">стрелки · клик · L</span>
 </div>
 
@@ -619,7 +660,9 @@ table.app td:first-child{width:24%;font-weight:600}
     document.getElementById('hint').textContent=lang==='en'?'arrows · click · L':'стрелки · клик · L';
     try{localStorage.setItem('orgscope-lang',lang)}catch(e){}
   }
-  function fit(){const vw=document.documentElement.clientWidth,vh=document.documentElement.clientHeight,s=Math.min(vw/1920,vh/1080),st=document.getElementById('stage');st.style.transform=`scale(${s})`;st.style.left=((vw-1920*s)/2)+'px';st.style.top=((vh-1080*s)/2)+'px';}
+  function fit(){const vw=document.documentElement.clientWidth,vh=document.documentElement.clientHeight,s=Math.min(vw/1920,vh/1080),st=document.getElementById('stage');const doc=s<0.5;const was=document.documentElement.classList.contains('doc');document.documentElement.classList.toggle('doc',doc);if(!doc){st.style.transform=`scale(${s})`;st.style.left=((vw-1920*s)/2)+'px';st.style.top=((vh-1080*s)/2)+'px';}else{st.style.transform='';st.style.left='';st.style.top='';}if(was!==doc)render();}
+  function isDoc(){return document.documentElement.classList.contains('doc');}
+  function render(){if(isDoc()){slides.forEach(s=>s.classList.add('on'));applyLang();requestAnimationFrame(()=>requestAnimationFrame(proofPlay));}else{slides.forEach((s,k)=>s.classList.toggle('on',k===i));}}
   function restart(slide){slide.querySelectorAll('.art').forEach(a=>{const c=a.cloneNode(true);a.replaceWith(c);});}
   function proofPlay(){
     const box=document.getElementById('proofBox');if(!box)return;
@@ -635,6 +678,7 @@ table.app td:first-child{width:24%;font-weight:600}
   }
   function show(n){
     i=(n+slides.length)%slides.length;
+    if(isDoc()){render();return;}
     slides.forEach((s,k)=>s.classList.toggle('on',k===i));
     document.getElementById('counter').textContent=`${i+1} / ${slides.length}`;
     restart(slides[i]); applyLang();
@@ -642,12 +686,18 @@ table.app td:first-child{width:24%;font-weight:600}
   }
   try{const saved=localStorage.getItem('orgscope-lang');if(saved==='en'||saved==='ru')lang=saved;}catch(e){}
   if(location.hash==='#en')lang='en'; if(location.hash==='#ru')lang='ru';
+  document.querySelectorAll('.art').forEach(a=>{if(a.querySelector(':scope > svg, :scope > .s3b'))a.classList.add('ratio');});
   addEventListener('resize',fit);addEventListener('orientationchange',fit);fit();setTimeout(fit,300);
+  let tx=null;addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});addEventListener('touchend',e=>{if(tx===null||isDoc())return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>60)show(dx<0?i+1:i-1);},{passive:true});
   addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();show(i+1);}if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(i-1);}if(e.key==='l'||e.key==='L'){lang=lang==='en'?'ru':'en';show(i);}if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1);});
   document.getElementById('next').onclick=()=>show(i+1);
   document.getElementById('prev').onclick=()=>show(i-1);
   document.getElementById('lang').onclick=()=>{lang=lang==='en'?'ru':'en';show(i);};
-  document.getElementById('stage').addEventListener('click',e=>{if(e.target.closest('button'))return;show(i+1);});
+  const fsBtn=document.getElementById('fs');
+  function toggleFs(){if(!document.fullscreenEnabled)return;if(document.fullscreenElement){document.exitFullscreen().catch(()=>{});}else{document.documentElement.requestFullscreen().catch(()=>{});}}
+  if(!document.fullscreenEnabled){fsBtn.hidden=true;}else{fsBtn.onclick=toggleFs;document.addEventListener('fullscreenchange',()=>{fsBtn.dataset.en=document.fullscreenElement?'Exit full screen':'Full screen';fsBtn.dataset.ru=document.fullscreenElement?'Выйти из полного экрана':'Во весь экран';applyLang();setTimeout(fit,100);});}
+  addEventListener('keydown',e=>{if(e.key==='f'||e.key==='F')toggleFs();});
+  document.getElementById('stage').addEventListener('click',e=>{if(e.target.closest('button')||isDoc())return;show(i+1);});
   show(0);
 })();
 </script>

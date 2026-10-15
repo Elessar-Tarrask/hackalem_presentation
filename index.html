@@ -25,6 +25,11 @@ p.lead{margin:0;font-size:clamp(17px,1.6vw,24px);color:var(--soft);max-width:44c
 .btn-outline:hover{background:rgba(245,244,239,.08);transform:translateY(-2px)}
 .btn svg{width:22px;height:22px;flex:none}
 .hint{font-size:14px;color:var(--soft);opacity:.85;margin:0}
+button.btn{font-family:inherit;cursor:pointer}
+#fsWrap{position:fixed;inset:0;background:#1F1E1D;display:none;z-index:10}
+#fsWrap.on{display:block}
+#fsWrap iframe{width:100%;height:100%;border:0;display:block}
+#fsClose{position:absolute;top:12px;right:12px;background:#2A2927;color:#F5F4EF;border:1px solid #3a3937;border-radius:8px;padding:8px 12px;font:inherit;font-size:14px;cursor:pointer}
 footer{text-align:center;font-size:14px;color:var(--soft);padding-block:18px}
 @media (prefers-reduced-motion:reduce){.btn{transition:none}}
 </style>
@@ -36,10 +41,22 @@ footer{text-align:center;font-size:14px;color:var(--soft);padding-block:18px}
   <p class="lead">Демонстрация проекта Optimus на HackAlem AI 2026: презентация с анимированными артефактами и материалы, из которых она собрана.</p>
   <div class="buttons">
     <a class="btn btn-primary" href="presentation.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Презентация</a>
+    <button type="button" class="btn btn-outline" id="fsOpen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>Во весь экран</button>
     <a class="btn btn-outline" href="artifacts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Артефакты</a>
   </div>
   <p class="hint">В презентации: стрелки или клик листают слайды, клавиша L переключает русский и английский.</p>
 </main>
 <footer>Optimus · HackAlem AI 2026 · задача 1 · Казахтелеком</footer>
+<div id="fsWrap" aria-label="Презентация во весь экран"><button type="button" id="fsClose">Закрыть ✕</button></div>
+<script>
+(function(){
+  const btn=document.getElementById('fsOpen'),wrap=document.getElementById('fsWrap'),close=document.getElementById('fsClose');
+  if(!document.fullscreenEnabled){btn.onclick=()=>{location.href='presentation.html';};return;}
+  function open(){const f=document.createElement('iframe');f.src='presentation.html';f.setAttribute('allow','fullscreen');f.setAttribute('allowfullscreen','');wrap.appendChild(f);wrap.classList.add('on');wrap.requestFullscreen().catch(()=>{});setTimeout(()=>{try{f.focus();f.contentWindow.focus();}catch(e){}},400);}
+  function shut(){wrap.classList.remove('on');wrap.querySelectorAll('iframe').forEach(x=>x.remove());if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});}
+  btn.onclick=open;close.onclick=shut;
+  document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&wrap.classList.contains('on'))shut();});
+})();
+</script>
 </body>
 </html>
