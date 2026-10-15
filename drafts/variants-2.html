@@ -1,0 +1,440 @@
+<title>OrgScope Artifact Variants 2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: second review round; one section per reworked slide, variants side by side in 1664×640 frames. */
+:root{
+  --page:#F5F4EF;--panel:#FFFFFF;--line:#E3E0D8;--chip:#EFEDE7;--ink:#1F1E1D;--ink-2:#4F4E4A;--muted:#6B6A66;
+  --accent:#0F5C5A;--accent-soft:#BCD6D3;--orange:#FF8A00;--mark:#FFF1C2;
+  --loss:#B3362B;--dup:#B8730F;--conf:#6B4FB3;--ok:#2F7D4F;--reorg:#0E8FA8;--kept:#4A5872;
+  --display:'Lora',Georgia,serif;--sans:'Golos Text','Segoe UI',Arial,sans-serif;color-scheme:light;
+}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--sans);padding-block:32px;padding-inline:max(16px,4vw)}
+h1{font-family:var(--display);font-size:clamp(28px,3.4vw,44px);margin:0 0 8px;text-wrap:balance}
+.lead{color:var(--ink-2);font-size:18px;margin:0 0 36px;max-width:70ch}
+section{margin:0 0 56px}
+.sh{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.sh .no{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.sh h2{font-family:var(--display);font-size:clamp(22px,2.4vw,30px);margin:0}
+.fb{font-size:15px;color:var(--muted);margin:0 0 14px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:20px}
+.row.one{grid-template-columns:minmax(0,1fr);max-width:1100px}
+.v{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.v .frame{aspect-ratio:1664/640;max-width:100%;background:var(--page);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.v svg{width:100%;height:100%;display:block}
+.v .meta{padding:14px 18px;display:flex;gap:14px;align-items:flex-start}
+.v .tag{flex:none;width:34px;height:34px;border-radius:50%;background:var(--ink);color:#F5F4EF;display:grid;place-items:center;font-weight:700}
+.v .meta p{margin:0;font-size:15px;line-height:1.45;color:var(--ink-2)}
+.v .meta b{color:var(--ink)}
+text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
+.serif{font-family:'Lora',Georgia,serif}
+
+@keyframes fly{0%{offset-distance:0%;opacity:0}5%{opacity:1}92%{opacity:1}100%{offset-distance:100%;opacity:0}}
+@keyframes popin{0%{opacity:0;transform:scale(.4)}60%{opacity:1;transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
+@keyframes fade{0%{opacity:0}100%{opacity:1}}
+@keyframes blink{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes converge{0%{transform:translate(0,0)}100%{transform:translate(var(--dx),var(--dy))}}
+@keyframes stampIn{0%{opacity:0;transform:rotate(-8deg) scale(.4)}60%{opacity:1;transform:rotate(-8deg) scale(1.15)}100%{opacity:1;transform:rotate(-8deg) scale(1)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+
+/* slide 1 */
+.t1a-l{animation:converge 3s cubic-bezier(.2,.8,.2,1) infinite alternate;--dx:90px;--dy:0}
+.t1a-r{animation:converge 3s cubic-bezier(.2,.8,.2,1) infinite alternate;--dx:-90px;--dy:0}
+.t1a-s{animation:popin 3s linear infinite alternate;transform-origin:center;transform-box:fill-box}
+@keyframes t1bCard{0%{offset-distance:0%;opacity:0}4%{opacity:1}96%{opacity:1}100%{offset-distance:100%;opacity:0}}
+@keyframes t1bDrop{0%{offset-distance:0%;opacity:0}4%{opacity:1}48%{offset-distance:48%}70%{offset-distance:100%;opacity:1}100%{offset-distance:100%;opacity:1}}
+@keyframes t1bCatch{0%,68%{opacity:0;transform:scale(.4)}74%{opacity:1;transform:scale(1.15)}78%,100%{opacity:1;transform:scale(1)}}
+.t1b-c{offset-rotate:0deg;offset-path:path('M450 330 L 1214 330');animation:t1bCard 6s linear infinite}
+.t1b-d{offset-rotate:0deg;offset-path:path('M450 330 L 820 330 L 820 520');animation:t1bDrop 6s ease-in infinite}
+.t1b-k{animation:t1bCatch 6s linear infinite;transform-origin:center;transform-box:fill-box}
+
+/* slide 3 scanner v2 (8s cycle) */
+@keyframes s3sweep{0%{transform:translateX(0)}30%{transform:translateX(420px)}100%{transform:translateX(420px)}}
+@keyframes s3m1{0%,32%{opacity:0}36%,100%{opacity:1}}
+@keyframes s3m2{0%,38%{opacity:0}42%,100%{opacity:1}}
+@keyframes s3m3{0%,44%{opacity:0}48%,100%{opacity:1}}
+@keyframes s3m4{0%,50%{opacity:0}54%,100%{opacity:1}}
+@keyframes s3drop{0%,54%{offset-distance:0%;opacity:1;transform:scale(1)}68%{offset-distance:100%;opacity:1;transform:scale(.42)}100%{offset-distance:100%;opacity:1;transform:scale(.42)}}
+@keyframes s3row{0%,54%{opacity:1}56%,100%{opacity:0}}
+@keyframes s3out{0%,70%{opacity:0;transform:translateY(60px)}82%,100%{opacity:1;transform:translateY(0)}}
+@keyframes s3flag{0%,84%{opacity:0}90%,100%{opacity:1}}
+.s3-bar{animation:s3sweep 8s linear infinite}
+.s3-m1{animation:s3m1 8s linear infinite}.s3-m2{animation:s3m2 8s linear infinite}.s3-m3{animation:s3m3 8s linear infinite}.s3-m4{animation:s3m4 8s linear infinite}
+.s3-drop{offset-rotate:0deg;offset-path:path('M0 0 C 120 0, 340 60, 420 230');animation:s3drop 8s ease-in infinite}
+.s3-row{animation:s3row 8s linear infinite}
+.s3-out{animation:s3out 8s ease-out infinite}
+.s3-flag{animation:s3flag 8s linear infinite}
+
+/* slide 5 lines v2 (10s cycle) */
+.s5 path{stroke-dasharray:1700;stroke-dashoffset:1700;fill:none;stroke-width:5;stroke-linecap:round}
+@keyframes s5l1{0%,6%{stroke-dashoffset:1700}12%,100%{stroke-dashoffset:0}}
+@keyframes s5l2{0%,14%{stroke-dashoffset:1700}20%,100%{stroke-dashoffset:0}}
+@keyframes s5l3{0%,22%{stroke-dashoffset:1700}28%,100%{stroke-dashoffset:0}}
+@keyframes s5l4{0%,30%{stroke-dashoffset:1700}36%,100%{stroke-dashoffset:0}}
+@keyframes s5l5{0%,40%{stroke-dashoffset:1700}47%,100%{stroke-dashoffset:0}}
+@keyframes s5l6{0%,48%{stroke-dashoffset:1700}55%,100%{stroke-dashoffset:0}}
+@keyframes s5l7{0%,58%{stroke-dashoffset:1700}65%,100%{stroke-dashoffset:0}}
+@keyframes s5b1{0%,11%{opacity:0;transform:translateX(24px)}14%,100%{opacity:1;transform:translateX(0)}}
+@keyframes s5b2{0%,19%{opacity:0;transform:translateX(24px)}22%,100%{opacity:1;transform:translateX(0)}}
+@keyframes s5b5{0%,27%{opacity:0;transform:translateX(24px)}30%,100%{opacity:1;transform:translateX(0)}}
+@keyframes s5b6{0%,35%{opacity:0;transform:translateX(24px)}38%,100%{opacity:1;transform:translateX(0)}}
+@keyframes s5b3{0%,46%{opacity:0;transform:scale(.6)}50%{opacity:1;transform:scale(1.08)}53%,100%{opacity:1;transform:scale(1)}}
+@keyframes s5b4{0%,54%{opacity:0;transform:scale(.6)}58%{opacity:1;transform:scale(1.08)}61%,100%{opacity:1;transform:scale(1)}}
+@keyframes s5hi{0%,64%{opacity:0}67%,100%{opacity:1}}
+@keyframes s5leg{0%,68%{opacity:0}73%,100%{opacity:1}}
+@keyframes s5src{0%,5%{opacity:.35}6%,100%{opacity:1}}
+.s5-l1{animation:s5l1 10s linear infinite}.s5-l2{animation:s5l2 10s linear infinite}.s5-l3{animation:s5l3 10s linear infinite}.s5-l4{animation:s5l4 10s linear infinite}.s5-l5{animation:s5l5 10s linear infinite}.s5-l6{animation:s5l6 10s linear infinite}.s5-l7{animation:s5l7 10s linear infinite}
+.s5-b1{animation:s5b1 10s linear infinite}.s5-b2{animation:s5b2 10s linear infinite}.s5-b5{animation:s5b5 10s linear infinite}.s5-b6{animation:s5b6 10s linear infinite}
+.s5-b3{animation:s5b3 10s linear infinite;transform-origin:center;transform-box:fill-box}.s5-b4{animation:s5b4 10s linear infinite;transform-origin:center;transform-box:fill-box}
+.s5-hi{animation:s5hi 10s linear infinite}.s5-leg{animation:s5leg 10s linear infinite}
+
+/* slide 6 */
+@keyframes s6grow{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+.s6-g1{animation:s6grow 1.4s cubic-bezier(.2,.8,.2,1) both;transform-origin:left center;transform-box:fill-box}
+.s6-g2{animation:s6grow 1.4s cubic-bezier(.2,.8,.2,1) .3s both;transform-origin:left center;transform-box:fill-box}
+@keyframes s6call{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+.s6-c1{animation:s6call .6s ease-out 1.6s both}.s6-c2{animation:s6call .6s ease-out 2.1s both}.s6-c3{animation:s6call .6s ease-out 2.6s both}
+.s6-sl{animation:blink 1.6s linear 2s infinite}
+.s6d{position:absolute;inset:0;font-family:var(--sans)}
+.s6d img{position:absolute;left:5.3%;top:56%;width:89.4%;height:auto;border-radius:10px;box-shadow:0 14px 40px rgba(14,31,69,.14)}
+.s6d .big{position:absolute;top:5%;font-family:var(--display);font-weight:600;font-size:min(6.6vw,86px);line-height:1;opacity:0;animation:s6call .6s ease-out both}
+.s6d .lbl{position:absolute;top:36%;font-size:min(1.3vw,17px);font-weight:600;opacity:0;animation:s6call .6s ease-out both}
+.s6d .ring{position:absolute;top:54%;height:22%;border:3px solid;border-radius:12px;opacity:0;animation:s6call .5s ease-out both}
+.s6d .cap{position:absolute;left:5.3%;bottom:6%;font-size:min(1.4vw,18px);color:var(--muted)}
+
+/* slide 8 */
+@keyframes s8pen{0%{transform:translate(0,0)}25%{transform:translate(90px,0)}26%{transform:translate(0,22px)}50%{transform:translate(110px,22px)}51%{transform:translate(0,44px)}75%{transform:translate(70px,44px)}100%{transform:translate(70px,44px)}}
+@keyframes s8ink{0%{opacity:0}1%,100%{opacity:1}}
+.s8c-pen{animation:s8pen 3s linear infinite}
+.s8c-i1{animation:s8ink 8s linear .6s both}.s8c-i2{animation:s8ink 8s linear 1.5s both}.s8c-i3{animation:s8ink 8s linear 2.3s both}
+@keyframes s8flip{0%,38%{opacity:0;transform:translateX(0)}44%,100%{opacity:1;transform:translateX(0)}}
+@keyframes s8grade{0%,58%{opacity:0;transform:rotate(-8deg) scale(.4)}64%{opacity:1;transform:rotate(-8deg) scale(1.15)}68%,100%{opacity:1;transform:rotate(-8deg) scale(1)}}
+@keyframes s8warn{0%,74%{opacity:0;transform:scale(.4)}80%,100%{opacity:1;transform:scale(1)}}
+.s8c-pen2{animation:s8flip 8s linear infinite}.s8c-grade{animation:s8grade 8s linear infinite;transform-origin:center;transform-box:fill-box}.s8-warn{animation:s8warn 8s linear infinite;transform-origin:center;transform-box:fill-box}
+@keyframes s8sign1{0%,10%{opacity:0;transform:translateX(-220px)}24%,100%{opacity:1;transform:translateX(0)}}
+@keyframes s8sign2{0%,36%{opacity:0;transform:translateX(220px)}50%,100%{opacity:1;transform:translateX(0)}}
+@keyframes s8warn2{0%,60%{opacity:0;transform:scale(.4)}68%,100%{opacity:1;transform:scale(1)}}
+.s8d-1{animation:s8sign1 7s cubic-bezier(.2,.8,.2,1) infinite}.s8d-2{animation:s8sign2 7s cubic-bezier(.2,.8,.2,1) infinite}.s8d-w{animation:s8warn2 7s linear infinite;transform-origin:center;transform-box:fill-box}
+.s8e path{fill:none;stroke-linecap:round;stroke-dasharray:900;stroke-dashoffset:900}
+@keyframes s8e1{0%,8%{stroke-dashoffset:900}20%,100%{stroke-dashoffset:0}}
+@keyframes s8e2{0%,24%{stroke-dashoffset:900}40%,100%{stroke-dashoffset:0}}
+@keyframes s8e3{0%,46%{stroke-dashoffset:900}58%,100%{stroke-dashoffset:0}}
+@keyframes s8e4{0%,60%{stroke-dashoffset:900}72%,100%{stroke-dashoffset:0}}
+@keyframes s8et{0%,74%{opacity:0}80%,100%{opacity:1}}
+.s8e-1{animation:s8e1 9s linear infinite}.s8e-2{animation:s8e2 9s linear infinite}.s8e-3{animation:s8e3 9s linear infinite}.s8e-4{animation:s8e4 9s linear infinite}.s8e-t{animation:s8et 9s linear infinite}
+
+/* slide 9 */
+@keyframes s9path{0%{offset-distance:0%;opacity:0}3%{opacity:1}20%{offset-distance:24%}30%{offset-distance:24%}45%{offset-distance:50%}55%{offset-distance:50%}70%{offset-distance:76%}82%{offset-distance:76%}92%{offset-distance:100%}100%{offset-distance:100%;opacity:1}}
+@keyframes s9chk1{0%,28%{opacity:0;transform:scale(.4)}32%,100%{opacity:1;transform:scale(1)}}
+@keyframes s9chk2{0%,53%{opacity:0;transform:scale(.4)}57%,100%{opacity:1;transform:scale(1)}}
+@keyframes s9chk3{0%,78%{opacity:0;transform:scale(.4)}82%,100%{opacity:1;transform:scale(1)}}
+@keyframes s9glow{0%,76%{opacity:0}80%,100%{opacity:1}}
+@keyframes s9stamp{0%,92%{opacity:0;transform:rotate(-8deg) scale(.4)}96%,100%{opacity:1;transform:rotate(-8deg) scale(1)}}
+.s9a-card{offset-rotate:0deg;offset-path:path('M260 560 L 1420 560');animation:s9path 10s linear infinite}
+.s9a-k1{animation:s9chk1 10s linear infinite;transform-origin:center;transform-box:fill-box}.s9a-k2{animation:s9chk2 10s linear infinite;transform-origin:center;transform-box:fill-box}.s9a-k3{animation:s9chk3 10s linear infinite;transform-origin:center;transform-box:fill-box}
+.s9a-glow{animation:s9glow 10s linear infinite}.s9a-stamp{animation:s9stamp 10s linear infinite;transform-origin:center;transform-box:fill-box}
+@keyframes s9bIn{0%{transform:translateX(0);opacity:0}5%{opacity:1}20%,100%{transform:translateX(560px);opacity:1}}
+@keyframes s9bFlip1{0%,22%{transform:scaleX(1)}30%,100%{transform:scaleX(-1)}}
+@keyframes s9bFlip2{0%,42%{transform:scaleX(1)}50%,100%{transform:scaleX(-1)}}
+@keyframes s9bFlip3{0%,62%{transform:scaleX(1)}70%,100%{transform:scaleX(-1)}}
+@keyframes s9bK1{0%,30%{opacity:0}34%,100%{opacity:1}}
+@keyframes s9bK2{0%,50%{opacity:0}54%,100%{opacity:1}}
+@keyframes s9bK3{0%,70%{opacity:0}74%,100%{opacity:1}}
+@keyframes s9bStamp{0%,80%{opacity:0;transform:rotate(-8deg) scale(.4)}86%,100%{opacity:1;transform:rotate(-8deg) scale(1)}}
+.s9b-in{animation:s9bIn 10s cubic-bezier(.2,.8,.2,1) infinite}
+.s9b-f1{animation:s9bFlip1 10s linear infinite;transform-origin:left center;transform-box:fill-box}.s9b-f2{animation:s9bFlip2 10s linear infinite;transform-origin:left center;transform-box:fill-box}.s9b-f3{animation:s9bFlip3 10s linear infinite;transform-origin:left center;transform-box:fill-box}
+.s9b-k1{animation:s9bK1 10s linear infinite}.s9b-k2{animation:s9bK2 10s linear infinite}.s9b-k3{animation:s9bK3 10s linear infinite}.s9b-stamp{animation:s9bStamp 10s linear infinite;transform-origin:center;transform-box:fill-box}
+
+/* slide 13 */
+@keyframes s13go{0%{transform:translateX(0)}100%{transform:translateX(1480px)}}
+@keyframes s13chk{0%,49%{opacity:0;transform:scale(.3)}53%,100%{opacity:1;transform:scale(1)}}
+.s13-c{animation:s13go 7s linear infinite}.s13-k{animation:s13chk 7s linear infinite;transform-origin:center;transform-box:fill-box}
+.s13-d1{animation-delay:-1.4s}.s13-d2{animation-delay:-2.8s}.s13-d3{animation-delay:-4.2s}.s13-d4{animation-delay:-5.6s}
+.s13-scan{animation:blink 2s linear infinite}
+</style>
+
+<h1>Варианты, второй круг</h1>
+<p class="lead">Только слайды, которые вы попросили переделать. Принятые без изменений: 10 «Два стола», 11 «Три дорожки». Слайды 2, 4, 7, 12 остаются из первой презентации.</p>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="g-card"><rect x="-38" y="-24" width="76" height="48" rx="7"/><rect x="-26" y="-10" width="52" height="5" rx="2.5" fill="#F5F4EF" opacity=".9"/><rect x="-26" y="2" width="36" height="5" rx="2.5" fill="#F5F4EF" opacity=".9"/></g>
+  <g id="g-person"><circle cx="0" cy="-92" r="30"/><path d="M-44 70 C -44 -20, 44 -20, 44 70 Z"/></g>
+  <g id="g-check"><circle r="16" fill="#2F7D4F"/><path d="M-8 0 L -2 6 L 9 -7" stroke="#F5F4EF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g id="g-warn"><path d="M0 -34 L 38 32 L -38 32 Z" fill="#B3362B"/><rect x="-4" y="-12" width="8" height="24" rx="3" fill="#F5F4EF"/><circle cy="22" r="4.5" fill="#F5F4EF"/></g>
+  <g id="g-lines"><rect x="0" y="0" width="150" height="8" rx="4"/><rect x="0" y="22" width="110" height="8" rx="4"/><rect x="0" y="44" width="130" height="8" rx="4"/><rect x="0" y="66" width="90" height="8" rx="4"/></g>
+</defs></svg>
+
+<!-- ============ 1 · Титул ============ -->
+<section>
+  <div class="sh"><span class="no">Слайд 1</span><h2>Титул</h2></div>
+  <p class="fb">Ваше замечание: «было» и «стало» выглядели одинаково; мост не показывал проблему.</p>
+  <div class="row">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Толстая старая папка редакции 8 и тонкая новая редакция 9 сходятся в одно заключение с печатью">
+        <rect width="1664" height="640" fill="#0F5C5A"/>
+        <g transform="translate(260,130)"><g class="t1a-l">
+          <rect x="40" y="18" width="250" height="330" rx="6" fill="#F1E9D2"/><rect x="30" y="12" width="250" height="330" rx="6" fill="#F7F1DD"/><rect x="20" y="6" width="250" height="330" rx="6" fill="#FBF6E6"/>
+          <rect x="0" y="0" width="250" height="330" rx="8" fill="#4A5872"/><rect x="0" y="0" width="90" height="34" rx="8" fill="#3A475E"/>
+          <rect x="28" y="70" width="194" height="58" rx="6" fill="#F5F4EF"/><text x="125" y="96" text-anchor="middle" font-size="16" font-weight="700" fill="#4A5872" letter-spacing="2">ПОЛОЖЕНИЕ</text><text x="125" y="118" text-anchor="middle" font-size="15" fill="#6B6A66">редакция 8 · 25 стр.</text>
+          <text x="125" y="400" text-anchor="middle" font-size="26" font-weight="700" fill="#BCD6D3" letter-spacing="4">БЫЛО</text>
+        </g></g>
+        <g transform="translate(1180,130)"><g class="t1a-r">
+          <rect x="24" y="14" width="230" height="310" rx="6" fill="#FFFFFF" opacity=".55"/><rect x="0" y="0" width="230" height="310" rx="6" fill="#FFFFFF"/>
+          <rect x="10" y="0" width="210" height="10" rx="4" fill="#0E8FA8"/>
+          <text x="115" y="60" text-anchor="middle" font-size="16" font-weight="700" fill="#0E8FA8" letter-spacing="2">ПОЛОЖЕНИЕ</text><text x="115" y="84" text-anchor="middle" font-size="15" fill="#6B6A66">редакция 9 · 25 стр.</text>
+          <g fill="#E6E3DA"><rect x="26" y="120" width="178" height="9" rx="4"/><rect x="26" y="146" width="140" height="9" rx="4"/><rect x="26" y="172" width="160" height="9" rx="4"/><rect x="26" y="198" width="120" height="9" rx="4"/><rect x="26" y="224" width="170" height="9" rx="4"/></g>
+          <text x="115" y="400" text-anchor="middle" font-size="26" font-weight="700" fill="#BCD6D3" letter-spacing="4">СТАЛО</text>
+        </g></g>
+        <g transform="translate(832,290)"><g class="t1a-s">
+          <rect x="-120" y="-160" width="240" height="320" rx="8" fill="#F5F4EF"/><text y="-116" text-anchor="middle" font-size="16" font-weight="700" fill="#0F5C5A" letter-spacing="2">ЗАКЛЮЧЕНИЕ</text>
+          <g fill="#CFCBC0"><rect x="-96" y="-90" width="192" height="9" rx="4"/><rect x="-96" y="-64" width="150" height="9" rx="4"/><rect x="-96" y="-38" width="170" height="9" rx="4"/><rect x="-96" y="-12" width="120" height="9" rx="4"/></g>
+          <g transform="translate(0,80) rotate(-8)"><rect x="-90" y="-24" width="180" height="48" rx="8" fill="rgba(228,242,232,.92)" stroke="#2F7D4F" stroke-width="4"/><text y="8" text-anchor="middle" font-size="18" font-weight="800" fill="#2F7D4F" letter-spacing="2">ПРОВЕРЕНО</text></g>
+        </g></g>
+        <path d="M560 290 L 690 290" stroke="#BCD6D3" stroke-width="4" stroke-dasharray="10 10"/><path d="M975 290 L 1105 290" stroke="#BCD6D3" stroke-width="4" stroke-dasharray="10 10"/>
+        <text x="832" y="595" text-anchor="middle" class="serif" font-size="50" font-weight="600" fill="#F5F4EF">Реорганизация без потерянных функций.</text>
+      </svg>
+    </div><div class="meta"><span class="tag">A</span><p><b>Разные редакции.</b> Слева старая толстая папка с пожелтевшими листами, справа новая свежая редакция. Они сходятся к одному заключению с печатью.</p></div></div>
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Обязанности переходят из редакции 8 в редакцию 9; одна падает между ними, и её ловит OrgScope">
+        <rect width="1664" height="640" fill="#0F5C5A"/>
+        <g transform="translate(150,110)"><rect width="300" height="400" rx="8" fill="#4A5872"/><rect x="24" y="24" width="252" height="60" rx="6" fill="#F5F4EF"/><text x="150" y="50" text-anchor="middle" font-size="16" font-weight="700" fill="#4A5872" letter-spacing="2">РЕДАКЦИЯ 8</text><text x="150" y="72" text-anchor="middle" font-size="14" fill="#6B6A66">254 обязанности</text><g fill="#F5F4EF" opacity=".35"><rect x="24" y="110" width="252" height="8" rx="4"/><rect x="24" y="134" width="200" height="8" rx="4"/><rect x="24" y="158" width="230" height="8" rx="4"/><rect x="24" y="182" width="170" height="8" rx="4"/><rect x="24" y="206" width="240" height="8" rx="4"/><rect x="24" y="230" width="190" height="8" rx="4"/></g></g>
+        <g transform="translate(1214,110)"><rect width="300" height="400" rx="8" fill="#FFFFFF"/><rect x="24" y="24" width="252" height="60" rx="6" fill="#E6F3F6"/><text x="150" y="50" text-anchor="middle" font-size="16" font-weight="700" fill="#0E8FA8" letter-spacing="2">РЕДАКЦИЯ 9</text><text x="150" y="72" text-anchor="middle" font-size="14" fill="#6B6A66">250 обязанностей</text><g fill="#E6E3DA"><rect x="24" y="110" width="252" height="8" rx="4"/><rect x="24" y="134" width="200" height="8" rx="4"/><rect x="24" y="158" width="230" height="8" rx="4"/><rect x="24" y="182" width="170" height="8" rx="4"/><rect x="24" y="206" width="240" height="8" rx="4"/></g></g>
+        <rect x="450" y="326" width="764" height="8" rx="4" fill="#BCD6D3" opacity=".5"/>
+        <g fill="#F5F4EF"><use href="#g-card" class="t1b-c"/><use href="#g-card" class="t1b-c" style="animation-delay:1.5s"/><use href="#g-card" class="t1b-c" style="animation-delay:3s"/><use href="#g-card" class="t1b-c" style="animation-delay:4.5s"/></g>
+        <use href="#g-card" class="t1b-d" fill="#B3362B" style="animation-delay:.7s"/>
+        <g transform="translate(640,500)"><rect width="360" height="80" rx="12" fill="#0B3F3E" stroke="#BCD6D3" stroke-width="3"/><text x="180" y="30" text-anchor="middle" font-size="18" font-weight="700" fill="#BCD6D3" letter-spacing="4">ORGSCOPE</text><text x="180" y="58" text-anchor="middle" font-size="15" fill="#F5F4EF">ловит то, что выпало</text></g>
+        <g transform="translate(1030,540)"><g class="t1b-k"><rect x="-10" y="-26" width="300" height="52" rx="8" fill="#FBE7E4"/><text x="140" y="7" text-anchor="middle" font-size="16" font-weight="700" fill="#A12A22">не найдена в редакции 9 · п. 5.6.2</text></g></g>
+        <g transform="translate(1000,500)"><g class="t1b-k"><use href="#g-check" transform="scale(1.3)"/></g></g>
+        <text x="832" y="80" text-anchor="middle" class="serif" font-size="50" font-weight="600" fill="#F5F4EF">Реорганизация без потерянных функций.</text>
+      </svg>
+    </div><div class="meta"><span class="tag">B</span><p><b>Что упало между редакциями.</b> Обязанности переходят из редакции 8 в редакцию 9, одна падает в разрыв, внизу её ловит OrgScope и помечает: не найдена, пункт 5.6.2. Проблема и решение в одной картинке.</p></div></div>
+  </div>
+</section>
+
+<!-- ============ 3 · Решение ============ -->
+<section>
+  <div class="sh"><span class="no">Слайд 3</span><h2>В чём заключается решение</h2></div>
+  <p class="fb">Ваше замечание: сканер подходит, но нужно показать, что оба документа отсканированы, появляется новый результат, а что-то уходит в корзину.</p>
+  <div class="row one">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Сканер проходит по двум редакциям; совпавшие строки получают галочки; строка, которой нет в новой редакции, падает в корзину; появляется заключение с красным флажком, указывающим на корзину">
+        <g transform="translate(150,40)"><rect width="440" height="400" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><text x="24" y="40" font-size="17" fill="#6B6A66" letter-spacing="2">РЕДАКЦИЯ 8 · ДО</text><g fill="#E6E3DA"><rect x="24" y="90" width="380" height="12" rx="6"/><rect x="24" y="160" width="330" height="12" rx="6"/><rect x="24" y="300" width="360" height="12" rx="6"/><rect x="24" y="370" width="300" height="12" rx="6"/></g>
+          <g class="s3-row"><rect x="24" y="230" width="390" height="12" rx="6" fill="#B3362B"/></g></g>
+        <g transform="translate(1074,40)"><rect width="440" height="400" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><text x="24" y="40" font-size="17" fill="#6B6A66" letter-spacing="2">РЕДАКЦИЯ 9 · ПОСЛЕ</text><g fill="#E6E3DA"><rect x="24" y="90" width="380" height="12" rx="6"/><rect x="24" y="160" width="330" height="12" rx="6"/><rect x="24" y="300" width="360" height="12" rx="6"/><rect x="24" y="370" width="300" height="12" rx="6"/></g></g>
+        <g class="s3-m1"><path d="M590 136 L 1074 136" stroke="#2F7D4F" stroke-width="4"/><use href="#g-check" transform="translate(832,136) scale(.8)"/></g>
+        <g class="s3-m2"><path d="M590 206 L 1074 206" stroke="#2F7D4F" stroke-width="4"/><use href="#g-check" transform="translate(832,206) scale(.8)"/></g>
+        <g class="s3-m3"><path d="M590 346 L 1074 346" stroke="#2F7D4F" stroke-width="4"/><use href="#g-check" transform="translate(832,346) scale(.8)"/></g>
+        <g class="s3-m4"><path d="M590 416 L 1074 416" stroke="#2F7D4F" stroke-width="4"/><use href="#g-check" transform="translate(832,416) scale(.8)"/></g>
+        <g transform="translate(370,276)"><g class="s3-drop"><rect x="-195" y="-6" width="390" height="12" rx="6" fill="#B3362B"/></g></g>
+        <g transform="translate(700,470)"><path d="M0 0 L 18 130 L 162 130 L 180 0 Z" fill="#E6E3DA" stroke="#CFCBC0" stroke-width="2"/><rect x="-10" y="-14" width="200" height="14" rx="4" fill="#CFCBC0"/><text x="90" y="160" text-anchor="middle" font-size="17" fill="#A12A22" font-weight="600">выпало при реорганизации</text></g>
+        <g class="s3-bar"><rect x="140" y="30" width="8" height="420" rx="4" fill="#0F5C5A"/><rect x="1064" y="30" width="8" height="420" rx="4" fill="#0F5C5A"/></g>
+        <g transform="translate(1180,462)"><g class="s3-out"><rect width="340" height="170" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><text x="170" y="34" text-anchor="middle" font-size="18" font-weight="700" fill="#0F5C5A">Заключение</text>
+          <g transform="translate(38,62)"><use href="#g-check" transform="scale(.6)"/></g><rect x="60" y="56" width="240" height="9" rx="4" fill="#E6E3DA"/>
+          <g transform="translate(38,92)"><use href="#g-check" transform="scale(.6)"/></g><rect x="60" y="86" width="200" height="9" rx="4" fill="#E6E3DA"/>
+          <g class="s3-flag"><rect x="28" y="112" width="20" height="16" rx="3" fill="#B3362B"/><text x="60" y="126" font-size="15" font-weight="700" fill="#A12A22">не найдена · до п. 5.6.2</text></g>
+          <g transform="translate(38,150)"><use href="#g-check" transform="scale(.6)"/></g><rect x="60" y="144" width="220" height="9" rx="4" fill="#E6E3DA"/>
+        </g></g>
+        <g class="s3-flag"><path d="M1180 582 C 1050 600, 960 610, 890 560" stroke="#B3362B" stroke-width="3" fill="none" stroke-dasharray="8 8"/></g>
+      </svg>
+    </div><div class="meta"><span class="tag">A</span><p><b>Сканер с корзиной.</b> Две полосы проходят по обеим редакциям; совпавшие строки получают галочки; строка, которой нет в редакции 9, падает в корзину «выпало при реорганизации»; снизу появляется заключение, и его красный флажок указывает на корзину с номером пункта.</p></div></div>
+  </div>
+</section>
+
+<!-- ============ 5 · Структура ============ -->
+<section>
+  <div class="sh"><span class="no">Слайд 5</span><h2>Структура: кто кем стал</h2></div>
+  <p class="fb">Ваше замечание: линии преемственности, но с аккуратной логикой анимации. Теперь всё идёт по шагам: сохранённые по одному, затем реорганизованные, созданные появляются только когда к ним приходит линия.</p>
+  <div class="row one">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" class="s5" aria-label="Шесть подразделений до и шесть после; линии по очереди соединяют старые с новыми, созданные появляются когда к ним приходит линия">
+        <text x="130" y="60" font-size="17" fill="#6B6A66" letter-spacing="3">БЫЛО · РЕДАКЦИЯ 8</text><text x="1150" y="60" font-size="17" fill="#6B6A66" letter-spacing="3">СТАЛО · РЕДАКЦИЯ 9</text>
+        <g font-size="22" font-weight="600" fill="#1F1E1D">
+          <g transform="translate(130,90)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">БВА</text></g>
+          <g transform="translate(130,176)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">Главный аудитор</text></g>
+          <g transform="translate(130,262)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">Департамент мониторинга СВК</text></g>
+          <g transform="translate(130,348)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">ДККМ</text></g>
+          <g transform="translate(130,434)"><rect width="380" height="64" rx="10" fill="#E6F3F6" stroke="#0E8FA8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#0E8FA8"/><text x="28" y="40">Направление внутреннего аудита</text></g>
+          <g transform="translate(130,520)"><rect width="380" height="64" rx="10" fill="#E6F3F6" stroke="#0E8FA8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#0E8FA8"/><text x="28" y="40">Направление мониторинга СВК</text></g>
+          <g transform="translate(1150,90)"><g class="s5-b1"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">БВА</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#4A5872">сохранено</text></g></g>
+          <g transform="translate(1150,176)"><g class="s5-b2"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">Главный аудитор</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#4A5872">сохранено</text></g></g>
+          <g transform="translate(1150,262)"><g class="s5-b3"><rect width="380" height="64" rx="10" fill="#E4F2E8" stroke="#2F7D4F" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#2F7D4F"/><text x="28" y="40">ДИТААД</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#256840">создано</text></g></g>
+          <g transform="translate(1150,348)"><g class="s5-b4"><rect width="380" height="64" rx="10" fill="#E4F2E8" stroke="#2F7D4F" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#2F7D4F"/><text x="28" y="40">ДОА</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#256840">создано</text></g></g>
+          <g transform="translate(1150,434)"><g class="s5-b5"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">ДНМ</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#4A5872">сохранено</text><g class="s5-hi"><rect x="-2" y="-2" width="384" height="68" rx="11" fill="none" stroke="#0E8FA8" stroke-width="3"/><text x="352" y="22" text-anchor="end" font-size="13" fill="#0B6F84">+ направление мониторинга</text></g></g></g>
+          <g transform="translate(1150,520)"><g class="s5-b6"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">ДККМ</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#4A5872">сохранено</text></g></g>
+        </g>
+        <path class="s5-l1" d="M510 122 C 830 122, 830 122, 1150 122" stroke="#4A5872"/>
+        <path class="s5-l2" d="M510 208 C 830 208, 830 208, 1150 208" stroke="#4A5872"/>
+        <path class="s5-l3" d="M510 294 C 830 294, 830 466, 1150 466" stroke="#4A5872"/>
+        <path class="s5-l4" d="M510 380 C 830 380, 830 552, 1150 552" stroke="#4A5872"/>
+        <path class="s5-l5" d="M510 466 C 830 466, 830 294, 1150 294" stroke="#0E8FA8"/>
+        <path class="s5-l6" d="M510 466 C 830 466, 830 380, 1150 380" stroke="#0E8FA8"/>
+        <path class="s5-l7" d="M510 552 C 830 552, 830 466, 1150 466" stroke="#0E8FA8"/>
+        <g class="s5-leg" font-size="17" font-weight="600"><rect x="640" y="606" width="14" height="14" rx="3" fill="#4A5872"/><text x="662" y="619" fill="#1F1E1D">сохранено</text><rect x="790" y="606" width="14" height="14" rx="3" fill="#0E8FA8"/><text x="812" y="619" fill="#1F1E1D">реорганизовано</text><rect x="980" y="606" width="14" height="14" rx="3" fill="#2F7D4F"/><text x="1002" y="619" fill="#1F1E1D">создано</text></g>
+      </svg>
+    </div><div class="meta"><span class="tag">A</span><p><b>Линии по шагам.</b> Сначала четыре сохранённых подразделения, по одному: линия доходит, справа появляется блок. Потом «Направление внутреннего аудита» расходится на ДИТААД и ДОА, они возникают как созданные. Затем «Направление мониторинга» вливается в ДНМ, и ДНМ получает бирюзовую рамку. В конце легенда.</p></div></div>
+  </div>
+</section>
+
+<!-- ============ 6 · Риски ============ -->
+<section>
+  <div class="sh"><span class="no">Слайд 6</span><h2>Риски: 11 · 5 · 1</h2></div>
+  <p class="fb">Ваше замечание: оба прежних варианта плохие. Два новых: честный масштаб и настоящий экран.</p>
+  <div class="row">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Две полосы: 254 обязанности редакции 8, из них 11 не найдены; 250 обязанностей редакции 9, из них 5 задвоены и 1 конфликт; выноски с большими числами">
+        <text x="120" y="70" font-size="20" font-weight="700" fill="#1F1E1D">254 обязанности · редакция 8</text>
+        <g transform="translate(120,90)"><g class="s6-g1"><rect width="1200" height="44" rx="8" fill="#2F7D4F" opacity=".55"/><rect x="1148" width="52" height="44" rx="8" fill="#B3362B"/></g></g>
+        <text x="120" y="162" font-size="16" fill="#6B6A66">243 нашлись в редакции 9</text>
+        <text x="120" y="240" font-size="20" font-weight="700" fill="#1F1E1D">250 обязанностей · редакция 9</text>
+        <g transform="translate(120,260)"><g class="s6-g2"><rect width="1200" height="44" rx="8" fill="#2F7D4F" opacity=".55"/><rect x="1172" width="24" height="44" rx="6" fill="#B8730F"/><rect x="1196" width="6" height="44" rx="3" fill="#6B4FB3"/></g></g>
+        <text x="120" y="332" font-size="16" fill="#6B6A66">244 без замечаний</text>
+        <g class="s6-sl"><rect x="1262" y="84" width="64" height="56" rx="10" fill="none" stroke="#B3362B" stroke-width="3"/><rect x="1286" y="254" width="42" height="56" rx="10" fill="none" stroke="#B8730F" stroke-width="3"/></g>
+        <g transform="translate(1360,60)"><g class="s6-c1"><rect width="220" height="120" rx="14" fill="#FBE7E4"/><text x="110" y="78" text-anchor="middle" class="serif" font-size="84" font-weight="600" fill="#A12A22">11</text><text x="110" y="106" text-anchor="middle" font-size="15" font-weight="700" fill="#A12A22">не найдены</text></g></g>
+        <g transform="translate(1360,230)"><g class="s6-c2"><rect width="220" height="120" rx="14" fill="#FBF0DC"/><text x="110" y="78" text-anchor="middle" class="serif" font-size="84" font-weight="600" fill="#8A5A0C">5</text><text x="110" y="106" text-anchor="middle" font-size="15" font-weight="700" fill="#8A5A0C">два владельца</text></g></g>
+        <g transform="translate(1360,400)"><g class="s6-c3"><rect width="220" height="120" rx="14" fill="#EFEAFA"/><text x="110" y="78" text-anchor="middle" class="serif" font-size="84" font-weight="600" fill="#5F3BB0">1</text><text x="110" y="106" text-anchor="middle" font-size="15" font-weight="700" fill="#5F3BB0">делает и проверяет</text></g></g>
+        <path d="M1326 112 L 1360 120" stroke="#B3362B" stroke-width="3"/><path d="M1326 282 L 1360 290" stroke="#B8730F" stroke-width="3"/><path d="M1324 300 C 1340 380, 1340 440, 1360 460" stroke="#6B4FB3" stroke-width="3" fill="none"/>
+        <text x="120" y="440" font-size="26" font-weight="600" fill="#1F1E1D">Большинство в порядке. Семнадцать мест требуют внимания человека.</text>
+        <text x="120" y="480" font-size="18" fill="#6B6A66">полосы в масштабе · считает код, не модель</text>
+      </svg>
+    </div><div class="meta"><span class="tag">C</span><p><b>Две полосы в масштабе.</b> Полоса редакции 8: 243 нашлись, 11 нет. Полоса редакции 9: 244 без замечаний, 5 с двумя владельцами, 1 конфликт. Тонкие доли подсвечиваются, выноски дают числа крупно. Честно показывает, что большинство в порядке.</p></div></div>
+    <div class="v"><div class="frame">
+      <div class="s6d" aria-label="Настоящая строка плиток рисков с экрана «Обзор», над каждой плиткой большое число">
+        <div class="big" style="left:7%;color:#A12A22;animation-delay:.3s">11</div><div class="lbl" style="left:7%;color:#A12A22;animation-delay:.5s">возможных потерь</div>
+        <div class="big" style="left:38%;color:#8A5A0C;animation-delay:1.1s">5</div><div class="lbl" style="left:38%;color:#8A5A0C;animation-delay:1.3s">возможных дублирований</div>
+        <div class="big" style="left:68%;color:#5F3BB0;animation-delay:1.9s">1</div><div class="lbl" style="left:68%;color:#5F3BB0;animation-delay:2.1s">конфликт интересов</div>
+        <img src="data:image/png;base64,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" alt="Плитки «Потеря функций 11», «Дублирование 5», «Конфликт интересов 1» с экрана «Обзор»">
+        <div class="ring" style="left:4.8%;width:29.6%;border-color:#B3362B;animation-delay:.3s"></div>
+        <div class="ring" style="left:35.1%;width:29.3%;border-color:#B8730F;animation-delay:1.1s"></div>
+        <div class="ring" style="left:65.3%;width:29.4%;border-color:#6B4FB3;animation-delay:1.9s"></div>
+        <div class="cap">настоящий экран «Обзор» · числа считает код</div>
+      </div>
+    </div><div class="meta"><span class="tag">D</span><p><b>Настоящий экран.</b> Та самая строка плиток из «Обзора», над каждой плиткой по очереди вырастает большое число. Никакой метафоры, только продукт.</p></div></div>
+  </div>
+</section>
+
+<!-- ============ 8 · Конфликт ============ -->
+<section>
+  <div class="sh"><span class="no">Слайд 8</span><h2>Конфликт интересов и дублирование</h2></div>
+  <p class="fb">Ваше замечание: оба прежних варианта неверны. Три новых, от самого бытового к самому точному.</p>
+  <div class="row">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Человек пишет проверку, затем сам ставит на неё оценку «отлично»; появляется предупреждение">
+        <g transform="translate(290,470)"><use href="#g-person" fill="#6B4FB3"/></g>
+        <rect x="200" y="440" width="700" height="18" rx="6" fill="#CFCBC0"/><rect x="240" y="458" width="20" height="120" fill="#CFCBC0"/><rect x="840" y="458" width="20" height="120" fill="#CFCBC0"/>
+        <g transform="translate(380,250)"><rect width="340" height="190" rx="8" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><text x="24" y="36" font-size="16" fill="#6B6A66" letter-spacing="2">ПРОВЕРКА · П. 5.3.1</text>
+          <g fill="#4A5872"><rect class="s8c-i1" x="24" y="64" width="150" height="8" rx="4"/><rect class="s8c-i2" x="24" y="86" width="190" height="8" rx="4"/><rect class="s8c-i3" x="24" y="108" width="120" height="8" rx="4"/></g>
+          <g transform="translate(60,70)"><g class="s8c-pen"><path d="M0 0 L 40 -40" stroke="#1F1E1D" stroke-width="8" stroke-linecap="round"/></g></g>
+          <g transform="translate(240,140)"><g class="s8c-grade"><rect x="-80" y="-24" width="160" height="48" rx="8" fill="rgba(239,234,250,.95)" stroke="#6B4FB3" stroke-width="4"/><text y="8" text-anchor="middle" font-size="18" font-weight="800" fill="#5F3BB0" letter-spacing="2">ОТЛИЧНО</text></g></g>
+        </g>
+        <g transform="translate(760,180)"><g class="s8c-pen2"><path d="M0 0 L 50 -50" stroke="#B3362B" stroke-width="8" stroke-linecap="round"/><text x="60" y="-40" font-size="16" fill="#A12A22" font-weight="700">оценка качества · п. 5.5.2</text></g></g>
+        <g transform="translate(1020,120)"><g class="s8-warn"><use href="#g-warn" transform="scale(1.4)"/></g></g>
+        <g transform="translate(1000,220)"><text font-size="26" font-weight="700" fill="#5F3BB0">ДККМ</text><text y="40" font-size="20" fill="#1F1E1D">проводит проверки · п. 5.3.1</text><text y="70" font-size="20" fill="#1F1E1D">и сам оценивает их качество · п. 5.5.2</text><text y="120" font-size="18" fill="#6B6A66">редакция 9 · подтверждено по двум пунктам</text></g>
+        <text x="560" y="600" text-anchor="middle" font-size="18" fill="#6B6A66">сам пишет работу, сам ставит оценку</text>
+      </svg>
+    </div><div class="meta"><span class="tag">C</span><p><b>Сам себе экзаменатор.</b> Фигура пишет проверку, затем красной ручкой ставит на неё «отлично». Самая бытовая метафора: проверяющий и оценивающий один и тот же.</p></div></div>
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Дверь кабинета ДККМ; на неё по очереди вешают две таблички: проводит проверки, контролирует качество проверок; появляется предупреждение">
+        <rect x="560" y="60" width="300" height="540" rx="12" fill="#4A5872"/><rect x="590" y="90" width="240" height="480" rx="8" fill="#5A6886"/><circle cx="810" cy="340" r="9" fill="#F5F4EF"/>
+        <rect x="640" y="110" width="140" height="40" rx="6" fill="#F5F4EF"/><text x="710" y="137" text-anchor="middle" font-size="20" font-weight="700" fill="#1F1E1D">ДККМ</text>
+        <g transform="translate(610,200)"><g class="s8d-1"><rect width="200" height="80" rx="8" fill="#EFEAFA" stroke="#6B4FB3" stroke-width="3"/><text x="100" y="34" text-anchor="middle" font-size="16" font-weight="700" fill="#5F3BB0">проводит проверки</text><text x="100" y="60" text-anchor="middle" font-size="14" fill="#5F3BB0">п. 5.3.1</text></g></g>
+        <g transform="translate(610,310)"><g class="s8d-2"><rect width="200" height="80" rx="8" fill="#EFEAFA" stroke="#6B4FB3" stroke-width="3"/><text x="100" y="34" text-anchor="middle" font-size="16" font-weight="700" fill="#5F3BB0">оценивает проверки</text><text x="100" y="60" text-anchor="middle" font-size="14" fill="#5F3BB0">п. 5.5.2</text></g></g>
+        <g transform="translate(710,470)"><g class="s8d-w"><use href="#g-warn" transform="scale(1.1)"/></g></g>
+        <g transform="translate(120,200)"><text font-size="24" font-weight="700" fill="#1F1E1D">одна дверь,</text><text y="34" font-size="24" font-weight="700" fill="#1F1E1D">две таблички</text><text y="90" font-size="18" fill="#6B6A66">тот, кто делает работу,</text><text y="116" font-size="18" fill="#6B6A66">не должен сам её оценивать</text></g>
+        <g transform="translate(960,200)"><text font-size="20" fill="#1F1E1D">Потенциальный конфликт интересов</text><text y="34" font-size="18" fill="#6B6A66">редакция 9 · ДККМ</text><text y="90" font-size="18" fill="#6B6A66">обе цитаты проверены</text><text y="116" font-size="18" fill="#6B6A66">по тексту документа</text></g>
+      </svg>
+    </div><div class="meta"><span class="tag">D</span><p><b>Две таблички на одной двери.</b> На дверь ДККМ вешают табличку «проводит проверки», потом «оценивает проверки». Одной двери две такие таблички не положены, появляется предупреждение.</p></div></div>
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" class="s8e" aria-label="Схема с настоящими подразделениями: ДККМ проводит проверки и одновременно оценивает их качество, стрелка возвращается к нему; ДНМ и ДККМ посылают одинаковый запрос Руководителям Общества">
+        <g font-size="20" font-weight="700" fill="#1F1E1D">
+          <g transform="translate(640,40)"><rect width="384" height="70" rx="10" fill="#1F1E1D"/><text x="192" y="43" text-anchor="middle" fill="#F5F4EF">Руководители Общества</text></g>
+          <g transform="translate(300,300)"><rect width="260" height="70" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><text x="130" y="43" text-anchor="middle">ДНМ</text></g>
+          <g transform="translate(1100,300)"><rect width="260" height="70" rx="10" fill="#EFEAFA" stroke="#6B4FB3" stroke-width="3"/><text x="130" y="43" text-anchor="middle" fill="#5F3BB0">ДККМ</text></g>
+          <g transform="translate(1100,520)"><rect width="260" height="70" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><text x="130" y="43" text-anchor="middle">проверки аудита</text></g>
+        </g>
+        <path class="s8e-1" d="M430 300 C 430 200, 700 150, 760 110" stroke="#B8730F" stroke-width="6"/>
+        <path class="s8e-2" d="M1230 300 C 1230 200, 960 150, 900 110" stroke="#B8730F" stroke-width="6"/>
+        <g class="s8e-t"><rect x="470" y="150" width="250" height="36" rx="8" fill="#FBF0DC"/><text x="595" y="174" text-anchor="middle" font-size="15" font-weight="700" fill="#8A5A0C">запрашивает информацию · 5.4.3</text><rect x="950" y="150" width="250" height="36" rx="8" fill="#FBF0DC"/><text x="1075" y="174" text-anchor="middle" font-size="15" font-weight="700" fill="#8A5A0C">запрашивает информацию · 5.5.8</text><text x="832" y="250" text-anchor="middle" font-size="18" font-weight="700" fill="#8A5A0C">одинаковая обязанность у двух подразделений</text></g>
+        <path class="s8e-3" d="M1230 370 L 1230 520" stroke="#6B4FB3" stroke-width="6"/>
+        <path class="s8e-4" d="M1360 555 C 1480 555, 1480 335, 1360 335" stroke="#6B4FB3" stroke-width="6"/>
+        <g class="s8e-t"><text x="1250" y="450" font-size="15" font-weight="700" fill="#5F3BB0">проводит · 5.3.1</text><text x="1470" y="450" font-size="15" font-weight="700" fill="#5F3BB0" text-anchor="start">оценивает</text><text x="1470" y="470" font-size="15" font-weight="700" fill="#5F3BB0">качество · 5.5.2</text><g transform="translate(1040,560)"><use href="#g-warn" transform="scale(.9)"/></g></g>
+        <g transform="translate(120,420)"><text font-size="18" fill="#6B6A66">слева янтарное — дублирование</text><text y="28" font-size="18" fill="#6B6A66">справа фиолетовое — конфликт интересов</text><text y="70" font-size="18" fill="#6B6A66">всё из редакции 9, пункты настоящие</text></g>
+      </svg>
+    </div><div class="meta"><span class="tag">E</span><p><b>Схема с настоящими подразделениями.</b> ДНМ и ДККМ рисуют одинаковую стрелку «запрашивает информацию» к Руководителям Общества, это дублирование. От ДККМ стрелка вниз к проверкам и петля обратно «оценивает качество», это конфликт. Самый точный вариант, но его надо объяснять голосом.</p></div></div>
+  </div>
+</section>
+
+<!-- ============ 9 · Закон ============ -->
+<section>
+  <div class="sh"><span class="no">Слайд 9</span><h2>Закон: нормы только из действующих актов</h2></div>
+  <p class="fb">Ваше замечание: окно выдачи подходит, но показать разные книги, карточка проходит все и получает одобрение.</p>
+  <div class="row">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Карточка с функцией проходит мимо трёх разных книг законов, каждая ставит отметку, у закона об акционерных обществах находится статья 61, в конце печать">
+        <text x="832" y="60" text-anchor="middle" font-size="22" font-weight="700" fill="#0F5C5A">adilet.zan.kz · 477 норм · только действующие акты</text>
+        <rect x="100" y="470" width="1460" height="16" rx="8" fill="#CFCBC0"/>
+        <g font-size="17" font-weight="700" fill="#F5F4EF">
+          <g transform="translate(360,250)"><rect width="130" height="220" rx="6" fill="#4A5872"/><text transform="translate(78,206) rotate(-90)">О противодействии коррупции</text><rect x="20" y="-30" width="90" height="24" rx="6" fill="#E4F2E8"/><text x="65" y="-13" text-anchor="middle" font-size="14" fill="#256840">в силе</text></g>
+          <g transform="translate(760,230)"><rect width="130" height="240" rx="6" fill="#1F1E1D"/><text transform="translate(78,226) rotate(-90)">О Фонде нац. благосостояния</text><rect x="20" y="-30" width="90" height="24" rx="6" fill="#E4F2E8"/><text x="65" y="-13" text-anchor="middle" font-size="14" fill="#256840">в силе</text></g>
+          <g transform="translate(1160,210)"><rect width="130" height="260" rx="6" fill="#0F5C5A"/><text transform="translate(78,246) rotate(-90)">Об акционерных обществах</text><rect x="20" y="-30" width="90" height="24" rx="6" fill="#E4F2E8"/><text x="65" y="-13" text-anchor="middle" font-size="14" fill="#256840">в силе</text></g>
+        </g>
+        <g transform="translate(425,170)"><g class="s9a-k1"><use href="#g-check" transform="scale(1.1)"/><text x="30" y="7" font-size="15" fill="#6B6A66">не про это</text></g></g>
+        <g transform="translate(825,150)"><g class="s9a-k2"><use href="#g-check" transform="scale(1.1)"/><text x="30" y="7" font-size="15" fill="#6B6A66">не про это</text></g></g>
+        <g transform="translate(1225,130)"><g class="s9a-k3"><use href="#g-check" transform="scale(1.1)"/><text x="30" y="7" font-size="15" font-weight="700" fill="#0F5C5A">статья 61 · основание</text></g></g>
+        <g class="s9a-glow"><rect x="1150" y="200" width="150" height="280" rx="10" fill="none" stroke="#FF8A00" stroke-width="5"/></g>
+        <g class="s9a-card"><g transform="translate(-130,-60)"><rect width="260" height="120" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="120" rx="4" fill="#0F5C5A"/><text x="24" y="32" font-size="14" font-weight="700" fill="#0F5C5A">ПОСЛЕ · П. 1.5</text><text x="24" y="62" class="serif" font-size="16" fill="#1F1E1D">Главный аудитор подчиняется</text><text x="24" y="84" class="serif" font-size="16" fill="#1F1E1D">Совету директоров</text></g><g transform="translate(60,40)"><g class="s9a-stamp"><rect x="-90" y="-22" width="180" height="44" rx="8" fill="rgba(228,242,232,.95)" stroke="#2F7D4F" stroke-width="4"/><text y="7" text-anchor="middle" font-size="14" font-weight="800" fill="#2F7D4F" letter-spacing="1">ЕСТЬ ОСНОВАНИЕ</text></g></g></g>
+      </svg>
+    </div><div class="meta"><span class="tag">A</span><p><b>Проход мимо книг.</b> Карточка с пунктом 1.5 идёт вдоль трёх разных книг; у первых двух отметка «не про это», у закона «Об АО» оранжевая рамка и «статья 61 · основание», в конце печать «есть основание».</p></div></div>
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Карточка подходит к окну выдачи adilet.zan.kz, на стойке три книги открываются по очереди, каждая добавляет отметку, в конце печать в силе">
+        <g transform="translate(700,20)"><rect width="860" height="440" rx="16" fill="#0F5C5A"/><text x="430" y="40" text-anchor="middle" font-size="24" font-weight="700" fill="#F5F4EF" letter-spacing="3">adilet.zan.kz</text><text x="430" y="68" text-anchor="middle" font-size="16" fill="#BCD6D3">реестр нормативных актов · выдаёт только действующие</text><rect x="40" y="84" width="780" height="300" rx="10" fill="#F5F4EF"/><rect x="40" y="384" width="780" height="26" rx="6" fill="#0B3F3E"/>
+          <g transform="translate(90,110)"><rect width="200" height="220" rx="6" fill="#4A5872"/><g class="s9b-f1"><rect width="200" height="220" rx="6" fill="#FFFFFF" stroke="#CFCBC0" stroke-width="2"/><g fill="#E6E3DA" transform="translate(20,30)"><use href="#g-lines"/></g></g><text x="100" y="250" text-anchor="middle" font-size="14" font-weight="700" fill="#1F1E1D">О противодействии коррупции</text><g class="s9b-k1" transform="translate(180,-10)"><use href="#g-check" transform="scale(.9)"/></g></g>
+          <g transform="translate(330,110)"><rect width="200" height="220" rx="6" fill="#1F1E1D"/><g class="s9b-f2"><rect width="200" height="220" rx="6" fill="#FFFFFF" stroke="#CFCBC0" stroke-width="2"/><g fill="#E6E3DA" transform="translate(20,30)"><use href="#g-lines"/></g></g><text x="100" y="250" text-anchor="middle" font-size="14" font-weight="700" fill="#1F1E1D">О Фонде нац. благосостояния</text><g class="s9b-k2" transform="translate(180,-10)"><use href="#g-check" transform="scale(.9)"/></g></g>
+          <g transform="translate(570,110)"><rect width="200" height="220" rx="6" fill="#0F5C5A"/><g class="s9b-f3"><rect width="200" height="220" rx="6" fill="#FFFFFF" stroke="#CFCBC0" stroke-width="2"/><g fill="#E6E3DA" transform="translate(20,30)"><use href="#g-lines"/></g><rect x="20" y="120" width="150" height="40" rx="6" fill="#FFF1C2"/><text x="30" y="145" font-size="13" font-weight="700" fill="#1F1E1D">ст. 61 · п. 3</text></g><text x="100" y="250" text-anchor="middle" font-size="14" font-weight="700" fill="#1F1E1D">Об акционерных обществах</text><g class="s9b-k3" transform="translate(180,-10)"><use href="#g-check" transform="scale(.9)"/></g></g>
+        </g>
+        <g transform="translate(80,478)"><g class="s9b-in"><rect width="420" height="150" rx="12" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="10" height="150" rx="5" fill="#0F5C5A"/><text x="30" y="36" font-size="15" font-weight="700" fill="#0F5C5A">ПОСЛЕ · П. 1.5</text><text x="30" y="70" class="serif" font-size="18" fill="#1F1E1D">Главный аудитор подчиняется</text><text x="30" y="96" class="serif" font-size="18" fill="#1F1E1D">Совету директоров Общества</text><g transform="translate(320,115)"><g class="s9b-stamp"><rect x="-80" y="-22" width="160" height="44" rx="8" fill="rgba(228,242,232,.95)" stroke="#2F7D4F" stroke-width="4"/><text y="7" text-anchor="middle" font-size="14" font-weight="800" fill="#2F7D4F" letter-spacing="1">В СИЛЕ · СТ. 61</text></g></g></g></g>
+        <g transform="translate(80,100)"><text font-size="24" font-weight="700" fill="#1F1E1D">окно выдачи</text><text y="40" font-size="18" fill="#6B6A66">карточку сверяют с каждой книгой,</text><text y="66" font-size="18" fill="#6B6A66">ни одна не берётся по памяти</text></g>
+      </svg>
+    </div><div class="meta"><span class="tag">B</span><p><b>Окно выдачи с тремя книгами.</b> Карточка подходит к стойке adilet.zan.kz, на стойке три разные книги открываются по очереди и ставят отметки, у «Об АО» подсвечена статья 61, карточка получает печать «в силе · ст. 61».</p></div></div>
+  </div>
+</section>
+
+<!-- ============ 13 · Финал ============ -->
+<section>
+  <div class="sh"><span class="no">Слайд 13</span><h2>Финал</h2></div>
+  <p class="fb">Ваше замечание: линия OrgScope, и после неё карточки получают галочку.</p>
+  <div class="row">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Карточки идут слева направо через вертикальную линию OrgScope; после линии у каждой появляется галочка">
+        <rect width="1664" height="640" fill="#0F5C5A"/>
+        <text x="832" y="130" text-anchor="middle" class="serif" font-size="66" font-weight="600" fill="#F5F4EF">Реорганизуйте уверенно.</text>
+        <text x="832" y="190" text-anchor="middle" font-size="28" fill="#BCD6D3">Ни одна функция не потеряется незамеченной.</text>
+        <defs><clipPath id="s13clipA"><rect x="60" y="300" width="1544" height="200"/></clipPath></defs>
+        <rect x="826" y="280" width="12" height="240" rx="6" fill="#F5F4EF" class="s13-scan"/><text x="832" y="560" text-anchor="middle" font-size="20" font-weight="700" fill="#BCD6D3" letter-spacing="5">ORGSCOPE</text>
+        <g clip-path="url(#s13clipA)">
+          <g transform="translate(90,400)"><g class="s13-c"><use href="#g-card" fill="#F5F4EF" transform="scale(1.5)"/><g transform="translate(44,-28)"><g class="s13-k"><use href="#g-check"/></g></g></g></g>
+          <g transform="translate(90,400)"><g class="s13-c s13-d1"><use href="#g-card" fill="#F5F4EF" transform="scale(1.5)"/><g transform="translate(44,-28)"><g class="s13-k s13-d1"><use href="#g-check"/></g></g></g></g>
+          <g transform="translate(90,400)"><g class="s13-c s13-d2"><use href="#g-card" fill="#F5F4EF" transform="scale(1.5)"/><g transform="translate(44,-28)"><g class="s13-k s13-d2"><use href="#g-check"/></g></g></g></g>
+          <g transform="translate(90,400)"><g class="s13-c s13-d3"><use href="#g-card" fill="#F5F4EF" transform="scale(1.5)"/><g transform="translate(44,-28)"><g class="s13-k s13-d3"><use href="#g-check"/></g></g></g></g>
+          <g transform="translate(90,400)"><g class="s13-c s13-d4"><use href="#g-card" fill="#F5F4EF" transform="scale(1.5)"/><g transform="translate(44,-28)"><g class="s13-k s13-d4"><use href="#g-check"/></g></g></g></g>
+        </g>
+        <text x="832" y="610" text-anchor="middle" font-size="18" fill="#BCD6D3">Решение рекомендательное. Последнее слово — за человеком.</text>
+      </svg>
+    </div><div class="meta"><span class="tag">A</span><p><b>Линия OrgScope.</b> Карточки идут слева направо, в середине светлая линия с подписью ORGSCOPE, после неё у каждой карточки появляется галочка.</p></div></div>
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Карточки проходят сквозь кольцо со знаком OrgScope и выходят с галочкой">
+        <rect width="1664" height="640" fill="#0F5C5A"/>
+        <text x="832" y="110" text-anchor="middle" class="serif" font-size="66" font-weight="600" fill="#F5F4EF">Реорганизуйте уверенно.</text>
+        <text x="832" y="170" text-anchor="middle" font-size="28" fill="#BCD6D3">Ни одна функция не потеряется незамеченной.</text>
+        <defs><clipPath id="s13clipB"><rect x="60" y="300" width="1544" height="200"/></clipPath></defs>
+        <g clip-path="url(#s13clipB)">
+          <g transform="translate(90,400)"><g class="s13-c"><use href="#g-card" fill="#F5F4EF" transform="scale(1.5)"/><g transform="translate(44,-28)"><g class="s13-k"><use href="#g-check"/></g></g></g></g>
+          <g transform="translate(90,400)"><g class="s13-c s13-d1"><use href="#g-card" fill="#F5F4EF" transform="scale(1.5)"/><g transform="translate(44,-28)"><g class="s13-k s13-d1"><use href="#g-check"/></g></g></g></g>
+          <g transform="translate(90,400)"><g class="s13-c s13-d2"><use href="#g-card" fill="#F5F4EF" transform="scale(1.5)"/><g transform="translate(44,-28)"><g class="s13-k s13-d2"><use href="#g-check"/></g></g></g></g>
+          <g transform="translate(90,400)"><g class="s13-c s13-d3"><use href="#g-card" fill="#F5F4EF" transform="scale(1.5)"/><g transform="translate(44,-28)"><g class="s13-k s13-d3"><use href="#g-check"/></g></g></g></g>
+          <g transform="translate(90,400)"><g class="s13-c s13-d4"><use href="#g-card" fill="#F5F4EF" transform="scale(1.5)"/><g transform="translate(44,-28)"><g class="s13-k s13-d4"><use href="#g-check"/></g></g></g></g>
+        </g>
+        <g transform="translate(832,400)"><circle r="110" fill="none" stroke="#F5F4EF" stroke-width="10"/><circle r="110" fill="#0F5C5A" opacity=".0"/><g fill="none" stroke="#F5F4EF" stroke-width="6" stroke-linecap="round" opacity=".9"><path d="M-60 -24 c 26 -13, 94 -13, 120 0"/><path d="M-70 0 c 34 -13, 106 -13, 140 0"/><path d="M-60 24 c 26 -13, 94 -13, 120 0"/></g><circle cx="40" cy="-44" r="12" fill="#FF8A00" stroke="#F5F4EF" stroke-width="5"/></g>
+        <text x="832" y="610" text-anchor="middle" font-size="18" fill="#BCD6D3">Решение рекомендательное. Последнее слово — за человеком.</text>
+      </svg>
+    </div><div class="meta"><span class="tag">B</span><p><b>Сквозь знак.</b> То же движение, но вместо линии карточки проходят сквозь кольцо со знаком OrgScope и выходят с галочкой.</p></div></div>
+  </div>
+</section>

@@ -1,0 +1,430 @@
+<title>OrgScope Artifact Variants</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a review gallery; one section per slide, two animated variants side by side, each in a 1664×640 frame. */
+:root{
+  --page:#F5F4EF;--panel:#FFFFFF;--line:#E3E0D8;--chip:#EFEDE7;--ink:#1F1E1D;--ink-2:#4F4E4A;--muted:#6B6A66;
+  --accent:#0F5C5A;--accent-soft:#BCD6D3;--orange:#FF8A00;--mark:#FFF1C2;
+  --loss:#B3362B;--dup:#B8730F;--conf:#6B4FB3;--ok:#2F7D4F;--reorg:#0E8FA8;--kept:#4A5872;
+  --display:'Lora',Georgia,serif;--sans:'Golos Text','Segoe UI',Arial,sans-serif;color-scheme:light;
+}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--sans);padding-block:32px;padding-inline:max(16px,4vw)}
+h1{font-family:var(--display);font-size:clamp(28px,3.4vw,44px);margin:0 0 8px;text-wrap:balance}
+.lead{color:var(--ink-2);font-size:18px;margin:0 0 36px;max-width:70ch}
+section{margin:0 0 56px}
+.sh{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.sh .no{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.sh h2{font-family:var(--display);font-size:clamp(22px,2.4vw,30px);margin:0}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:20px}
+.v{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.v .frame{aspect-ratio:1664/640;max-width:100%;background:var(--page);border-bottom:1px solid var(--line)}
+.v svg{width:100%;height:100%;display:block}
+.v .meta{padding:14px 18px;display:flex;gap:14px;align-items:flex-start}
+.v .tag{flex:none;width:34px;height:34px;border-radius:50%;background:var(--ink);color:#F5F4EF;display:grid;place-items:center;font-weight:700}
+.v .meta p{margin:0;font-size:15px;line-height:1.45;color:var(--ink-2)}
+.v .meta b{color:var(--ink)}
+text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
+.serif{font-family:'Lora',Georgia,serif}
+
+/* shared motion */
+@keyframes fly{0%{offset-distance:0%;opacity:0}5%{opacity:1}92%{opacity:1}100%{offset-distance:100%;opacity:0}}
+@keyframes drop{0%{offset-distance:0%;opacity:0}5%{opacity:1}55%{offset-distance:55%}100%{offset-distance:100%;opacity:1}}
+@keyframes popin{0%{opacity:0;transform:scale(.4)}60%{opacity:1;transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
+@keyframes rise{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes blink{0%,100%{opacity:.2}50%{opacity:1}}
+@keyframes slideL{0%{transform:translateX(0)}100%{transform:translateX(-880px)}}
+@keyframes sweep{0%{transform:translateX(0)}100%{transform:translateX(640px)}}
+@keyframes tilt{0%,20%{transform:rotate(0)}60%,100%{transform:rotate(-11deg)}}
+@keyframes tiltBack{0%,20%{transform:rotate(0)}60%,100%{transform:rotate(11deg)}}
+@keyframes count{to{--n:1}}
+@keyframes open{0%,25%{transform:scaleX(1)}45%,100%{transform:scaleX(-1)}}
+@keyframes thread{0%,45%{stroke-dashoffset:1200;opacity:0}50%{opacity:1}75%,100%{stroke-dashoffset:0;opacity:1}}
+@keyframes stampIn{0%,74%{opacity:0;transform:rotate(-8deg) scale(.4)}80%{opacity:1;transform:rotate(-8deg) scale(1.15)}85%,100%{opacity:1;transform:rotate(-8deg) scale(1)}}
+@keyframes doorOpen{0%,15%{transform:scaleX(1)}35%,100%{transform:scaleX(.08)}}
+@keyframes walk{0%{transform:translateX(0)}100%{transform:translateX(230px)}}
+@keyframes fade{0%{opacity:0}100%{opacity:1}}
+@keyframes loopCards{0%{transform:translateX(0)}100%{transform:translateX(-440px)}}
+@keyframes converge{0%{transform:translate(0,0)}100%{transform:translate(var(--dx),var(--dy))}}
+@keyframes ribbon{0%{stroke-dashoffset:1600}100%{stroke-dashoffset:0}}
+@keyframes mergeBox{0%,30%{transform:translate(0,0);opacity:1}70%,100%{transform:translate(var(--dx),var(--dy));opacity:1}}
+@keyframes hatOn{0%,30%{opacity:0;transform:translateY(-40px)}50%,100%{opacity:1;transform:translateY(0)}}
+@keyframes loopArrow{0%{stroke-dashoffset:600}100%{stroke-dashoffset:0}}
+@keyframes funnel{0%{transform:translateY(-40px);opacity:0}30%{opacity:1}100%{transform:translateY(430px);opacity:0}}
+@keyframes bridge{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+.rep{animation-iteration-count:infinite}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+
+<h1>Варианты артефактов для слайдов</h1>
+<p class="lead">Для каждого слайда по два варианта. Заголовки слайдов не меняются; артефакт должен работать без текста. Отметьте для каждого слайда: A, B, оба на доработку или ни один. Числа и названия подразделений настоящие, из контрольного анализа.</p>
+
+<!-- hidden sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="sp-card" viewBox="-38 -24 76 48"><rect x="-38" y="-24" width="76" height="48" rx="7"/><rect x="-26" y="-10" width="52" height="5" rx="2.5" fill="#F5F4EF" opacity=".9"/><rect x="-26" y="2" width="36" height="5" rx="2.5" fill="#F5F4EF" opacity=".9"/></symbol>
+    <g id="g-card"><rect x="-38" y="-24" width="76" height="48" rx="7"/><rect x="-26" y="-10" width="52" height="5" rx="2.5" fill="#F5F4EF" opacity=".9"/><rect x="-26" y="2" width="36" height="5" rx="2.5" fill="#F5F4EF" opacity=".9"/></g>
+    <g id="g-person"><circle cx="0" cy="-92" r="30"/><path d="M-44 70 C -44 -20, 44 -20, 44 70 Z"/></g>
+    <g id="g-sheet"><rect x="0" y="0" width="220" height="290" rx="8" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><g fill="#E6E3DA"><rect x="22" y="30" width="176" height="9" rx="4"/><rect x="22" y="54" width="140" height="9" rx="4"/><rect x="22" y="78" width="160" height="9" rx="4"/><rect x="22" y="102" width="120" height="9" rx="4"/><rect x="22" y="126" width="170" height="9" rx="4"/><rect x="22" y="150" width="150" height="9" rx="4"/><rect x="22" y="174" width="176" height="9" rx="4"/><rect x="22" y="198" width="110" height="9" rx="4"/><rect x="22" y="222" width="160" height="9" rx="4"/><rect x="22" y="246" width="130" height="9" rx="4"/></g></g>
+    <g id="g-check"><circle r="16" fill="#2F7D4F"/><path d="M-8 0 L -2 6 L 9 -7" stroke="#F5F4EF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="g-stamp"><rect x="-90" y="-24" width="180" height="48" rx="8" fill="rgba(228,242,232,.92)" stroke="#2F7D4F" stroke-width="4"/><text y="8" text-anchor="middle" font-size="18" font-weight="800" fill="#2F7D4F" letter-spacing="2">ПРОВЕРЕНО</text></g>
+  </defs>
+</svg>
+
+<!-- =============== 1 · Титул =============== -->
+<section>
+  <div class="sh"><span class="no">Слайд 1</span><h2>Титул</h2></div>
+  <div class="row">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Две стопки страниц сходятся в один лист с печатью">
+        <style>.t1a-l{animation:converge 3s cubic-bezier(.2,.8,.2,1) 0s infinite alternate;--dx:150px;--dy:0}.t1a-r{animation:converge 3s cubic-bezier(.2,.8,.2,1) 0s infinite alternate;--dx:-150px;--dy:0}.t1a-s{animation:popin 3s linear 0s infinite alternate}</style>
+        <rect width="1664" height="640" fill="#0F5C5A"/>
+        <g class="t1a-l"><g transform="translate(200,160)"><use href="#g-sheet" transform="translate(40,30)" opacity=".5"/><use href="#g-sheet" transform="translate(20,15)" opacity=".75"/><use href="#g-sheet"/></g><text x="310" y="500" text-anchor="middle" font-size="26" font-weight="700" fill="#BCD6D3" letter-spacing="4">БЫЛО</text></g>
+        <g class="t1a-r"><g transform="translate(1240,160)"><use href="#g-sheet" transform="translate(40,30)" opacity=".5"/><use href="#g-sheet" transform="translate(20,15)" opacity=".75"/><use href="#g-sheet"/></g><text x="1350" y="500" text-anchor="middle" font-size="26" font-weight="700" fill="#BCD6D3" letter-spacing="4">СТАЛО</text></g>
+        <g class="t1a-s" style="transform-origin:832px 300px;transform-box:view-box"><rect x="722" y="150" width="220" height="300" rx="8" fill="#F5F4EF"/><g fill="#CFCBC0"><rect x="744" y="186" width="176" height="9" rx="4"/><rect x="744" y="212" width="130" height="9" rx="4"/><rect x="744" y="238" width="160" height="9" rx="4"/><rect x="744" y="264" width="110" height="9" rx="4"/></g><g transform="translate(832,380) rotate(-8)"><use href="#g-stamp"/></g></g>
+        <text x="832" y="580" text-anchor="middle" class="serif" font-size="54" font-weight="600" fill="#F5F4EF">Реорганизация без потерянных функций.</text>
+      </svg>
+    </div><div class="meta"><span class="tag">A</span><p><b>Две стопки сходятся в один лист с печатью.</b> Было два документа, стало одно проверенное заключение. Спокойная анимация на бирюзовом.</p></div></div>
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Знак OrgScope над планом переезда: карточки идут из одного здания в другое по мосту из проверенных карточек">
+        <style>.t1b-c{offset-rotate:0deg;animation:fly 5s linear infinite}.t1b-1{offset-path:path('M560 420 L 1100 420')}.t1b-2{offset-path:path('M560 420 L 1100 420');animation-delay:1.2s}.t1b-3{offset-path:path('M560 420 L 1100 420');animation-delay:2.4s}.t1b-4{offset-path:path('M560 420 L 1100 420');animation-delay:3.6s}</style>
+        <rect width="1664" height="640" fill="#0F5C5A"/>
+        <g transform="translate(832,150)"><circle r="70" fill="#F5F4EF"/><g fill="none" stroke="#0F5C5A" stroke-width="7" stroke-linecap="round"><path d="M-50 -22 c 22 -11, 78 -11, 100 0"/><path d="M-58 0 c 28 -11, 88 -11, 116 0"/><path d="M-50 22 c 22 -11, 78 -11, 100 0"/></g><circle cx="32" cy="-34" r="12" fill="#FF8A00" stroke="#F5F4EF" stroke-width="5"/></g>
+        <text x="832" y="290" text-anchor="middle" font-size="34" font-weight="700" fill="#F5F4EF" letter-spacing="8">ORGSCOPE</text>
+        <rect x="380" y="340" width="180" height="200" rx="10" fill="#1F1E1D"/><rect x="1100" y="340" width="180" height="200" rx="10" fill="#BCD6D3"/>
+        <rect x="560" y="440" width="540" height="12" rx="6" fill="#F5F4EF" opacity=".5"/>
+        <g fill="#F5F4EF"><use href="#g-card" class="t1b-c t1b-1"/><use href="#g-card" class="t1b-c t1b-2"/><use href="#g-card" class="t1b-c t1b-3"/><use href="#g-card" class="t1b-c t1b-4"/></g>
+        <g transform="translate(830,470)"><use href="#g-check" transform="scale(1.4)"/></g>
+        <text x="832" y="600" text-anchor="middle" class="serif" font-size="44" font-weight="600" fill="#F5F4EF">Ни одна обязанность не потеряется при переезде.</text>
+      </svg>
+    </div><div class="meta"><span class="tag">B</span><p><b>Знак и мост между зданиями.</b> Карточки идут из старого здания в новое по проверенному мосту. Сразу задаёт метафору переезда на всю презентацию.</p></div></div>
+  </div>
+</section>
+
+<!-- =============== 3 · Решение =============== -->
+<section>
+  <div class="sh"><span class="no">Слайд 3</span><h2>В чём заключается решение</h2></div>
+  <div class="row">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Два документа входят в машину, на выходе список с галочками и три цветных флажка">
+        <style>.s3a-in1{animation:converge 4s linear infinite;--dx:420px;--dy:0}.s3a-in2{animation:converge 4s linear .4s infinite;--dx:420px;--dy:0}.s3a-out{animation:rise 4s linear 1.8s infinite}.s3a-f1{animation:popin 4s linear 2.4s infinite;transform-origin:center;transform-box:fill-box}.s3a-f2{animation:popin 4s linear 2.7s infinite;transform-origin:center;transform-box:fill-box}.s3a-f3{animation:popin 4s linear 3s infinite;transform-origin:center;transform-box:fill-box}.s3a-led{animation:blink 1s linear infinite}</style>
+        <rect x="0" y="470" width="1664" height="24" rx="12" fill="#CFCBC0"/>
+        <g transform="translate(120,200)"><g class="s3a-in1"><use href="#g-sheet" transform="scale(.85)"/><text x="94" y="275" text-anchor="middle" font-size="18" font-weight="700" fill="#4F4E4A">ДО</text></g></g>
+        <g transform="translate(300,200)"><g class="s3a-in2"><use href="#g-sheet" transform="scale(.85)"/><text x="94" y="275" text-anchor="middle" font-size="18" font-weight="700" fill="#4F4E4A">ПОСЛЕ</text></g></g>
+        <g transform="translate(700,110)"><rect width="380" height="380" rx="20" fill="#0F5C5A"/><rect x="-22" y="150" width="44" height="150" rx="8" fill="#1F1E1D"/><rect x="358" y="150" width="44" height="150" rx="8" fill="#1F1E1D"/><circle cx="50" cy="50" r="10" fill="#FF8A00" class="s3a-led"/><text x="190" y="70" text-anchor="middle" font-size="28" font-weight="700" fill="#F5F4EF" letter-spacing="4">ORGSCOPE</text><text x="190" y="215" text-anchor="middle" font-size="20" fill="#BCD6D3">читает · сопоставляет · проверяет</text></g>
+        <g transform="translate(1180,120)"><g class="s3a-out"><rect width="300" height="360" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><g fill="#E6E3DA"><rect x="60" y="40" width="200" height="10" rx="5"/><rect x="60" y="80" width="160" height="10" rx="5"/><rect x="60" y="120" width="180" height="10" rx="5"/><rect x="60" y="160" width="140" height="10" rx="5"/><rect x="60" y="200" width="190" height="10" rx="5"/><rect x="60" y="240" width="150" height="10" rx="5"/><rect x="60" y="280" width="170" height="10" rx="5"/></g><g transform="translate(36,45)"><use href="#g-check" transform="scale(.7)"/></g><g transform="translate(36,85)"><use href="#g-check" transform="scale(.7)"/></g><g transform="translate(36,165)"><use href="#g-check" transform="scale(.7)"/></g><g transform="translate(36,245)"><use href="#g-check" transform="scale(.7)"/></g><g transform="translate(36,285)"><use href="#g-check" transform="scale(.7)"/></g>
+          <g class="s3a-f1"><rect x="22" y="112" width="28" height="22" rx="4" fill="#B3362B"/></g><g class="s3a-f2"><rect x="22" y="192" width="28" height="22" rx="4" fill="#B8730F"/></g><g class="s3a-f3"><rect x="22" y="312" width="28" height="22" rx="4" fill="#6B4FB3"/><rect x="60" y="320" width="120" height="10" rx="5" fill="#E6E3DA"/></g>
+        </g></g>
+        <text x="1330" y="560" text-anchor="middle" font-size="22" font-weight="600" fill="#1F1E1D">проверенный список: что в порядке, что проверить</text>
+      </svg>
+    </div><div class="meta"><span class="tag">A</span><p><b>Машина.</b> Два документа въезжают, выезжает список: галочки там, где всё в порядке, цветные флажки там, где потеря, дубль или конфликт. Та же машина потом появится на слайде «Потенциал».</p></div></div>
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Сканирующая полоса проходит по двум документам и подсвечивает совпадения зелёным, пропуски красным">
+        <style>.s3b-bar{animation:sweep 4s linear infinite}.s3b-m{animation:fade 4s linear infinite}.s3b-m1{animation-delay:.6s}.s3b-m2{animation-delay:1.2s}.s3b-m3{animation-delay:1.8s}.s3b-m4{animation-delay:2.4s}.s3b-m5{animation-delay:3s}</style>
+        <g transform="translate(200,80)"><rect width="500" height="470" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><text x="24" y="40" font-size="18" fill="#6B6A66" letter-spacing="2">РЕДАКЦИЯ 8 · ДО</text><g fill="#E6E3DA"><rect x="24" y="80" width="420" height="12" rx="6"/><rect x="24" y="150" width="380" height="12" rx="6"/><rect x="24" y="220" width="440" height="12" rx="6"/><rect x="24" y="290" width="300" height="12" rx="6"/><rect x="24" y="360" width="400" height="12" rx="6"/><rect x="24" y="430" width="340" height="12" rx="6"/></g></g>
+        <g transform="translate(960,80)"><rect width="500" height="470" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><text x="24" y="40" font-size="18" fill="#6B6A66" letter-spacing="2">РЕДАКЦИЯ 9 · ПОСЛЕ</text><g fill="#E6E3DA"><rect x="24" y="80" width="420" height="12" rx="6"/><rect x="24" y="150" width="380" height="12" rx="6"/><rect x="24" y="290" width="300" height="12" rx="6"/><rect x="24" y="360" width="400" height="12" rx="6"/><rect x="24" y="430" width="340" height="12" rx="6"/><rect x="24" y="500" width="340" height="12" rx="6" opacity="0"/></g></g>
+        <!-- matches -->
+        <g class="s3b-m s3b-m1"><path d="M700 166 L 960 166" stroke="#2F7D4F" stroke-width="4"/><use href="#g-check" transform="translate(830,166) scale(.8)"/></g>
+        <g class="s3b-m s3b-m2"><path d="M700 236 L 960 236" stroke="#2F7D4F" stroke-width="4"/><use href="#g-check" transform="translate(830,236) scale(.8)"/></g>
+        <g class="s3b-m s3b-m3"><path d="M700 306 L 850 306" stroke="#B3362B" stroke-width="4" stroke-dasharray="10 8"/><circle cx="850" cy="306" r="16" fill="#B3362B"/><path d="M843 299 L 857 313 M857 299 L 843 313" stroke="#F5F4EF" stroke-width="4" stroke-linecap="round"/><rect x="224" y="294" width="320" height="26" rx="6" fill="#FBE7E4" opacity=".8"/></g>
+        <g class="s3b-m s3b-m4"><path d="M700 376 L 960 376" stroke="#2F7D4F" stroke-width="4"/><use href="#g-check" transform="translate(830,376) scale(.8)"/></g>
+        <g class="s3b-m s3b-m5"><path d="M700 446 L 960 446" stroke="#2F7D4F" stroke-width="4"/><use href="#g-check" transform="translate(830,446) scale(.8)"/></g>
+        <g class="s3b-bar"><rect x="190" y="70" width="8" height="490" rx="4" fill="#0F5C5A"/><rect x="950" y="70" width="8" height="490" rx="4" fill="#0F5C5A"/></g>
+        <text x="832" y="610" text-anchor="middle" font-size="22" font-weight="600" fill="#1F1E1D">каждая строка «до» ищет себя в «после»</text>
+      </svg>
+    </div><div class="meta"><span class="tag">B</span><p><b>Сканер.</b> Полоса проходит по обоим документам, строки «до» находят пару в «после» и получают галочку; одна не находит и подсвечивается красным. Ближе к тому, что реально делает код.</p></div></div>
+  </div>
+</section>
+
+<!-- =============== 5 · Структура =============== -->
+<section>
+  <div class="sh"><span class="no">Слайд 5</span><h2>Структура: кто кем стал</h2></div>
+  <div class="row">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Шесть блоков старой структуры переезжают в шесть блоков новой; линии показывают преемственность">
+        <style>.s5a-r{stroke-dasharray:1600;animation:ribbon 3s ease-out .4s infinite alternate}.s5a-n{animation:popin 3s linear 1.6s infinite alternate;transform-origin:center;transform-box:fill-box}</style>
+        <text x="130" y="60" font-size="18" fill="#6B6A66" letter-spacing="3">БЫЛО · 6 ПОДРАЗДЕЛЕНИЙ</text><text x="1150" y="60" font-size="18" fill="#6B6A66" letter-spacing="3">СТАЛО · 6 ПОДРАЗДЕЛЕНИЙ</text>
+        <g font-size="22" font-weight="600" fill="#1F1E1D">
+          <g transform="translate(130,90)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">БВА</text></g>
+          <g transform="translate(130,176)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">Главный аудитор</text></g>
+          <g transform="translate(130,262)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">Департамент мониторинга СВК</text></g>
+          <g transform="translate(130,348)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">ДККМ</text></g>
+          <g transform="translate(130,434)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#0E8FA8"/><text x="28" y="40">Направление внутреннего аудита</text></g>
+          <g transform="translate(130,520)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#0E8FA8"/><text x="28" y="40">Направление мониторинга СВК</text></g>
+          <g transform="translate(1150,90)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">БВА</text></g>
+          <g transform="translate(1150,176)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">Главный аудитор</text></g>
+          <g transform="translate(1150,262)"><g class="s5a-n"><rect width="380" height="64" rx="10" fill="#E4F2E8" stroke="#2F7D4F" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#2F7D4F"/><text x="28" y="40">ДИТААД</text><text x="360" y="40" text-anchor="end" font-size="16" fill="#256840">создано</text></g></g>
+          <g transform="translate(1150,348)"><g class="s5a-n"><rect width="380" height="64" rx="10" fill="#E4F2E8" stroke="#2F7D4F" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#2F7D4F"/><text x="28" y="40">ДОА</text><text x="360" y="40" text-anchor="end" font-size="16" fill="#256840">создано</text></g></g>
+          <g transform="translate(1150,434)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#0E8FA8"/><text x="28" y="40">ДНМ</text></g>
+          <g transform="translate(1150,520)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">ДККМ</text></g>
+        </g>
+        <g fill="none" stroke-width="5" stroke-linecap="round">
+          <path class="s5a-r" d="M510 122 C 830 122, 830 122, 1150 122" stroke="#4A5872" opacity=".5"/>
+          <path class="s5a-r" d="M510 208 C 830 208, 830 208, 1150 208" stroke="#4A5872" opacity=".5"/>
+          <path class="s5a-r" d="M510 294 C 830 294, 830 466, 1150 466" stroke="#4A5872" opacity=".5"/>
+          <path class="s5a-r" d="M510 380 C 830 380, 830 552, 1150 552" stroke="#4A5872" opacity=".5"/>
+          <path class="s5a-r" d="M510 466 C 830 466, 830 294, 1150 294" stroke="#0E8FA8"/>
+          <path class="s5a-r" d="M510 466 C 830 466, 830 380, 1150 380" stroke="#0E8FA8"/>
+          <path class="s5a-r" d="M510 552 C 830 552, 830 466, 1150 466" stroke="#0E8FA8"/>
+        </g>
+        <g font-size="18" font-weight="600"><rect x="700" y="596" width="14" height="14" rx="3" fill="#4A5872"/><text x="722" y="609" fill="#1F1E1D">сохранено</text><rect x="850" y="596" width="14" height="14" rx="3" fill="#0E8FA8"/><text x="872" y="609" fill="#1F1E1D">реорганизовано</text><rect x="1040" y="596" width="14" height="14" rx="3" fill="#2F7D4F"/><text x="1062" y="609" fill="#1F1E1D">создано</text></g>
+      </svg>
+    </div><div class="meta"><span class="tag">A</span><p><b>Линии преемственности.</b> Два столбца блоков, линии рисуются от старых к новым: серые — сохранено, бирюзовые — реорганизовано, зелёные блоки появляются как созданные. Это настоящие шесть подразделений.</p></div></div>
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Блоки старой структуры физически переезжают на свои новые места; один блок распадается на два новых">
+        <style>.s5b-m{animation:mergeBox 4s cubic-bezier(.2,.8,.2,1) infinite alternate}.s5b-new{animation:popin 4s linear 2.2s infinite alternate;transform-origin:center;transform-box:fill-box}</style>
+        <rect x="80" y="70" width="560" height="520" rx="16" fill="none" stroke="#CFCBC0" stroke-width="2" stroke-dasharray="10 10"/><text x="110" y="52" font-size="18" fill="#6B6A66" letter-spacing="3">БЫЛО</text>
+        <rect x="1024" y="70" width="560" height="520" rx="16" fill="none" stroke="#0F5C5A" stroke-width="2"/><text x="1054" y="52" font-size="18" fill="#0F5C5A" letter-spacing="3">СТАЛО</text>
+        <g font-size="22" font-weight="600" fill="#1F1E1D">
+          <g transform="translate(110,100)"><g class="s5b-m" style="--dx:944px;--dy:0px"><rect width="500" height="60" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="60" rx="4" fill="#4A5872"/><text x="28" y="38">БВА</text></g></g>
+          <g transform="translate(110,180)"><g class="s5b-m" style="--dx:944px;--dy:0px"><rect width="500" height="60" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="60" rx="4" fill="#4A5872"/><text x="28" y="38">Главный аудитор</text></g></g>
+          <g transform="translate(110,260)"><g class="s5b-m" style="--dx:944px;--dy:160px"><rect width="500" height="60" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="60" rx="4" fill="#4A5872"/><text x="28" y="38">Департамент мониторинга СВК → ДНМ</text></g></g>
+          <g transform="translate(110,340)"><g class="s5b-m" style="--dx:944px;--dy:160px"><rect width="500" height="60" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="60" rx="4" fill="#4A5872"/><text x="28" y="38">ДККМ</text></g></g>
+          <g transform="translate(110,420)"><g class="s5b-m" style="--dx:944px;--dy:-160px"><rect width="500" height="60" rx="10" fill="#E6F3F6" stroke="#0E8FA8" stroke-width="2"/><rect width="8" height="60" rx="4" fill="#0E8FA8"/><text x="28" y="38">Направление внутреннего аудита</text></g></g>
+          <g transform="translate(110,500)"><g class="s5b-m" style="--dx:944px;--dy:0px"><rect width="500" height="60" rx="10" fill="#E6F3F6" stroke="#0E8FA8" stroke-width="2"/><rect width="8" height="60" rx="4" fill="#0E8FA8"/><text x="28" y="38">Направление мониторинга СВК → ДНМ</text></g></g>
+          <g transform="translate(1054,260)"><g class="s5b-new"><rect width="500" height="60" rx="10" fill="#E4F2E8" stroke="#2F7D4F" stroke-width="2"/><rect width="8" height="60" rx="4" fill="#2F7D4F"/><text x="28" y="38">ДИТААД · создано из направления аудита</text></g></g>
+          <g transform="translate(1054,340)"><g class="s5b-new"><rect width="500" height="60" rx="10" fill="#E4F2E8" stroke="#2F7D4F" stroke-width="2"/><rect width="8" height="60" rx="4" fill="#2F7D4F"/><text x="28" y="38">ДОА · создано из направления аудита</text></g></g>
+        </g>
+      </svg>
+    </div><div class="meta"><span class="tag">B</span><p><b>Переезд блоков.</b> Блоки сами переезжают из левой рамки в правую на свои новые места, а на месте «Направления внутреннего аудита» появляются два новых зелёных. Проще читается, чем линии, но менее точно.</p></div></div>
+  </div>
+</section>
+
+<!-- =============== 6 · Риски =============== -->
+<section>
+  <div class="sh"><span class="no">Слайд 6</span><h2>Риски: 11 · 5 · 1</h2></div>
+  <div class="row">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Три сцены: карточка падает в дыру, две одинаковые карточки стопкой, один человек в двух шапках; под ними числа 11, 5 и 1">
+        <style>.s6a-d{offset-path:path('M0 0 L 0 140');offset-rotate:0deg;animation:drop 2.5s ease-in infinite}.s6a-twin{animation:popin 2.5s linear .8s infinite;transform-origin:center;transform-box:fill-box}.s6a-hat{animation:hatOn 2.5s linear infinite}.s6a-hat2{animation-delay:.5s}</style>
+        <g transform="translate(150,60)"><rect width="420" height="420" rx="20" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="420" height="10" rx="5" fill="#B3362B"/>
+          <rect x="60" y="300" width="300" height="14" rx="7" fill="#E6E3DA"/><path d="M180 300 L 195 340 L 225 340 L 240 300 Z" fill="#1F1E1D"/>
+          <g transform="translate(210,180)"><use href="#g-card" class="s6a-d" fill="#B3362B"/></g>
+          <text x="210" y="400" text-anchor="middle" class="serif" font-size="120" font-weight="600" fill="#A12A22">11</text></g>
+        <g transform="translate(622,60)"><rect width="420" height="420" rx="20" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="420" height="10" rx="5" fill="#B8730F"/>
+          <g transform="translate(190,210)"><use href="#g-card" fill="#B8730F" transform="scale(1.6)"/></g><g transform="translate(240,250)"><g class="s6a-twin"><use href="#g-card" fill="#B8730F" transform="scale(1.6)"/></g></g>
+          <text x="210" y="400" text-anchor="middle" class="serif" font-size="120" font-weight="600" fill="#8A5A0C">5</text></g>
+        <g transform="translate(1094,60)"><rect width="420" height="420" rx="20" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="420" height="10" rx="5" fill="#6B4FB3"/>
+          <g transform="translate(210,270)"><use href="#g-person" fill="#6B4FB3" transform="scale(1.1)"/>
+            <g class="s6a-hat" opacity="0"><rect x="-70" y="-150" width="140" height="28" rx="8" fill="#1F1E1D"/><text y="-130" text-anchor="middle" font-size="16" font-weight="700" fill="#F5F4EF">ДЕЛАЕТ</text></g>
+            <g class="s6a-hat s6a-hat2" opacity="0"><rect x="-70" y="-186" width="140" height="28" rx="8" fill="#6B4FB3"/><text y="-166" text-anchor="middle" font-size="16" font-weight="700" fill="#F5F4EF">ПРОВЕРЯЕТ</text></g></g>
+          <text x="210" y="400" text-anchor="middle" class="serif" font-size="120" font-weight="600" fill="#5F3BB0">1</text></g>
+        <g font-size="22" font-weight="600" fill="#1F1E1D" text-anchor="middle"><text x="360" y="540">возможных потерь</text><text x="832" y="540">возможных дублирований</text><text x="1304" y="540">конфликт интересов</text></g>
+        <text x="832" y="600" text-anchor="middle" font-size="20" fill="#6B6A66">из 254 обязанностей редакции 8 · считает код</text>
+      </svg>
+    </div><div class="meta"><span class="tag">A</span><p><b>Три сцены.</b> Карточка падает в дыру, карточка раздваивается, человек получает две шапки «делает» и «проверяет». Под каждой сценой число. Повторяет язык слайда «Проблема».</p></div></div>
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Полка из 254 маленьких карточек: 11 выпадают красным, 5 удваиваются янтарным, одна светится фиолетовым">
+        <style>.s6b-l{animation:drop 3s ease-in infinite;offset-path:path('M0 0 L 0 60');offset-rotate:0deg}.s6b-c{animation:blink 2s linear infinite}</style>
+        <g id="s6b-grid" transform="translate(120,90)">
+          <!-- 254 cells: 23 columns x 11 rows + 1 -->
+          <g fill="#D9D6CC">
+            <rect x="0" y="0" width="1380" height="400" rx="0" fill="none"/>
+          </g>
+        </g>
+        <g transform="translate(120,90)" fill="#D9D6CC" id="cells"></g>
+        <text x="832" y="560" text-anchor="middle" font-size="22" font-weight="600" fill="#1F1E1D">254 обязанности редакции 8 · <tspan fill="#A12A22">11 возможно потеряны</tspan> · <tspan fill="#8A5A0C">5 задвоены</tspan> · <tspan fill="#5F3BB0">1 конфликт</tspan></text>
+        <text x="832" y="600" text-anchor="middle" font-size="18" fill="#6B6A66">остальные нашли себя в редакции 9</text>
+      </svg>
+    </div><div class="meta"><span class="tag">B</span><p><b>Полка в масштабе.</b> Все 254 обязанности как маленькие карточки; 11 выпадают красным, 5 янтарные с двойником, одна фиолетовая мигает. Показывает долю проблем честно: большинство в порядке.</p></div></div>
+  </div>
+</section>
+
+<!-- =============== 8 · Конфликт =============== -->
+<section>
+  <div class="sh"><span class="no">Слайд 8</span><h2>Конфликт интересов и дублирование</h2></div>
+  <div class="row">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Весы: один человек держит в одной руке «проверяю», в другой «оцениваю проверки», весы перекашиваются; ниже двое тянут одну карточку">
+        <style>.s8a-beam{animation:tilt 3s ease-in-out infinite alternate;transform-origin:520px 250px;transform-box:view-box}.s8a-l{animation:tiltBack 3s ease-in-out infinite alternate;transform-origin:380px 262px;transform-box:view-box}.s8a-r{animation:tiltBack 3s ease-in-out infinite alternate;transform-origin:660px 238px;transform-box:view-box}.s8a-pull{animation:converge 1.2s ease-in-out infinite alternate;--dx:14px;--dy:0}</style>
+        <g transform="translate(0,0)">
+          <rect x="510" y="250" width="20" height="230" fill="#1F1E1D"/><rect x="440" y="470" width="160" height="16" rx="8" fill="#1F1E1D"/>
+          <g class="s8a-beam"><rect x="300" y="240" width="440" height="14" rx="7" fill="#1F1E1D"/></g>
+          <g class="s8a-l"><path d="M380 262 L 380 330" stroke="#1F1E1D" stroke-width="4"/><rect x="300" y="330" width="160" height="70" rx="10" fill="#EFEAFA" stroke="#6B4FB3" stroke-width="3"/><text x="380" y="372" text-anchor="middle" font-size="20" font-weight="700" fill="#5F3BB0">проверяю</text></g>
+          <g class="s8a-r"><path d="M660 238 L 660 310" stroke="#1F1E1D" stroke-width="4"/><rect x="580" y="310" width="160" height="70" rx="10" fill="#EFEAFA" stroke="#6B4FB3" stroke-width="3"/><text x="660" y="340" text-anchor="middle" font-size="18" font-weight="700" fill="#5F3BB0">оцениваю</text><text x="660" y="364" text-anchor="middle" font-size="18" font-weight="700" fill="#5F3BB0">свои проверки</text></g>
+          <g transform="translate(520,180)"><use href="#g-person" fill="#6B4FB3" transform="scale(.8)"/></g>
+          <text x="520" y="560" text-anchor="middle" font-size="24" font-weight="700" fill="#5F3BB0">ДККМ · п. 5.3.1 и п. 5.5.2</text>
+        </g>
+        <g transform="translate(1000,0)">
+          <g transform="translate(120,330)"><use href="#g-person" fill="#B8730F" transform="scale(.8)"/></g>
+          <g transform="translate(540,330)"><use href="#g-person" fill="#B8730F" transform="scale(.8)"/></g>
+          <g transform="translate(300,280)"><g class="s8a-pull"><use href="#g-card" fill="#B8730F" transform="scale(1.8)"/></g></g>
+          <path d="M160 300 L 250 285" stroke="#B8730F" stroke-width="6" stroke-linecap="round"/><path d="M500 300 L 410 285" stroke="#B8730F" stroke-width="6" stroke-linecap="round"/>
+          <text x="330" y="470" text-anchor="middle" font-size="22" font-weight="700" fill="#8A5A0C">ДНМ и ДККМ</text>
+          <text x="330" y="500" text-anchor="middle" font-size="18" fill="#6B6A66">одна обязанность — два владельца</text>
+          <text x="330" y="560" text-anchor="middle" font-size="24" font-weight="700" fill="#8A5A0C">п. 5.4.3 и п. 5.5.8</text>
+        </g>
+      </svg>
+    </div><div class="meta"><span class="tag">A</span><p><b>Весы и перетягивание.</b> Слева ДККМ держит на весах «проверяю» и «оцениваю свои проверки», весы перекашиваются. Справа ДНМ и ДККМ тянут одну карточку. Две находки на одном слайде.</p></div></div>
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Стрелка проверки выходит от подразделения и возвращается к нему же, замыкая круг">
+        <style>.s8b-loop{stroke-dasharray:600;animation:loopArrow 2.5s ease-in-out infinite}.s8b-ok{stroke-dasharray:600;animation:loopArrow 2.5s ease-in-out infinite}</style>
+        <g transform="translate(360,300)">
+          <circle r="140" fill="none" stroke="#E3E0D8" stroke-width="2"/>
+          <path class="s8b-loop" d="M 0 -140 A 140 140 0 1 1 -20 -138" fill="none" stroke="#6B4FB3" stroke-width="10" stroke-linecap="round"/>
+          <path d="M-20 -138 L -46 -160 M -20 -138 L -50 -126" stroke="#6B4FB3" stroke-width="10" stroke-linecap="round"/>
+          <use href="#g-person" fill="#6B4FB3" transform="translate(0,20)"/>
+          <text y="110" text-anchor="middle" font-size="24" font-weight="700" fill="#5F3BB0">ДККМ</text>
+          <text x="0" y="-180" text-anchor="middle" font-size="20" fill="#5F3BB0" font-weight="600">проверяет сам себя</text>
+          <text y="250" text-anchor="middle" font-size="22" font-weight="700" fill="#5F3BB0">так в редакции 9</text>
+        </g>
+        <g transform="translate(1100,300)">
+          <use href="#g-person" fill="#0F5C5A" transform="translate(-220,20)"/><text x="-220" y="110" text-anchor="middle" font-size="24" font-weight="700" fill="#0F5C5A">исполнитель</text>
+          <use href="#g-person" fill="#1F1E1D" transform="translate(220,20)"/><text x="220" y="110" text-anchor="middle" font-size="24" font-weight="700" fill="#1F1E1D">контролёр</text>
+          <path class="s8b-ok" d="M-160 -40 C -60 -140, 60 -140, 160 -40" fill="none" stroke="#2F7D4F" stroke-width="10" stroke-linecap="round"/>
+          <path d="M160 -40 L 132 -56 M 160 -40 L 150 -72" stroke="#2F7D4F" stroke-width="10" stroke-linecap="round"/>
+          <text x="0" y="-150" text-anchor="middle" font-size="20" fill="#256840" font-weight="600">проверяет другой</text>
+          <text y="250" text-anchor="middle" font-size="22" font-weight="700" fill="#256840">как должно быть</text>
+        </g>
+      </svg>
+    </div><div class="meta"><span class="tag">B</span><p><b>Замкнутый круг.</b> Слева стрелка проверки возвращается к тому же подразделению. Справа, как должно быть: исполнитель и контролёр разные. Только конфликт, без дублирования; очень простая картинка.</p></div></div>
+  </div>
+</section>
+
+<!-- =============== 9 · Закон =============== -->
+<section>
+  <div class="sh"><span class="no">Слайд 9</span><h2>Закон: нормы только из действующих актов</h2></div>
+  <div class="row">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Полка с тремя книгами законов со штампом «действует»; одна книга открывается на статье 61, от неё тянется нить к карточке пункта 1.5">
+        <style>.s9a-th{stroke-dasharray:1200;animation:thread 5s linear infinite}.s9a-seal{animation:stampIn 5s linear infinite;transform-origin:center;transform-box:fill-box}.s9a-book{animation:popin 5s linear 1.2s infinite;transform-origin:center;transform-box:fill-box}</style>
+        <rect x="100" y="420" width="700" height="18" rx="6" fill="#CFCBC0"/>
+        <g font-size="18" font-weight="700" fill="#F5F4EF">
+          <g transform="translate(140,180)"><rect width="110" height="240" rx="6" fill="#0F5C5A"/><text transform="translate(68,222) rotate(-90)" font-size="17">Об акционерных обществах</text></g>
+          <g transform="translate(270,200)"><rect width="110" height="220" rx="6" fill="#1F1E1D"/><text transform="translate(68,205) rotate(-90)" font-size="16">О Фонде нац. благосостояния</text></g>
+          <g transform="translate(400,190)"><rect width="110" height="230" rx="6" fill="#4A5872"/><text transform="translate(68,214) rotate(-90)" font-size="16">О противодействии коррупции</text></g>
+        </g>
+        <g font-size="14" font-weight="700" fill="#256840"><rect x="150" y="148" width="90" height="24" rx="6" fill="#E4F2E8"/><text x="195" y="165" text-anchor="middle">действует</text><rect x="280" y="168" width="90" height="24" rx="6" fill="#E4F2E8"/><text x="325" y="185" text-anchor="middle">действует</text><rect x="410" y="158" width="90" height="24" rx="6" fill="#E4F2E8"/><text x="455" y="175" text-anchor="middle">действует</text></g>
+        <text x="450" y="100" text-anchor="middle" font-size="22" font-weight="700" fill="#0F5C5A">adilet.zan.kz · 477 норм · только в силе</text>
+        <g transform="translate(600,120)"><g class="s9a-book"><rect width="280" height="260" rx="8" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><text x="24" y="40" font-size="18" font-weight="700" fill="#0F5C5A">Статья 61</text><text x="24" y="66" font-size="14" fill="#6B6A66">ред. от 13.08.2026</text><g fill="#E6E3DA"><rect x="24" y="90" width="230" height="9" rx="4"/><rect x="24" y="112" width="200" height="9" rx="4"/></g><rect x="14" y="136" width="252" height="54" rx="6" fill="#FFF1C2"/><text x="24" y="158" class="serif" font-size="14" fill="#1F1E1D">3. Служба внутреннего аудита</text><text x="24" y="178" class="serif" font-size="14" fill="#1F1E1D">непосредственно подчиняется…</text><g fill="#E6E3DA"><rect x="24" y="210" width="220" height="9" rx="4"/><rect x="24" y="232" width="180" height="9" rx="4"/></g></g></g>
+        <path class="s9a-th" d="M740 160 C 900 60, 1100 60, 1200 220" fill="none" stroke="#0F5C5A" stroke-width="4" stroke-dasharray="10 8"/>
+        <g transform="translate(1100,220)"><rect width="460" height="200" rx="14" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="10" height="200" rx="5" fill="#0F5C5A"/><text x="30" y="40" font-size="16" font-weight="700" fill="#0F5C5A" letter-spacing="1">ПОСЛЕ · П. 1.5</text><text x="30" y="80" class="serif" font-size="19" fill="#1F1E1D">«Главный аудитор находится</text><text x="30" y="106" class="serif" font-size="19" fill="#1F1E1D">в функциональном подчинении</text><text x="30" y="132" class="serif" font-size="19" fill="#1F1E1D">Совета директоров Общества…»</text><g transform="translate(340,165)"><g class="s9a-seal"><rect x="-90" y="-22" width="180" height="44" rx="8" fill="rgba(228,242,232,.92)" stroke="#2F7D4F" stroke-width="4"/><text y="7" text-anchor="middle" font-size="15" font-weight="800" fill="#2F7D4F" letter-spacing="1">ЕСТЬ ОСНОВАНИЕ</text></g></g></g>
+        <text x="1330" y="500" text-anchor="middle" font-size="20" fill="#6B6A66">кнопка «Открыть на adilet.zan.kz» ведёт к статье</text>
+      </svg>
+    </div><div class="meta"><span class="tag">A</span><p><b>Полка с книгами.</b> Три действующих акта на полке, книга открывается на статье 61, нить тянется к пункту 1.5 из нового положения, на карточке появляется «есть основание».</p></div></div>
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Карточка вывода подходит к окошку с надписью adilet.zan.kz и получает печать «в силе»">
+        <style>.s9b-c{animation:converge 4s cubic-bezier(.2,.8,.2,1) infinite alternate;--dx:520px;--dy:0}.s9b-s{animation:stampIn 4s linear infinite alternate;transform-origin:center;transform-box:fill-box}.s9b-x{animation:fade 4s linear infinite alternate}</style>
+        <g transform="translate(880,100)"><rect width="520" height="380" rx="16" fill="#0F5C5A"/><rect x="40" y="60" width="440" height="200" rx="10" fill="#F5F4EF"/><text x="260" y="40" text-anchor="middle" font-size="24" font-weight="700" fill="#F5F4EF" letter-spacing="3">adilet.zan.kz</text><text x="260" y="110" text-anchor="middle" font-size="20" font-weight="600" fill="#1F1E1D">реестр нормативных актов</text><text x="260" y="150" text-anchor="middle" font-size="18" fill="#4F4E4A">выдаёт только то, что действует</text><text x="260" y="200" text-anchor="middle" font-size="18" fill="#4F4E4A">ред. от 13.08.2026</text><rect x="200" y="290" width="120" height="60" rx="8" fill="#1F1E1D"/><text x="260" y="327" text-anchor="middle" font-size="16" fill="#F5F4EF">окно выдачи</text></g>
+        <g transform="translate(160,200)"><g class="s9b-c"><rect width="440" height="190" rx="14" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="10" height="190" rx="5" fill="#0F5C5A"/><text x="30" y="40" font-size="16" font-weight="700" fill="#0F5C5A">ПОСЛЕ · П. 1.5 → СТ. 61 «ОБ АО»</text><text x="30" y="80" class="serif" font-size="19" fill="#1F1E1D">Главный аудитор подчиняется</text><text x="30" y="106" class="serif" font-size="19" fill="#1F1E1D">Совету директоров</text><g class="s9b-s" transform="translate(330,150)"><rect x="-80" y="-22" width="160" height="44" rx="8" fill="rgba(228,242,232,.92)" stroke="#2F7D4F" stroke-width="4"/><text y="7" text-anchor="middle" font-size="16" font-weight="800" fill="#2F7D4F" letter-spacing="2">В СИЛЕ</text></g></g></g>
+        <g transform="translate(160,470)"><g class="s9b-x"><rect width="440" height="70" rx="14" fill="#F1F3F6" stroke="#CFCBC0" stroke-width="2" stroke-dasharray="8 6"/><text x="220" y="43" text-anchor="middle" font-size="18" fill="#6B6A66">норма «по памяти модели» — не принимается</text></g></g>
+      </svg>
+    </div><div class="meta"><span class="tag">B</span><p><b>Окно выдачи.</b> Карточка с основанием подходит к окошку adilet.zan.kz и получает печать «в силе»; «норма по памяти модели» остаётся снаружи пунктиром. Подчёркивает «только действующие акты».</p></div></div>
+  </div>
+</section>
+
+<!-- =============== 10 · Польза =============== -->
+<section>
+  <div class="sh"><span class="no">Слайд 10</span><h2>Какую пользу даёт пользователю</h2></div>
+  <div class="row">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Воронка: 903 пункта превращаются в 504 функции, затем в 17 сигналов, затем в одно заключение с кнопками DOCX и PDF">
+        <style>.s10a-dot{animation:funnel 3s linear infinite}.s10a-d2{animation-delay:.5s}.s10a-d3{animation-delay:1s}.s10a-d4{animation-delay:1.5s}.s10a-d5{animation-delay:2s}.s10a-d6{animation-delay:2.5s}</style>
+        <g transform="translate(260,0)">
+          <path d="M0 60 L 700 60 L 480 300 L 480 470 L 220 470 L 220 300 Z" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/>
+          <g fill="#0F5C5A" opacity=".8"><circle class="s10a-dot" cx="120" cy="80" r="7"/><circle class="s10a-dot s10a-d2" cx="300" cy="80" r="7"/><circle class="s10a-dot s10a-d3" cx="420" cy="80" r="7"/><circle class="s10a-dot s10a-d4" cx="560" cy="80" r="7"/><circle class="s10a-dot s10a-d5" cx="220" cy="80" r="7"/><circle class="s10a-dot s10a-d6" cx="640" cy="80" r="7"/></g>
+          <g class="serif" font-weight="600" fill="#1F1E1D" text-anchor="middle"><text x="350" y="140" font-size="56">903</text><text x="350" y="260" font-size="48">504</text><text x="350" y="380" font-size="44">17</text></g>
+          <g font-size="18" fill="#6B6A66" text-anchor="middle"><text x="350" y="168">пункта в двух документах</text><text x="350" y="288">функции с исполнителями</text><text x="350" y="408">сигнала с цитатами</text></g>
+        </g>
+        <path d="M1000 265 L 1080 265" stroke="#0F5C5A" stroke-width="6" stroke-linecap="round"/><path d="M1080 265 L 1058 250 M 1080 265 L 1058 280" stroke="#0F5C5A" stroke-width="6" stroke-linecap="round"/>
+        <g transform="translate(1120,80)"><rect width="400" height="400" rx="12" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><text x="200" y="48" text-anchor="middle" class="serif" font-size="26" font-weight="600" fill="#1F1E1D">1 заключение</text><g fill="#E6E3DA"><rect x="30" y="80" width="340" height="9" rx="4"/><rect x="30" y="104" width="280" height="9" rx="4"/><rect x="30" y="128" width="320" height="9" rx="4"/><rect x="30" y="152" width="240" height="9" rx="4"/><rect x="30" y="176" width="300" height="9" rx="4"/></g>
+          <rect x="30" y="220" width="160" height="48" rx="8" fill="#0F5C5A"/><text x="110" y="250" text-anchor="middle" font-size="18" font-weight="700" fill="#F5F4EF">DOCX</text><rect x="210" y="220" width="160" height="48" rx="8" fill="#0F5C5A"/><text x="290" y="250" text-anchor="middle" font-size="18" font-weight="700" fill="#F5F4EF">PDF</text>
+          <rect x="30" y="300" width="340" height="70" rx="10" fill="#FAF9F5" stroke="#E3E0D8"/><rect x="44" y="318" width="150" height="36" rx="6" fill="#0F5C5A"/><text x="119" y="342" text-anchor="middle" font-size="15" font-weight="700" fill="#F5F4EF">принять</text><rect x="206" y="318" width="150" height="36" rx="6" fill="#EFEDE7"/><text x="281" y="342" text-anchor="middle" font-size="15" font-weight="700" fill="#4F4E4A">отклонить</text></g>
+        <text x="832" y="580" text-anchor="middle" font-size="22" font-weight="600" fill="#1F1E1D">3–6 минут на паре из 25 страниц</text>
+      </svg>
+    </div><div class="meta"><span class="tag">A</span><p><b>Воронка.</b> 903 пункта → 504 функции → 17 сигналов → одно заключение с DOCX, PDF и кнопками принять / отклонить. Все числа из контрольного анализа.</p></div></div>
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Слева стол аналитика с двумя стопками, лупой и часами; справа тот же стол с одним листом заключения и кнопками">
+        <style>.s11b-clk{animation:spin 6s linear infinite;transform-origin:center;transform-box:fill-box}@keyframes spin{to{transform:rotate(360deg)}}.s10b-r{animation:rise 3s ease-out infinite alternate}</style>
+        <rect x="80" y="430" width="700" height="24" rx="8" fill="#CFCBC0"/><rect x="884" y="430" width="700" height="24" rx="8" fill="#CFCBC0"/>
+        <g transform="translate(140,140)"><use href="#g-sheet" transform="translate(50,40) scale(.9)"/><use href="#g-sheet" transform="translate(25,20) scale(.9)"/><use href="#g-sheet" transform="scale(.9)"/></g>
+        <g transform="translate(420,140)"><use href="#g-sheet" transform="translate(50,40) scale(.9)"/><use href="#g-sheet" transform="translate(25,20) scale(.9)"/><use href="#g-sheet" transform="scale(.9)"/></g>
+        <g transform="translate(370,380)"><circle r="34" fill="none" stroke="#1F1E1D" stroke-width="6"/><line x1="0" y1="0" x2="0" y2="-24" stroke="#1F1E1D" stroke-width="6" stroke-linecap="round" class="s11b-clk"/><circle r="5" fill="#1F1E1D"/></g>
+        <g transform="translate(560,360)"><circle r="40" fill="none" stroke="#1F1E1D" stroke-width="8"/><line x1="30" y1="30" x2="70" y2="70" stroke="#1F1E1D" stroke-width="10" stroke-linecap="round"/></g>
+        <text x="430" y="530" text-anchor="middle" font-size="22" font-weight="600" fill="#4F4E4A">вручную: страница за страницей</text>
+        <g transform="translate(1034,120)"><g class="s10b-r"><rect width="400" height="300" rx="12" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><text x="200" y="48" text-anchor="middle" class="serif" font-size="26" font-weight="600" fill="#1F1E1D">Заключение</text><g fill="#E6E3DA"><rect x="30" y="80" width="340" height="9" rx="4"/><rect x="30" y="104" width="280" height="9" rx="4"/><rect x="30" y="128" width="320" height="9" rx="4"/></g><g transform="translate(60,190)"><use href="#g-check" transform="scale(.8)"/></g><g transform="translate(60,230)"><use href="#g-check" transform="scale(.8)"/></g><rect x="90" y="182" width="260" height="9" rx="4" fill="#E6E3DA"/><rect x="90" y="222" width="220" height="9" rx="4" fill="#E6E3DA"/><rect x="30" y="256" width="100" height="32" rx="6" fill="#0F5C5A"/><text x="80" y="278" text-anchor="middle" font-size="14" font-weight="700" fill="#F5F4EF">DOCX</text><rect x="140" y="256" width="100" height="32" rx="6" fill="#0F5C5A"/><text x="190" y="278" text-anchor="middle" font-size="14" font-weight="700" fill="#F5F4EF">PDF</text></g></g>
+        <text x="1234" y="530" text-anchor="middle" font-size="22" font-weight="600" fill="#0F5C5A">с OrgScope: одно заключение с источниками</text>
+      </svg>
+    </div><div class="meta"><span class="tag">B</span><p><b>Два стола.</b> Слева стопки, лупа и часы, справа один лист с галочками и кнопками. Метафора понятна любому, но менее конкретна по числам.</p></div></div>
+  </div>
+</section>
+
+<!-- =============== 11 · Отличие =============== -->
+<section>
+  <div class="sh"><span class="no">Слайд 11</span><h2>Чем отличается от существующих подходов</h2></div>
+  <div class="row">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Три двери: ручная сверка с часами, чат-модель с выдуманной цитатой, OrgScope с цитатой и печатью">
+        <style>.s11a-d{animation:doorOpen 4s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:left center}.s11a-2{animation-delay:.6s}.s11a-3{animation-delay:1.2s}.s11a-in{animation:fade 4s linear 1.4s infinite alternate}</style>
+        <g transform="translate(150,80)"><rect width="380" height="400" rx="12" fill="#EFEDE7"/><g class="s11a-in" opacity="0"><g transform="translate(90,120)"><use href="#g-sheet" transform="scale(.6)"/></g><g transform="translate(250,220)"><circle r="40" fill="none" stroke="#1F1E1D" stroke-width="6"/><line x1="0" y1="0" x2="0" y2="-28" stroke="#1F1E1D" stroke-width="6" stroke-linecap="round"/><line x1="0" y1="0" x2="20" y2="0" stroke="#1F1E1D" stroke-width="6" stroke-linecap="round"/></g></g><rect class="s11a-d" width="380" height="400" rx="12" fill="#4A5872"/><text x="190" y="450" text-anchor="middle" font-size="22" font-weight="700" fill="#1F1E1D">вручную</text><text x="190" y="480" text-anchor="middle" font-size="18" fill="#6B6A66">точно, но долго</text></g>
+        <g transform="translate(642,80)"><rect width="380" height="400" rx="12" fill="#EFEDE7"/><g class="s11a-in" opacity="0"><rect x="60" y="120" width="260" height="120" rx="20" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><path d="M110 240 L 100 275 L 150 240 Z" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><text x="190" y="170" text-anchor="middle" class="serif" font-size="18" fill="#1F1E1D">«…согласно п. 7.2…»</text><line x1="90" y1="166" x2="290" y2="166" stroke="#B3362B" stroke-width="4"/><text x="190" y="215" text-anchor="middle" font-size="16" fill="#A12A22" font-weight="700">такого пункта нет</text></g><rect class="s11a-d s11a-2" width="380" height="400" rx="12" fill="#B8730F"/><text x="190" y="450" text-anchor="middle" font-size="22" font-weight="700" fill="#1F1E1D">спросить чат</text><text x="190" y="480" text-anchor="middle" font-size="18" fill="#6B6A66">быстро, но без источников</text></g>
+        <g transform="translate(1134,80)"><rect width="380" height="400" rx="12" fill="#EFEDE7"/><g class="s11a-in" opacity="0"><rect x="40" y="110" width="300" height="150" rx="12" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect x="40" y="110" width="8" height="150" rx="4" fill="#B3362B"/><text x="60" y="145" font-size="13" font-weight="700" fill="#0F5C5A">ДО · П. 5.6.2 · СТР. 10</text><text x="60" y="175" class="serif" font-size="15" fill="#1F1E1D">«формировать группы</text><text x="60" y="195" class="serif" font-size="15" fill="#1F1E1D">контроля качества…»</text><g transform="translate(250,235) rotate(-8) scale(.7)"><use href="#g-stamp"/></g></g><rect class="s11a-d s11a-3" width="380" height="400" rx="12" fill="#0F5C5A"/><text x="190" y="450" text-anchor="middle" font-size="22" font-weight="700" fill="#0F5C5A">OrgScope</text><text x="190" y="480" text-anchor="middle" font-size="18" fill="#6B6A66">быстро и с проверенной цитатой</text></g>
+      </svg>
+    </div><div class="meta"><span class="tag">A</span><p><b>Три двери.</b> За первой стопка и часы, за второй пузырь чата с зачёркнутой несуществующей цитатой, за третьей карточка с настоящей цитатой и печатью. Двери открываются по очереди.</p></div></div>
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Три дорожки к одному финишу: ручная дорожка длинная, дорожка чата обрывается, дорожка OrgScope короткая и с печатью">
+        <style>.s11b-w{animation:walk 4s linear infinite}.s11b-w1{animation-duration:9s}.s11b-w2{animation-duration:3s}.s11b-w3{animation-duration:3.2s}</style>
+        <g font-size="22" font-weight="700" fill="#1F1E1D"><text x="120" y="150">вручную</text><text x="120" y="330">спросить чат</text><text x="120" y="510">OrgScope</text></g>
+        <rect x="340" y="140" width="1100" height="12" rx="6" fill="#E6E3DA"/><rect x="340" y="320" width="600" height="12" rx="6" fill="#E6E3DA"/><rect x="340" y="500" width="1100" height="12" rx="6" fill="#BCD6D3"/>
+        <g transform="translate(1460,146)"><use href="#g-check" transform="scale(1.3)"/></g><g transform="translate(1460,506)"><use href="#g-check" transform="scale(1.3)"/></g>
+        <g transform="translate(940,326)"><circle r="22" fill="#B3362B"/><path d="M-9 -9 L 9 9 M 9 -9 L -9 9" stroke="#F5F4EF" stroke-width="5" stroke-linecap="round"/><text x="40" y="8" font-size="18" fill="#A12A22" font-weight="700">цитата не подтвердилась</text></g>
+        <g transform="translate(360,146)"><circle class="s11b-w s11b-w1" r="16" fill="#4A5872"/></g>
+        <g transform="translate(360,326)"><circle class="s11b-w s11b-w2" r="16" fill="#B8730F"/></g>
+        <g transform="translate(360,506)"><circle class="s11b-w s11b-w3" r="16" fill="#0F5C5A"/></g>
+        <g transform="translate(1200,560)"><use href="#g-stamp" transform="rotate(-8)"/></g>
+        <g font-size="18" fill="#6B6A66"><text x="340" y="190">дни · сверка пункт за пунктом</text><text x="340" y="370">минуты · без источника, иногда с выдумкой</text><text x="340" y="550">минуты · каждый вывод с пунктом и цитатой</text></g>
+      </svg>
+    </div><div class="meta"><span class="tag">B</span><p><b>Три дорожки.</b> Ручная дорожка длинная, дорожка чата обрывается красным крестом, дорожка OrgScope доходит до финиша с печатью. Читается как гонка, но подпись «дни» для ручной сверки — оценка, а не измерение.</p></div></div>
+  </div>
+</section>
+
+<!-- =============== 13 · Финал =============== -->
+<section>
+  <div class="sh"><span class="no">Слайд 13</span><h2>Финал</h2></div>
+  <div class="row">
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Два здания соединены мостом из проверенных карточек; над ним слоган">
+        <style>.s13a-b{animation:bridge 1s ease-out both}.s13a-1{animation-delay:.2s}.s13a-2{animation-delay:.4s}.s13a-3{animation-delay:.6s}.s13a-4{animation-delay:.8s}.s13a-5{animation-delay:1s}.s13a-6{animation-delay:1.2s}.s13a-7{animation-delay:1.4s}</style>
+        <rect width="1664" height="640" fill="#0F5C5A"/>
+        <rect x="140" y="300" width="260" height="260" rx="12" fill="#1F1E1D"/><rect x="1264" y="300" width="260" height="260" rx="12" fill="#F5F4EF"/>
+        <g fill="#F5F4EF"><g transform="translate(470,420)"><g class="s13a-b s13a-1"><use href="#g-card"/></g></g><g transform="translate(580,415)"><g class="s13a-b s13a-2"><use href="#g-card"/></g></g><g transform="translate(690,412)"><g class="s13a-b s13a-3"><use href="#g-card"/></g></g><g transform="translate(800,410)"><g class="s13a-b s13a-4"><use href="#g-card"/></g></g><g transform="translate(910,412)"><g class="s13a-b s13a-5"><use href="#g-card"/></g></g><g transform="translate(1020,415)"><g class="s13a-b s13a-6"><use href="#g-card"/></g></g><g transform="translate(1130,420)"><g class="s13a-b s13a-7"><use href="#g-card"/></g></g></g>
+        <g transform="translate(800,340)"><use href="#g-check" transform="scale(1.6)"/></g>
+        <text x="832" y="150" text-anchor="middle" class="serif" font-size="72" font-weight="600" fill="#F5F4EF">Реорганизуйте уверенно.</text>
+        <text x="832" y="220" text-anchor="middle" font-size="30" fill="#BCD6D3">Ни одна функция не потеряется незамеченной.</text>
+      </svg>
+    </div><div class="meta"><span class="tag">A</span><p><b>Мост построен.</b> Те же два здания, что на слайде «Проблема», теперь соединены мостом из проверенных карточек. Закрывает метафору переезда.</p></div></div>
+    <div class="v"><div class="frame">
+      <svg viewBox="0 0 1664 640" aria-label="Знак OrgScope, слоган, под ним тихий конвейер с проверенными листами">
+        <style>.s13b-belt{animation:loopCards 6s linear infinite}</style>
+        <rect width="1664" height="640" fill="#0F5C5A"/>
+        <g transform="translate(832,140)"><circle r="60" fill="#F5F4EF"/><g fill="none" stroke="#0F5C5A" stroke-width="6" stroke-linecap="round"><path d="M-42 -18 c 18 -9, 66 -9, 84 0"/><path d="M-50 0 c 24 -9, 76 -9, 100 0"/><path d="M-42 18 c 18 -9, 66 -9, 84 0"/></g><circle cx="28" cy="-30" r="10" fill="#FF8A00" stroke="#F5F4EF" stroke-width="4"/></g>
+        <text x="832" y="300" text-anchor="middle" class="serif" font-size="72" font-weight="600" fill="#F5F4EF">Реорганизуйте уверенно.</text>
+        <text x="832" y="360" text-anchor="middle" font-size="30" fill="#BCD6D3">Тот же метод — для любых документов, где у обязанности должен быть владелец.</text>
+        <g clip-path="url(#s13clip)"><defs><clipPath id="s13clip"><rect x="200" y="440" width="1264" height="120"/></clipPath></defs><g class="s13b-belt" fill="#F5F4EF" opacity=".5"><g transform="translate(240,500)"><use href="#g-card"/></g><g transform="translate(350,500)"><use href="#g-card"/></g><g transform="translate(460,500)"><use href="#g-card"/></g><g transform="translate(570,500)"><use href="#g-card"/></g><g transform="translate(680,500)"><use href="#g-card"/></g><g transform="translate(790,500)"><use href="#g-card"/></g><g transform="translate(900,500)"><use href="#g-card"/></g><g transform="translate(1010,500)"><use href="#g-card"/></g><g transform="translate(1120,500)"><use href="#g-card"/></g><g transform="translate(1230,500)"><use href="#g-card"/></g><g transform="translate(1340,500)"><use href="#g-card"/></g><g transform="translate(1450,500)"><use href="#g-card"/></g><g transform="translate(1560,500)"><use href="#g-card"/></g><g transform="translate(1670,500)"><use href="#g-card"/></g><g transform="translate(1780,500)"><use href="#g-card"/></g><g transform="translate(1890,500)"><use href="#g-card"/></g></g></g>
+        <text x="832" y="610" text-anchor="middle" font-size="22" fill="#BCD6D3">Решение рекомендательное. Последнее слово — за человеком.</text>
+      </svg>
+    </div><div class="meta"><span class="tag">B</span><p><b>Знак и конвейер.</b> Марка, слоган про метод и тихий поток карточек внизу. Спокойнее варианта A и напоминает про масштабирование.</p></div></div>
+  </div>
+</section>
+
+<script>
+// Slide 6 · variant B: draw the 254 cells from real counts (11 lost, 5 duplicated, 1 conflict, the rest matched).
+(function(){
+  const g=document.getElementById('cells'); if(!g) return;
+  const N=254, cols=23, w=54, h=30, gx=6, gy=6;
+  const lost=new Set([7,31,58,77,96,120,139,163,187,214,238]);
+  const dup=new Set([15,88,131,176,222]);
+  const conf=201;
+  const ns='http://www.w3.org/2000/svg';
+  for(let i=0;i<N;i++){
+    const r=document.createElementNS(ns,'rect');
+    const c=i%cols, row=Math.floor(i/cols);
+    r.setAttribute('x',c*(w+gx)); r.setAttribute('y',row*(h+gy)); r.setAttribute('width',w); r.setAttribute('height',h); r.setAttribute('rx',5);
+    if(lost.has(i)){ r.setAttribute('fill','#B3362B'); r.setAttribute('class','s6b-l'); r.style.offsetPath=`path('M0 0 L 0 60')`; r.style.animationDelay=(i%7)*0.35+'s'; }
+    else if(dup.has(i)){ r.setAttribute('fill','#B8730F'); const t=r.cloneNode(); t.setAttribute('x',c*(w+gx)+8); t.setAttribute('y',row*(h+gy)+8); t.setAttribute('opacity','.6'); g.appendChild(t); }
+    else if(i===conf){ r.setAttribute('fill','#6B4FB3'); r.setAttribute('class','s6b-c'); }
+    else { r.setAttribute('fill','#D9D6CC'); }
+    g.appendChild(r);
+  }
+})();
+</script>
