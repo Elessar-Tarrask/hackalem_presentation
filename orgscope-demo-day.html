@@ -10,8 +10,8 @@
 }
 html,body{height:100%;margin:0}
 body{background:var(--ink);color:var(--ink);font-family:var(--sans);overflow:hidden;padding-block:0}
-#viewport{position:fixed;inset:0;display:grid;place-items:center;background:var(--ink)}
-#stage{position:relative;width:1920px;height:1080px;transform-origin:center;background:var(--page);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+#viewport{position:fixed;inset:0;overflow:hidden;background:var(--ink)}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:var(--page);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
 .slide{position:absolute;inset:0;display:none;padding:96px 128px;flex-direction:column;gap:28px}
 .slide.on{display:flex}
 .slide.full{padding:0;background:var(--accent)}
@@ -619,7 +619,7 @@ table.app td:first-child{width:24%;font-weight:600}
     document.getElementById('hint').textContent=lang==='en'?'arrows · click · L':'стрелки · клик · L';
     try{localStorage.setItem('orgscope-lang',lang)}catch(e){}
   }
-  function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);document.getElementById('stage').style.transform=`scale(${s})`;}
+  function fit(){const vw=document.documentElement.clientWidth,vh=document.documentElement.clientHeight,s=Math.min(vw/1920,vh/1080),st=document.getElementById('stage');st.style.transform=`scale(${s})`;st.style.left=((vw-1920*s)/2)+'px';st.style.top=((vh-1080*s)/2)+'px';}
   function restart(slide){slide.querySelectorAll('.art').forEach(a=>{const c=a.cloneNode(true);a.replaceWith(c);});}
   function proofPlay(){
     const box=document.getElementById('proofBox');if(!box)return;
@@ -642,7 +642,7 @@ table.app td:first-child{width:24%;font-weight:600}
   }
   try{const saved=localStorage.getItem('orgscope-lang');if(saved==='en'||saved==='ru')lang=saved;}catch(e){}
   if(location.hash==='#en')lang='en'; if(location.hash==='#ru')lang='ru';
-  addEventListener('resize',fit);fit();
+  addEventListener('resize',fit);addEventListener('orientationchange',fit);fit();setTimeout(fit,300);
   addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();show(i+1);}if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(i-1);}if(e.key==='l'||e.key==='L'){lang=lang==='en'?'ru':'en';show(i);}if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1);});
   document.getElementById('next').onclick=()=>show(i+1);
   document.getElementById('prev').onclick=()=>show(i-1);
