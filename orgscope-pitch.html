@@ -27,6 +27,9 @@ h2{font-family:var(--display);font-size:62px;font-weight:600;line-height:1.08;ma
 .shot{display:block;max-width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 14px 40px rgba(14,31,69,.12);background:#fff}
 .human{font-size:28px;color:var(--ink-2);margin:0}
 .stack{margin:0;font-size:19px;color:var(--muted);line-height:1.5}
+.bullets{display:flex;gap:18px}
+.bullet{flex:1;display:flex;align-items:center;gap:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 22px;font-size:26px;font-weight:600}
+.bullet i{width:18px;height:18px;border-radius:50%;flex:none}
 
 /* artifacts: SVG stages inside a slide */
 .art{position:relative;flex:1;min-height:0;container-type:inline-size}
@@ -205,6 +208,7 @@ html.doc .foot{font-size:13px;flex-direction:column;align-items:flex-start;gap:6
 html.doc .body{gap:14px}
 html.doc .human{font-size:15px}
 html.doc .stack{font-size:13px}
+html.doc .bullets{flex-direction:column;gap:8px}html.doc .bullet{font-size:15px;padding:10px 14px;gap:10px}html.doc .bullet i{width:12px;height:12px}
 html.doc .art{flex:none;width:100%;min-height:0;aspect-ratio:1664/640}
 html.doc .full .art{position:relative;inset:auto;aspect-ratio:16/9}
 html.doc .tiles{grid-template-columns:1fr;gap:10px}html.doc .tiles.six .tile{padding:14px 16px}html.doc .tiles.six .tile h3{font-size:18px}html.doc .tiles.six .tile p{font-size:15px}
@@ -323,6 +327,11 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
     <use href="#g-cardShape" class="mv confA" fill="#6B4FB3"/><use href="#g-cardShape" class="mv confB" fill="#6B4FB3"/>
     <g font-size="22" font-weight="600"><rect x="560" y="48" width="20" height="20" rx="4" fill="#B3362B"/><text x="592" y="65" fill="#1F1E1D" data-en="lost">потерялась</text><rect x="760" y="48" width="20" height="20" rx="4" fill="#B8730F"/><text x="792" y="65" fill="#1F1E1D" data-en="duplicated">задвоилась</text><rect x="960" y="48" width="20" height="20" rx="4" fill="#6B4FB3"/><text x="992" y="65" fill="#1F1E1D" data-en="same hands">в одних руках</text><rect x="1160" y="48" width="20" height="20" rx="4" fill="#1D4F91"/><text x="1192" y="65" fill="#1F1E1D" data-en="breaks the law of Kazakhstan">не соответствует закону РК</text></g>
   </svg>
+  </div>
+  <div class="bullets">
+    <div class="bullet"><i style="background:var(--loss)"></i><span data-en="Loss of efficiency">Потеря эффективности</span></div>
+    <div class="bullet"><i style="background:var(--dup)"></i><span data-en="Bloated headcount">Раздутость штата</span></div>
+    <div class="bullet"><i style="background:var(--accent)"></i><span data-en="Organizational development">Организационное развитие</span></div>
   </div>
 </section>
 
