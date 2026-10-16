@@ -97,6 +97,11 @@ text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
 @keyframes cvSheet{0%,88%{opacity:.35}94%,100%{opacity:1}}
 .cv-sheet{animation:cvSheet 12s linear infinite}
 
+/* fourth risk on the move: a card that breaks the law of Kazakhstan */
+.lawA{offset-path:path("M460 400 Q 830 240 1120 300");animation:flyA 8s linear 6.2s infinite}
+@keyframes lawPop{0%,86%{opacity:0;transform:scale(.4)}91%{opacity:1;transform:scale(1.1)}100%{opacity:1;transform:scale(1)}}
+.law-badge{animation:lawPop 8s linear 6.2s infinite;transform-origin:center;transform-box:fill-box}
+
 /* 1 · title on the brand teal */
 .slide.teal{background:var(--accent);color:var(--page);justify-content:space-between;padding:96px 128px}
 .brand{display:flex;align-items:center;gap:20px;font-size:28px;font-weight:700;letter-spacing:6px;color:var(--accent-soft)}
@@ -108,8 +113,13 @@ text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
 /* 4 · solution and benefit: artifact left, benefits right */
 .duo{display:flex;gap:40px;flex:1;min-height:0;align-items:center}
 .duo .art{flex:1;min-width:0;height:100%}
-.chips{display:flex;flex-direction:column;gap:14px;width:470px;flex:none}
-.chips .chip{font-size:24px;padding:14px 20px;white-space:normal;line-height:1.3}
+.gain{width:520px;flex:none;align-self:stretch;background:var(--accent);color:var(--page);border-radius:22px;padding:34px 36px;display:flex;flex-direction:column;justify-content:center;gap:18px;box-shadow:0 20px 50px rgba(15,92,90,.22)}
+.gain-h{margin:0 0 6px;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent-soft)}
+.gain ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px}
+.gain li{display:flex;flex-direction:column;gap:4px;padding-left:44px;position:relative}
+.gain li::before{content:"";position:absolute;left:0;top:6px;width:28px;height:28px;border-radius:50%;background:var(--page);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='black'/%3E%3Cpath d='M7 12.5l3 3 7-7' stroke='white' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='black'/%3E%3Cpath d='M7 12.5l3 3 7-7' stroke='white' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+.gain li b{font-size:30px;font-weight:600;line-height:1.15}
+.gain li span{font-size:21px;color:var(--accent-soft);line-height:1.3}
 
 /* 7 · legal check: real norm card, the adilet button called out as a big dialog */
 .legal{display:flex;gap:40px;align-items:flex-start;min-height:0;flex:1}
@@ -156,7 +166,7 @@ text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
 .team .eyebrow{color:var(--accent-soft)}
 .people{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:44px}
 .person{background:rgba(245,244,239,.08);border:1px solid rgba(188,214,211,.35);border-radius:20px;padding:36px 32px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
-.ava{width:88px;height:88px;border-radius:50%;background:var(--page);color:var(--accent-deep);display:grid;place-items:center;font-family:var(--display);font-size:34px;font-weight:700;margin-bottom:10px}
+.photo{width:240px;height:240px;border-radius:50%;object-fit:cover;border:5px solid var(--page);box-shadow:0 16px 40px rgba(0,0,0,.25);margin-bottom:12px;background:#2A6E6B}
 .person b{font-size:34px;font-weight:600;color:var(--page);line-height:1.15}
 .person .role{font-size:24px;color:var(--accent-soft)}
 
@@ -203,11 +213,11 @@ html.doc .stack{font-size:13px}
 html.doc .art{flex:none;width:100%;min-height:0;aspect-ratio:1664/640}
 html.doc .full .art{position:relative;inset:auto;aspect-ratio:16/9}
 html.doc .tiles{grid-template-columns:1fr;gap:10px}html.doc .tiles.six .tile{padding:14px 16px}html.doc .tiles.six .tile h3{font-size:18px}html.doc .tiles.six .tile p{font-size:15px}
-html.doc .people{grid-template-columns:1fr;gap:12px;margin-top:16px}html.doc .person{padding:18px;gap:6px}html.doc .ava{width:56px;height:56px;font-size:22px;margin-bottom:4px}html.doc .person b{font-size:20px}html.doc .person .role{font-size:15px}
+html.doc .people{grid-template-columns:1fr;gap:12px;margin-top:16px}html.doc .person{padding:18px;gap:6px}html.doc .photo{width:96px;height:96px;border-width:3px;margin-bottom:4px}html.doc .person b{font-size:20px}html.doc .person .role{font-size:15px}
 html.doc .card,html.doc .tile{padding:14px 16px}
 html.doc .card h3,html.doc .tile h3{font-size:18px}
 html.doc .card p,html.doc .tile p{font-size:15px}
-html.doc .duo{flex-direction:column;gap:12px}html.doc .duo .art{width:100%;height:auto}html.doc .chips{width:100%;gap:8px}html.doc .chips .chip{font-size:14px;padding:8px 12px}
+html.doc .duo{flex-direction:column;gap:12px}html.doc .duo .art{width:100%;height:auto}html.doc .gain{width:100%;padding:18px;gap:10px;border-radius:14px}html.doc .gain-h{font-size:12px}html.doc .gain ul{gap:10px}html.doc .gain li{padding-left:30px}html.doc .gain li::before{width:20px;height:20px;top:2px}html.doc .gain li b{font-size:18px}html.doc .gain li span{font-size:14px}
 html.doc .legal{flex-direction:column;gap:16px}html.doc .lcol{width:100%;gap:10px}html.doc .rcol{gap:10px}html.doc .larrow{display:none}
 html.doc .modal{margin-top:6px;padding:16px;gap:8px;opacity:1;transform:none;animation:none;box-shadow:0 10px 30px rgba(14,31,69,.15)}
 html.doc .meyebrow{font-size:12px;letter-spacing:2px}html.doc .mtitle{font-size:24px}
@@ -316,27 +326,28 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
     <use href="#g-cardShape" class="mv dupA" fill="#B8730F"/>
     <g class="dupB" opacity="0"><use href="#g-cardShape" fill="#B8730F" x="1120" y="470"/><use href="#g-cardShape" fill="#B8730F" x="1150" y="500"/></g>
     <rect class="dup-glow" x="1070" y="430" width="140" height="110" rx="12" fill="none" stroke="#B8730F" stroke-width="4" opacity="0"/>
+    <use href="#g-cardShape" class="mv lawA" fill="#1D4F91"/><g transform="translate(1120,300)"><g class="law-badge" opacity="0"><circle r="24" fill="#1D4F91" stroke="#F5F4EF" stroke-width="3"/><text y="9" text-anchor="middle" font-size="26" font-weight="700" fill="#F5F4EF">§</text><g transform="translate(26,-22)"><circle r="12" fill="#B3362B"/><text y="5" text-anchor="middle" font-size="16" font-weight="800" fill="#F5F4EF">!</text></g></g></g>
     <use href="#g-cardShape" class="mv confA" fill="#6B4FB3"/><use href="#g-cardShape" class="mv confB" fill="#6B4FB3"/>
-    <g font-size="22" font-weight="600"><rect x="560" y="48" width="20" height="20" rx="4" fill="#B3362B"/><text x="592" y="65" fill="#1F1E1D" data-en="lost">потерялась</text><rect x="760" y="48" width="20" height="20" rx="4" fill="#B8730F"/><text x="792" y="65" fill="#1F1E1D" data-en="duplicated">задвоилась</text><rect x="960" y="48" width="20" height="20" rx="4" fill="#6B4FB3"/><text x="992" y="65" fill="#1F1E1D" data-en="same hands">в одних руках</text></g>
+    <g font-size="22" font-weight="600"><rect x="560" y="48" width="20" height="20" rx="4" fill="#B3362B"/><text x="592" y="65" fill="#1F1E1D" data-en="lost">потерялась</text><rect x="760" y="48" width="20" height="20" rx="4" fill="#B8730F"/><text x="792" y="65" fill="#1F1E1D" data-en="duplicated">задвоилась</text><rect x="960" y="48" width="20" height="20" rx="4" fill="#6B4FB3"/><text x="992" y="65" fill="#1F1E1D" data-en="same hands">в одних руках</text><rect x="1160" y="48" width="20" height="20" rx="4" fill="#1D4F91"/><text x="1192" y="65" fill="#1F1E1D" data-en="breaks the law of Kazakhstan">не соответствует закону РК</text></g>
   </svg>
   </div>
 </section>
 
 <!-- 4 · Value · solution and benefit · artifact «Кто кем стал» left, benefits right -->
 <section class="slide" id="s4">
-  <div><p class="eyebrow" data-en="Value · the solution and the benefit">Ценность · решение и польза</p>
+  <div><p class="eyebrow" data-en="Solution">Решение</p>
   <h2 data-en="Upload “before” and “after”. Minutes later, a report with evidence.">Загрузите «до» и «после». Через несколько минут — отчёт с доказательствами.</h2></div>
   <div class="duo">
     <div class="art">
     <svg viewBox="0 0 1664 640" class="s5" aria-label="Шесть подразделений до и шесть после; линии по очереди соединяют старые с новыми, созданные появляются когда к ним приходит линия">
     <text x="130" y="60" font-size="17" fill="#6B6A66" letter-spacing="3" data-en="BEFORE · EDITION 8">БЫЛО · РЕДАКЦИЯ 8</text><text x="1150" y="60" font-size="17" fill="#6B6A66" letter-spacing="3" data-en="AFTER · EDITION 9">СТАЛО · РЕДАКЦИЯ 9</text>
     <g font-size="22" font-weight="600" fill="#1F1E1D">
-      <g transform="translate(130,90)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">БВА</text></g>
-      <g transform="translate(130,176)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40" data-en="Chief auditor">Главный аудитор</text></g>
-      <g transform="translate(130,262)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40" data-en="ICS monitoring department">Департамент мониторинга СВК</text></g>
-      <g transform="translate(130,348)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">ДККМ</text></g>
-      <g transform="translate(130,434)"><rect width="380" height="64" rx="10" fill="#E6F3F6" stroke="#0E8FA8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#0E8FA8"/><text x="28" y="40" data-en="Internal audit directorate">Направление внутреннего аудита</text></g>
-      <g transform="translate(130,520)"><rect width="380" height="64" rx="10" fill="#E6F3F6" stroke="#0E8FA8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#0E8FA8"/><text x="28" y="40" data-en="ICS monitoring directorate">Направление мониторинга СВК</text></g>
+      <g transform="translate(130,90)"><rect width="470" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">БВА</text></g>
+      <g transform="translate(130,176)"><rect width="470" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40" data-en="Chief auditor">Главный аудитор</text></g>
+      <g transform="translate(130,262)"><rect width="470" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40" data-en="ICS monitoring department">Департамент мониторинга СВК</text></g>
+      <g transform="translate(130,348)"><rect width="470" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">ДККМ</text></g>
+      <g transform="translate(130,434)"><rect width="470" height="64" rx="10" fill="#E6F3F6" stroke="#0E8FA8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#0E8FA8"/><text x="28" y="40" data-en="Internal audit directorate">Направление внутреннего аудита</text></g>
+      <g transform="translate(130,520)"><rect width="470" height="64" rx="10" fill="#E6F3F6" stroke="#0E8FA8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#0E8FA8"/><text x="28" y="40" data-en="ICS monitoring directorate">Направление мониторинга СВК</text></g>
       <g transform="translate(1150,90)"><g class="s5-b1"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">БВА</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#4A5872" data-en="kept">сохранено</text></g></g>
       <g transform="translate(1150,176)"><g class="s5-b2"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40" data-en="Chief auditor">Главный аудитор</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#4A5872" data-en="kept">сохранено</text></g></g>
       <g transform="translate(1150,262)"><g class="s5-b3"><rect width="380" height="64" rx="10" fill="#E4F2E8" stroke="#2F7D4F" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#2F7D4F"/><text x="28" y="40">ДИТААД</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#256840" data-en="created">создано</text></g></g>
@@ -344,23 +355,31 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
       <g transform="translate(1150,434)"><g class="s5-b5"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">ДНМ</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#4A5872" data-en="kept">сохранено</text><g class="s5-hi"><rect x="-2" y="-2" width="384" height="68" rx="11" fill="none" stroke="#0E8FA8" stroke-width="3"/><text x="352" y="22" text-anchor="end" font-size="13" fill="#0B6F84" data-en="+ monitoring directorate">+ направление мониторинга</text></g></g></g>
       <g transform="translate(1150,520)"><g class="s5-b6"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">ДККМ</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#4A5872" data-en="kept">сохранено</text></g></g>
     </g>
-    <path class="s5-l1" d="M510 122 C 830 122, 830 122, 1150 122" stroke="#4A5872"/>
-    <path class="s5-l2" d="M510 208 C 830 208, 830 208, 1150 208" stroke="#4A5872"/>
-    <path class="s5-l3" d="M510 294 C 830 294, 830 466, 1150 466" stroke="#4A5872"/>
-    <path class="s5-l4" d="M510 380 C 830 380, 830 552, 1150 552" stroke="#4A5872"/>
-    <path class="s5-l5" d="M510 466 C 830 466, 830 294, 1150 294" stroke="#0E8FA8"/>
-    <path class="s5-l6" d="M510 466 C 830 466, 830 380, 1150 380" stroke="#0E8FA8"/>
-    <path class="s5-l7" d="M510 552 C 830 552, 830 466, 1150 466" stroke="#0E8FA8"/>
+    <path class="s5-l1" d="M600 122 C 830 122, 830 122, 1150 122" stroke="#4A5872"/>
+    <path class="s5-l2" d="M600 208 C 830 208, 830 208, 1150 208" stroke="#4A5872"/>
+    <path class="s5-l3" d="M600 294 C 830 294, 830 466, 1150 466" stroke="#4A5872"/>
+    <path class="s5-l4" d="M600 380 C 830 380, 830 552, 1150 552" stroke="#4A5872"/>
+    <path class="s5-l5" d="M600 466 C 830 466, 830 294, 1150 294" stroke="#0E8FA8"/>
+    <path class="s5-l6" d="M600 466 C 830 466, 830 380, 1150 380" stroke="#0E8FA8"/>
+    <path class="s5-l7" d="M600 552 C 830 552, 830 466, 1150 466" stroke="#0E8FA8"/>
     <g class="s5-leg" font-size="17" font-weight="600"><rect x="640" y="606" width="14" height="14" rx="3" fill="#4A5872"/><text x="662" y="619" fill="#1F1E1D" data-en="kept">сохранено</text><rect x="790" y="606" width="14" height="14" rx="3" fill="#0E8FA8"/><text x="812" y="619" fill="#1F1E1D" data-en="reorganized">реорганизовано</text><rect x="980" y="606" width="14" height="14" rx="3" fill="#2F7D4F"/><text x="1002" y="619" fill="#1F1E1D" data-en="created">создано</text></g>
   </svg>
     </div>
-    <div class="chips"><span class="chip" data-en="3.5 min for a pair of 25-page regulations">3,5 мин на пару положений по 25 страниц</span><span class="chip" data-en="Who became whom: kept, reorganized, created">Кто кем стал: сохранено, реорганизовано, создано</span><span class="chip" data-en="Risks: document, clause, verbatim quote">Риски: документ, пункт, дословная цитата</span><span class="chip" data-en="Conclusion: accept or reject, DOCX and PDF">Заключение: принять или отклонить, DOCX и PDF</span></div>
+    <div class="gain">
+      <p class="gain-h" data-en="What you get">Что вы получаете</p>
+      <ul>
+        <li><b data-en="3.5 minutes">3,5 минуты</b><span data-en="for a pair of 25-page regulations">на пару положений по 25 страниц</span></li>
+        <li><b data-en="Who became whom">Кто кем стал</b><span data-en="kept, reorganized, created, abolished">сохранено, реорганизовано, создано, упразднено</span></li>
+        <li><b data-en="Risks with a source">Риски с источником</b><span data-en="document, clause, verbatim quote">документ, пункт, дословная цитата</span></li>
+        <li><b data-en="A ready conclusion">Готовое заключение</b><span data-en="accept or reject, DOCX and PDF">принять или отклонить, DOCX и PDF</span></li>
+      </ul>
+    </div>
   </div>
 </section>
 
 <!-- 5 · Result and technical implementation · multi-agent conveyor -->
 <section class="slide" id="s5">
-  <div><p class="eyebrow" data-en="Result and technical implementation · multi-agent architecture">Результат и техническая реализация · мультиагентная архитектура</p>
+  <div><p class="eyebrow" data-en="Technical implementation">Техническая реализация</p>
   <h2 data-en="A conveyor of agents: each one has its own job.">Конвейер агентов: у каждого своя задача.</h2></div>
   <div class="art">
   <svg viewBox="0 0 1664 640" aria-label="Конвейер из пяти агентов: экстрактор извлекает пункты с адресом, разметчик размечает функции, сопоставитель сравнивает редакции и считает, судья оценивает кандидатов, инспектор проверяет цитаты; карточка едет по ленте к заключению">
@@ -451,9 +470,9 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
     <p class="eyebrow" data-en="Team">Команда</p>
     <h1 class="hero">Optimus</h1>
     <div class="people">
-      <div class="person"><span class="ava" aria-hidden="true">АК</span><b data-en="Kairat Ashim">Ашим Кайрат</b><span class="role" data-en="MIT graduate">выпускник MIT</span></div>
-      <div class="person"><span class="ava" aria-hidden="true">АБ</span><b data-en="Bolat Ashim">Ашим Болат</b><span class="role">CTO</span></div>
-      <div class="person"><span class="ava" aria-hidden="true">ЖХ</span><b data-en="Khazretsultan Zhientayev">Жиентаев Хазретсултан</b><span class="role">Tech Lead</span></div>
+      <div class="person"><img class="photo" src="img/team/ashim-kairat.jpg" width="640" height="640" alt="Ашим Кайрат"><b data-en="Kairat Ashim">Ашим Кайрат</b><span class="role" data-en="MIT graduate">выпускник MIT</span></div>
+      <div class="person"><img class="photo" src="img/team/ashim-bolat.jpg" width="640" height="640" alt="Ашим Болат"><b data-en="Bolat Ashim">Ашим Болат</b><span class="role">CTO</span></div>
+      <div class="person"><img class="photo" src="img/team/zhientayev-khazretsultan.jpg" width="640" height="640" alt="Жиентаев Хазретсултан"><b data-en="Khazretsultan Zhientayev">Жиентаев Хазретсултан</b><span class="role">Tech Lead</span></div>
     </div>
   </div>
   <div class="foot"><span data-en="Optimus · HackAlem AI 2026 · Task 1 · Kazakhtelecom">Optimus · HackAlem AI 2026 · задача 1 · Казахтелеком</span><b>Demo Day</b></div>
