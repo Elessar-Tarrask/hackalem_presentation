@@ -176,7 +176,9 @@ text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
 .person{background:rgba(245,244,239,.08);border:1px solid rgba(188,214,211,.35);border-radius:20px;padding:36px 32px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
 .photo{width:240px;height:240px;border-radius:50%;object-fit:cover;border:5px solid var(--page);box-shadow:0 16px 40px rgba(0,0,0,.25);margin-bottom:12px;background:#2A6E6B}
 .person b{font-size:34px;font-weight:600;color:var(--page);line-height:1.15}
-.person .role{font-size:24px;color:var(--accent-soft)}
+.uni{display:inline-flex;flex-direction:column;align-items:center;gap:2px;margin-top:10px;padding:10px 18px 9px;border:4px solid var(--page);border-radius:10px;outline:2px solid var(--page);outline-offset:-10px;transform:rotate(-5deg);transform-origin:left center;color:var(--page);background:rgba(245,244,239,.06)}
+.uni b{font-size:30px;font-weight:800;letter-spacing:.16em;line-height:1;color:var(--page)}
+.uni small{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-soft);max-width:300px;text-align:center;line-height:1.2}
 
 /* 9 · the project video, full-bleed */
 .slide.video{padding:0;background:#000}
@@ -223,7 +225,7 @@ html.doc .bullets{flex-direction:column;gap:8px}html.doc .bullet{font-size:15px;
 html.doc .art{flex:none;width:100%;min-height:0;aspect-ratio:1664/640}
 html.doc .full .art{position:relative;inset:auto;aspect-ratio:16/9}
 html.doc .tiles{grid-template-columns:1fr;gap:10px}html.doc .tiles.six .tile{padding:14px 16px}html.doc .tiles.six .tile h3{font-size:18px}html.doc .tiles.six .tile p{font-size:15px}
-html.doc .people{grid-template-columns:1fr;gap:12px;margin-top:16px}html.doc .person{padding:18px;gap:6px}html.doc .photo{width:96px;height:96px;border-width:3px;margin-bottom:4px}html.doc .person b{font-size:20px}html.doc .person .role{font-size:15px}
+html.doc .people{grid-template-columns:1fr;gap:12px;margin-top:16px}html.doc .person{padding:18px;gap:6px}html.doc .photo{width:96px;height:96px;border-width:3px;margin-bottom:4px}html.doc .person b{font-size:20px}html.doc .uni{padding:6px 10px 5px;border-width:3px;outline-offset:-7px;margin-top:4px}html.doc .uni b{font-size:18px}html.doc .uni small{font-size:9px;max-width:200px}
 html.doc .card,html.doc .tile{padding:14px 16px}
 html.doc .card h3,html.doc .tile h3{font-size:18px}
 html.doc .card p,html.doc .tile p{font-size:15px}
@@ -490,9 +492,9 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
     <p class="eyebrow" data-en="Team">Команда</p>
     <h1 class="hero">Optimus</h1>
     <div class="people">
-      <div class="person"><img class="photo" src="img/team/ashim-kairat.jpg" width="640" height="640" alt="Ашим Кайрат"><b data-en="Kairat Ashim">Ашим Кайрат</b><span class="role" data-en="MIT graduate">выпускник MIT</span></div>
-      <div class="person"><img class="photo" src="img/team/ashim-bolat.jpg" width="640" height="640" alt="Ашим Болат"><b data-en="Bolat Ashim">Ашим Болат</b><span class="role">CTO</span></div>
-      <div class="person"><img class="photo" src="img/team/zhientayev-khazretsultan.jpg" width="640" height="640" alt="Жиентаев Хазретсултан"><b data-en="Khazretsultan Zhientayev">Жиентаев Хазретсултан</b><span class="role">Tech Lead</span></div>
+      <div class="person"><img class="photo" src="img/team/ashim-kairat.jpg" width="640" height="640" alt="Ашим Кайрат"><b data-en="Kairat Ashim">Ашим Кайрат</b><span class="uni"><b>MIT</b><small>Massachusetts Institute of Technology</small></span></div>
+      <div class="person"><img class="photo" src="img/team/ashim-bolat.jpg" width="640" height="640" alt="Ашим Болат"><b data-en="Bolat Ashim">Ашим Болат</b><span class="uni"><b>KAIST</b><small>Korea Advanced Institute of Science and Technology</small></span></div>
+      <div class="person"><img class="photo" src="img/team/zhientayev-khazretsultan.jpg" width="640" height="640" alt="Жиентаев Хазретсултан"><b data-en="Khazretsultan Zhientayev">Жиентаев Хазретсултан</b><span class="uni"><b>KBTU</b><small>Kazakh-British Technical University</small></span></div>
     </div>
   </div>
   <div class="foot"><span data-en="Optimus · HackAlem AI 2026 · Task 1 · Kazakhtelecom">Optimus · HackAlem AI 2026 · задача 1 · Казахтелеком</span><b>Demo Day</b></div>
