@@ -32,6 +32,11 @@ h2{font-family:var(--display);font-size:62px;font-weight:600;line-height:1.08;ma
 .shot{display:block;max-width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 14px 40px rgba(14,31,69,.12);background:#fff}
 .human{font-size:28px;color:var(--ink-2);margin:0}
 .stack{margin:0;font-size:19px;color:var(--muted);line-height:1.5}
+.risklegend{display:flex;gap:16px}
+.rl{flex:1;display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 18px;font-size:24px;font-weight:600;line-height:1.15}
+.rl i{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;flex:none;color:var(--page)}
+.rl i svg{width:28px;height:28px}
+.rl.loss i{background:var(--loss)}.rl.dup i{background:var(--dup)}.rl.conf i{background:var(--conf)}.rl.law i{background:#1D4F91}.rl.law{flex:1.35}
 .bullets{display:flex;gap:18px}
 .bullet{flex:1;display:flex;align-items:center;gap:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 22px;font-size:26px;font-weight:600}
 .bullet i{width:18px;height:18px;border-radius:50%;flex:none}
@@ -213,6 +218,7 @@ html.doc .foot{font-size:13px;flex-direction:column;align-items:flex-start;gap:6
 html.doc .body{gap:14px}
 html.doc .human{font-size:15px}
 html.doc .stack{font-size:13px}
+html.doc .risklegend{flex-wrap:wrap;gap:8px}html.doc .rl{flex:1 1 45%;font-size:14px;padding:8px 10px;gap:8px}html.doc .rl i{width:28px;height:28px;border-radius:8px}html.doc .rl i svg{width:17px;height:17px}
 html.doc .bullets{flex-direction:column;gap:8px}html.doc .bullet{font-size:15px;padding:10px 14px;gap:10px}html.doc .bullet i{width:12px;height:12px}
 html.doc .art{flex:none;width:100%;min-height:0;aspect-ratio:1664/640}
 html.doc .full .art{position:relative;inset:auto;aspect-ratio:16/9}
@@ -308,7 +314,12 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
 <section class="slide" id="s3">
   <div><p class="eyebrow" data-en="Problems">Проблемы</p>
   <h2 data-en="A reorganization rewrites the documents. Duties get lost silently.">Реорганизация переписывает документы. Обязанности теряются молча.</h2></div>
-  <p class="human" data-en="In a reorganization, duties get lost, duplicated, or land in the same hands.">При реорганизации обязанности теряются, двоятся и попадают в одни руки.</p>
+  <div class="risklegend">
+    <div class="rl loss"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="10" rx="2"/><path d="M12 16v5M9 18l3 3 3-3"/></svg></i><span data-en="lost">потерялась</span></div>
+    <div class="rl dup"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="13" height="9" rx="2"/><rect x="8" y="10" width="13" height="9" rx="2"/></svg></i><span data-en="duplicated">задвоилась</span></div>
+    <div class="rl conf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="9" height="7" rx="1.5"/><rect x="13" y="4" width="9" height="7" rx="1.5"/><path d="M6.5 11v4h11v-4M12 15v5"/></svg></i><span data-en="same hands">в одних руках</span></div>
+    <div class="rl law"><i><svg viewBox="0 0 24 24" aria-hidden="true"><text x="12" y="18" text-anchor="middle" font-size="19" font-weight="700" fill="currentColor" font-family="Georgia,serif">§</text></svg></i><span data-en="breaks the law of Kazakhstan">не соответствует закону РК</span></div>
+  </div>
   <div class="art">
   <svg viewBox="0 0 1664 640" aria-label="Обязанности переходят из старой структуры в новую: одна карточка падает в щель, одна раздваивается, две попадают одному человеку">
     <rect x="0" y="600" width="1664" height="40" fill="#E6E3DA"/>
@@ -332,7 +343,7 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
     <rect class="dup-glow" x="1070" y="430" width="140" height="110" rx="12" fill="none" stroke="#B8730F" stroke-width="4" opacity="0"/>
     <use href="#g-cardShape" class="mv lawA" fill="#1D4F91"/><g transform="translate(1120,300)"><g class="law-badge" opacity="0"><circle r="24" fill="#1D4F91" stroke="#F5F4EF" stroke-width="3"/><text y="9" text-anchor="middle" font-size="26" font-weight="700" fill="#F5F4EF">§</text><g transform="translate(26,-22)"><circle r="12" fill="#B3362B"/><text y="5" text-anchor="middle" font-size="16" font-weight="800" fill="#F5F4EF">!</text></g></g></g>
     <use href="#g-cardShape" class="mv confA" fill="#6B4FB3"/><use href="#g-cardShape" class="mv confB" fill="#6B4FB3"/>
-    <g font-size="22" font-weight="600"><rect x="560" y="48" width="20" height="20" rx="4" fill="#B3362B"/><text x="592" y="65" fill="#1F1E1D" data-en="lost">потерялась</text><rect x="760" y="48" width="20" height="20" rx="4" fill="#B8730F"/><text x="792" y="65" fill="#1F1E1D" data-en="duplicated">задвоилась</text><rect x="960" y="48" width="20" height="20" rx="4" fill="#6B4FB3"/><text x="992" y="65" fill="#1F1E1D" data-en="same hands">в одних руках</text><rect x="1160" y="48" width="20" height="20" rx="4" fill="#1D4F91"/><text x="1192" y="65" fill="#1F1E1D" data-en="breaks the law of Kazakhstan">не соответствует закону РК</text></g>
+    
   </svg>
   </div>
   <div class="bullets">
