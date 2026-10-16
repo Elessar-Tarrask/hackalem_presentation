@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="OrgScope · 3-minute Demo Day pitch · HackAlem AI 2026, task 1">
+<meta name="robots" content="noindex">
+<title>OrgScope Pitch</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: 3-minute pitch, seven fixed 1920×1080 stages scaled to the viewport; one slide per jury criterion, the generated video closes it full-bleed. */
+:root{
+  --page:#F5F4EF;--panel:#FFFFFF;--line:#E3E0D8;--chip:#EFEDE7;--ink:#1F1E1D;--ink-2:#4F4E4A;--muted:#6B6A66;
+  --accent:#0F5C5A;--accent-deep:#0B3F3E;--accent-soft:#BCD6D3;--orange:#FF8A00;
+  --loss:#B3362B;--loss-ink:#A12A22;--loss-bg:#FBE7E4;--dup:#B8730F;--dup-ink:#8A5A0C;--conf:#6B4FB3;--conf-ink:#5F3BB0;--ok-ink:#256840;
+  --display:'Lora',Georgia,serif;--sans:'Golos Text','Segoe UI',Arial,sans-serif;color-scheme:light;
+}
+html,body{height:100%;margin:0}
+body{background:var(--ink);color:var(--ink);font-family:var(--sans);overflow:hidden}
+#viewport{position:fixed;inset:0;overflow:hidden;background:var(--ink)}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:var(--page);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.slide{position:absolute;inset:0;display:none;padding:88px 128px 96px;flex-direction:column;gap:32px}
+.slide.on{display:flex}
+.eyebrow{font-size:22px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+h2{font-family:var(--display);font-size:62px;font-weight:600;line-height:1.08;margin:0;text-wrap:balance;max-width:1560px}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:28px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px 28px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{margin:0;font-size:30px;font-weight:600;line-height:1.2}
+.card p{margin:0;font-size:22px;color:var(--ink-2);line-height:1.4}
+.shot{display:block;max-width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 14px 40px rgba(14,31,69,.12);background:#fff}
+
+/* 1 · title on the brand teal */
+.slide.teal{background:var(--accent);color:var(--page);justify-content:space-between;padding:96px 128px}
+.brand{display:flex;align-items:center;gap:20px;font-size:28px;font-weight:700;letter-spacing:6px;color:var(--accent-soft)}
+.brand svg{width:60px;height:60px;flex:none}
+.hero{font-family:var(--display);font-size:112px;font-weight:600;line-height:1.05;margin:0;max-width:1400px;text-wrap:balance}
+.hero-sub{font-size:36px;line-height:1.4;color:var(--accent-soft);margin:24px 0 0;max-width:1180px}
+.foot{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;font-size:22px;color:var(--accent-soft)}
+.foot b{color:var(--page);font-weight:600}
+
+/* 2 · problem */
+.docs{display:grid;grid-template-columns:1fr 220px 1fr;align-items:center}
+.doc{display:flex;gap:22px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px 30px;box-shadow:0 10px 30px rgba(14,31,69,.06)}
+.doc .ico{width:64px;height:64px;border-radius:14px;background:var(--accent);display:grid;place-items:center;flex:none}
+.doc.after .ico{background:var(--ink)}
+.doc .ico svg{width:30px;height:30px}
+.doc .tag{display:inline-block;font-size:17px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-deep);background:var(--accent-soft);padding:4px 12px;border-radius:6px}
+.doc .name{font-size:28px;font-weight:600;margin:10px 0 4px}
+.doc .meta{font-size:20px;color:var(--muted);margin:0}
+.nums{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.nums span{font-size:21px;font-weight:600;background:var(--chip);padding:6px 14px;border-radius:999px}
+.gap{display:grid;place-items:center;position:relative;height:100%}
+.gap::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:3px dashed var(--accent)}
+.gap i{position:relative;width:76px;height:76px;border-radius:50%;background:var(--page);border:3px solid var(--accent);display:grid;place-items:center;font-style:normal;font-family:var(--display);font-size:40px;font-weight:700;color:var(--accent)}
+.risks{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.risk{background:var(--panel);border:1px solid var(--line);border-top:10px solid var(--loss);border-radius:16px;padding:24px 28px;display:flex;flex-direction:column;gap:10px}
+.risk.dup{border-top-color:var(--dup)}.risk.conf{border-top-color:var(--conf)}
+.risk h3{margin:0;font-size:30px;font-weight:600;color:var(--loss-ink)}
+.risk.dup h3{color:var(--dup-ink)}.risk.conf h3{color:var(--conf-ink)}
+.risk p{margin:0;font-size:23px;line-height:1.35;color:var(--ink-2)}
+.who{display:flex;gap:18px;align-items:baseline;background:var(--chip);border-radius:14px;padding:20px 26px;font-size:25px;line-height:1.4;color:var(--ink-2)}
+.who b{color:var(--ink);font-weight:600;white-space:nowrap}
+/* slide-level sizing for the projector only; document mode keeps its own sizes */
+html:not(.doc) #s2 .body,html:not(.doc) #s5 .body{justify-content:center;gap:36px}
+html:not(.doc) #s2 .doc{padding:32px 34px}html:not(.doc) #s2 .doc .name{font-size:32px}html:not(.doc) #s2 .doc .meta{font-size:22px}html:not(.doc) #s2 .nums span{font-size:23px}
+html:not(.doc) #s2 .risk{padding:28px 32px}html:not(.doc) #s2 .risk h3{font-size:34px}html:not(.doc) #s2 .risk p{font-size:26px}
+html:not(.doc) #s2 .who{font-size:27px;padding:24px 30px}
+html:not(.doc) #s5 table.cmp{font-size:27px}html:not(.doc) #s5 table.cmp th,html:not(.doc) #s5 table.cmp td{padding:18px 24px}
+
+/* 3 · solution and benefit */
+.split{display:flex;gap:40px;align-items:flex-start;min-height:0}
+.split .shot{width:1000px;flex:none}
+.benefits{display:flex;flex-direction:column;gap:16px;flex:1;min-width:0}
+.benefit{display:flex;flex-direction:column;gap:6px;background:var(--panel);border:1px solid var(--line);border-left:8px solid var(--accent);border-radius:14px;padding:20px 24px}
+.benefit h3{margin:0;font-size:28px;font-weight:600;line-height:1.2}
+.benefit p{margin:0;font-size:21px;line-height:1.38;color:var(--ink-2)}
+.benefit.big h3{font-family:var(--display);font-size:52px;line-height:1;color:var(--accent)}
+
+/* 4 · how it works, on ink */
+.slide.dark{background:var(--ink)}
+.slide.dark h2{color:var(--page)}.slide.dark .eyebrow{color:var(--accent-soft)}
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.step{position:relative;background:#2A2927;border-radius:16px;padding:22px 24px 24px;display:flex;flex-direction:column;gap:10px;color:var(--page)}
+.step:not(:last-child)::after{content:"→";position:absolute;right:-17px;top:30px;font-size:26px;color:var(--accent-soft);z-index:1}
+.step .n{font-size:18px;font-weight:700;color:var(--accent-soft);letter-spacing:.1em}
+.step h3{margin:0;font-size:30px;font-weight:600}
+.step p{margin:0;font-size:21px;line-height:1.38;color:#D9D7D0;flex:1}
+.who-tags{display:flex;gap:8px;flex-wrap:wrap}
+.wt{font-size:17px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:6px}
+.wt.code{background:var(--accent-soft);color:var(--accent-deep)}
+.wt.model{background:var(--orange);color:var(--ink)}
+.rule{display:flex;align-items:center;gap:18px;background:var(--page);border-radius:12px;padding:18px 26px;font-size:28px;font-weight:600;color:var(--ink)}
+.rule .warn{color:var(--loss-ink)}
+.checks-h{margin:0;font-size:22px;font-weight:600;letter-spacing:.04em;color:var(--accent-soft)}
+.checks{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.check{background:#2A2927;border-radius:14px;padding:18px 22px;display:flex;flex-direction:column;gap:6px;color:var(--page)}
+.check b{font-size:23px;font-weight:600}
+.check b::before{content:"✓ ";color:#7FC79A}
+.check span{font-size:20px;color:#D9D7D0}
+.stack{margin:0;font-size:21px;color:var(--accent-soft);line-height:1.5}
+
+/* 5 · innovation */
+table.cmp{border-collapse:collapse;width:100%;font-size:25px;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+table.cmp th,table.cmp td{text-align:left;padding:16px 22px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.3}
+table.cmp tr:last-child td{border-bottom:none}
+table.cmp th{background:var(--chip);font-size:19px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+table.cmp td:first-child{font-weight:600;width:22%}
+table.cmp th.us{color:var(--accent)}
+table.cmp td.us{color:var(--ok-ink);font-weight:600;background:#F3F8F6}
+.finding{background:var(--panel);border:1px solid var(--line);border-left:10px solid var(--loss);border-radius:16px;padding:24px 30px;display:grid;grid-template-columns:1fr auto;gap:12px 28px;align-items:start}
+.badge{display:inline-block;justify-self:start;font-size:17px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:6px;color:var(--loss-ink);background:var(--loss-bg)}
+.ftitle{font-size:28px;font-weight:600;line-height:1.25;grid-column:1/-1}
+.src{display:inline-block;justify-self:start;grid-column:1/-1;font-size:19px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:6px}
+.quote{grid-column:1/-1;font-family:var(--display);font-size:24px;line-height:1.45;background:#FAF9F5;border-left:4px solid var(--accent-soft);padding:12px 18px;border-radius:0 10px 10px 0}
+.verified{font-size:20px;color:var(--ok-ink);font-weight:600;justify-self:end;align-self:center}
+
+/* 6 · potential */
+.pill{display:flex;align-items:center;flex-wrap:wrap;gap:8px 24px;background:var(--ink);border-radius:20px;padding:18px 28px;color:var(--page);font-size:24px;font-weight:600}
+.pill span:last-child{margin-left:auto;color:var(--accent-soft);font-weight:400;font-size:21px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 24px;display:flex;flex-direction:column;gap:8px}
+.tile.done{background:var(--accent);color:var(--page);border-color:var(--accent)}
+.tile h3{margin:0;font-size:27px;font-weight:600}
+.tile p{margin:0;font-size:21px;color:var(--ink-2);flex:1}
+.tile.done p{color:var(--accent-soft)}
+.tile .tag{align-self:flex-start;font-size:19px;color:var(--accent);background:var(--accent-soft);padding:5px 12px;border-radius:6px}
+.tile.done .tag{background:#2A6E6B;color:var(--page)}
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.why .card{border-left:8px solid var(--accent-soft)}
+.why .card h3{font-size:25px}.why .card p{font-size:20px}
+
+/* 7 · the generated video, full-bleed */
+.slide.video{padding:0;background:#000}
+.slide.video video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;cursor:pointer}
+#playBtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:50%;border:0;background:rgba(15,92,90,.92);color:var(--page);display:none;place-items:center;cursor:pointer;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+#playBtn.on{display:grid}
+#playBtn svg{width:64px;height:64px;margin-left:10px}
+#playBtn:focus-visible{outline:4px solid var(--orange);outline-offset:4px}
+#vbar{position:absolute;left:0;bottom:0;height:6px;width:0;background:var(--orange);opacity:.85}
+
+/* presenter controls */
+.hud{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:10px;align-items:center;color:var(--accent-soft);font-size:14px;font-family:var(--sans);user-select:none;z-index:5;transition:opacity .3s}
+.hud.dim{opacity:0}
+.hud button,.hud a{background:#2A2927;color:var(--page);border:1px solid #3a3937;border-radius:8px;padding:6px 12px;font:inherit;cursor:pointer;text-decoration:none}
+.hud a{font-weight:600}
+.hud button:focus-visible,.hud a:focus-visible{outline:2px solid var(--accent-soft);outline-offset:2px}
+.hud button:disabled{opacity:.35;cursor:default}
+.hud .lang{min-width:64px;font-weight:700}
+.hud .fs{font-weight:600}
+.hud [hidden]{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---------- document mode: phones and portrait tablets ---------- */
+.mobnote{display:none}
+html.doc,html.doc body{overflow:auto;height:auto}
+html.doc body{background:var(--page)}
+html.doc #viewport{position:static;overflow:visible;background:var(--page)}
+html.doc #stage{position:static;width:100%;height:auto;transform:none!important;box-shadow:none}
+html.doc .mobnote{display:block;margin:0;padding:12px 16px;background:var(--chip);color:var(--ink-2);font-size:13px;line-height:1.4;border-bottom:1px solid var(--line)}
+html.doc .slide{position:static;display:flex;padding:28px 16px 32px;gap:16px;border-bottom:1px solid var(--line)}
+html.doc .slide.teal{padding:32px 16px;gap:28px}
+html.doc .slide.video{padding:0;aspect-ratio:16/9;position:relative;border-bottom:0;margin-bottom:72px}
+html.doc .eyebrow{font-size:clamp(11px,3vw,14px);letter-spacing:2px;margin-bottom:8px}
+html.doc h2{font-size:clamp(24px,6.5vw,40px)}
+html.doc .brand{font-size:16px;letter-spacing:4px}html.doc .brand svg{width:44px;height:44px}
+html.doc .hero{font-size:clamp(34px,10vw,64px)}
+html.doc .hero-sub{font-size:clamp(16px,4.4vw,22px);margin-top:14px}
+html.doc .foot{font-size:13px;flex-direction:column;align-items:flex-start;gap:6px}
+html.doc .body{gap:14px}
+html.doc .docs{grid-template-columns:1fr}
+html.doc .gap{height:44px}
+html.doc .gap::before{left:50%;right:auto;top:0;bottom:0;border-top:0;border-left:3px dashed var(--accent)}
+html.doc .gap i{width:40px;height:40px;font-size:22px}
+html.doc .doc{padding:16px 18px;gap:14px}html.doc .doc .ico{width:44px;height:44px}html.doc .doc .ico svg{width:22px;height:22px}
+html.doc .doc .name{font-size:18px}html.doc .doc .meta{font-size:14px}html.doc .doc .tag{font-size:12px}
+html.doc .nums span{font-size:14px;padding:4px 10px}
+html.doc .risks,html.doc .pipe,html.doc .checks,html.doc .tiles,html.doc .why{grid-template-columns:1fr;gap:10px}
+html.doc .pipe{gap:22px}
+html.doc .risk,html.doc .card,html.doc .benefit,html.doc .step,html.doc .check,html.doc .tile,html.doc .finding{padding:14px 16px}
+html.doc .risk h3,html.doc .card h3,html.doc .benefit h3,html.doc .step h3,html.doc .tile h3,html.doc .why .card h3{font-size:18px}
+html.doc .benefit.big h3{font-size:32px}
+html.doc .risk p,html.doc .card p,html.doc .benefit p,html.doc .step p,html.doc .tile p,html.doc .why .card p,html.doc .check span{font-size:15px}
+html.doc .check b{font-size:16px}
+html.doc .who{font-size:15px;flex-direction:column;gap:4px;padding:14px 16px}
+html.doc .split{flex-direction:column;gap:16px}html.doc .split .shot{width:100%}
+html.doc .step:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-22px;font-size:18px;transform:translateX(-50%)}
+html.doc .wt{font-size:12px}
+html.doc .rule{font-size:16px;padding:12px 14px}
+html.doc .checks-h,html.doc .stack{font-size:14px}
+html.doc .tablewrap{overflow-x:auto;border-radius:14px}
+html.doc table.cmp{font-size:13px;min-width:600px}
+html.doc table.cmp th,html.doc table.cmp td{padding:8px 10px}
+html.doc table.cmp th{font-size:11px}
+html.doc .finding{grid-template-columns:1fr}
+html.doc .badge{font-size:11px;padding:4px 8px}html.doc .ftitle{font-size:18px}html.doc .src{font-size:12px;padding:4px 8px}
+html.doc .quote{font-size:15px;padding:10px 12px}html.doc .verified{font-size:14px;justify-self:start}
+html.doc .pill{font-size:15px;padding:12px 16px}html.doc .pill span:last-child{margin-left:0;font-size:14px}
+html.doc .tile .tag{font-size:13px}
+html.doc #playBtn,html.doc #vbar{display:none}
+html.doc .hud{left:auto;right:12px;transform:none;bottom:12px;flex-wrap:wrap;justify-content:flex-end;max-width:calc(100vw - 24px)}
+html.doc #prev,html.doc #next,html.doc #counter{display:none}
+</style>
+</head>
+<body>
+<div id="viewport">
+<div id="stage">
+<p class="mobnote" data-en="Mobile view: slides follow one another. The full experience is on a wider screen.">Мобильный режим: слайды идут подряд. Полный вид — на широком экране.</p>
+
+<!-- 1 · Title · ~10 s -->
+<section class="slide teal on" id="s1" aria-label="OrgScope">
+  <div class="brand"><svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="30" fill="#F5F4EF"/><g fill="none" stroke="#0F5C5A" stroke-width="3" stroke-linecap="round"><path d="M9 21c9-5 33-5 42 0"/><path d="M6 30c12-5 36-5 48 0"/><path d="M9 39c9-5 33-5 42 0"/></g><circle cx="43" cy="16" r="5" fill="#FF8A00" stroke="#F5F4EF" stroke-width="2"/></svg>ORGSCOPE</div>
+  <div>
+    <h1 class="hero" data-en="Reorganization without lost functions.">Реорганизация без потерянных функций.</h1>
+    <p class="hero-sub" data-en="An AI agent compares the “before” and “after” documents and backs every finding with a quote from the source.">ИИ-агент сравнивает документы «до» и «после» и подтверждает каждый вывод цитатой из источника.</p>
+  </div>
+  <div class="foot"><span data-en="Optimus · HackAlem AI 2026 · Task 1 · Kazakhtelecom">Optimus · HackAlem AI 2026 · задача 1 · Казахтелеком</span><b>Demo Day</b></div>
+</section>
+
+<!-- 2 · Value · the problem · ~25 s -->
+<section class="slide" id="s2">
+  <div><p class="eyebrow" data-en="Value · the problem">Ценность · какую проблему решаем</p>
+  <h2 data-en="A reorganization rewrites the documents. Duties get lost silently.">Реорганизация переписывает документы. Обязанности теряются молча.</h2></div>
+  <div class="body">
+    <div class="docs">
+      <div class="doc"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#F5F4EF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div>
+        <div><span class="tag" data-en="before">до</span><p class="name">redakciya_8.pdf</p><p class="meta" data-en="Regulation on internal audit, edition 8">Положение о внутреннем аудите, ред. 8</p>
+        <div class="nums"><span data-en="25 pages">25 страниц</span><span data-en="450 clauses">450 пунктов</span><span data-en="254 functions">254 функции</span></div></div></div>
+      <div class="gap" aria-hidden="true"><i>?</i></div>
+      <div class="doc after"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#F5F4EF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div>
+        <div><span class="tag" data-en="after">после</span><p class="name">redakciya_9.pdf</p><p class="meta" data-en="Regulation on internal audit, edition 9">Положение о внутреннем аудите, ред. 9</p>
+        <div class="nums"><span data-en="25 pages">25 страниц</span><span data-en="453 clauses">453 пункта</span><span data-en="250 functions">250 функций</span></div></div></div>
+    </div>
+    <div class="risks">
+      <div class="risk"><h3 data-en="Loss">Потеря</h3><p data-en="a duty from the old edition has no owner in the new one">обязанность из старой редакции не получила владельца в новой</p></div>
+      <div class="risk dup"><h3 data-en="Duplication">Дублирование</h3><p data-en="the same duty is assigned to two units">одна обязанность закреплена за двумя подразделениями</p></div>
+      <div class="risk conf"><h3 data-en="Conflict of interest">Конфликт интересов</h3><p data-en="a unit performs the work and controls its quality">подразделение выполняет работу и само контролирует её качество</p></div>
+    </div>
+    <div class="who"><b data-en="Who it is for:">Для кого:</b><span data-en="the people who run a reorganization: org design, HR, internal audit, compliance. Today they compare regulations by hand, clause by clause, and what they miss surfaces later, in an audit or a dispute.">те, кто проводит реорганизацию: оргразвитие, HR, внутренний аудит, комплаенс. Сегодня они сверяют положения вручную, пункт за пунктом, а пропущенное всплывает позже, на аудите или в споре.</span></div>
+  </div>
+</section>
+
+<!-- 3 · Value · solution and benefit · ~25 s -->
+<section class="slide" id="s3">
+  <div><p class="eyebrow" data-en="Value · the solution and the benefit">Ценность · решение и польза</p>
+  <h2 data-en="Upload “before” and “after”. Minutes later, a report with evidence.">Загрузите «до» и «после». Через несколько минут — отчёт с доказательствами.</h2></div>
+  <div class="split">
+    <img class="shot" src="img/overview.png" width="1220" height="760" alt="Экран «Обзор» OrgScope: два подразделения созданы, семь функций могли быть утрачены; 11 потерь, 5 дублирований, 1 конфликт интересов">
+    <div class="benefits">
+      <div class="benefit big"><h3 data-en="3.5 min">3,5 мин</h3><p data-en="the full analysis of the control pair: two regulations of 25 pages each">полный анализ контрольной пары: два положения по 25 страниц</p></div>
+      <div class="benefit"><h3 data-en="Who became whom">Кто кем стал</h3><p data-en="units created, reorganized, kept or abolished">созданные, реорганизованные, сохранённые и упразднённые подразделения</p></div>
+      <div class="benefit"><h3 data-en="Risks with a source">Риски с источником</h3><p data-en="losses, duplications, conflicts of interest: document, clause, verbatim quote">потери, дублирования, конфликты интересов: документ, пункт, дословная цитата</p></div>
+      <div class="benefit"><h3 data-en="A ready conclusion">Готовое заключение</h3><p data-en="recommendations to accept or reject, a check against the laws of Kazakhstan, DOCX and PDF">рекомендации принять или отклонить, сверка с законами РК, DOCX и PDF</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · Result and technical implementation · ~30 s -->
+<section class="slide dark" id="s4">
+  <div><p class="eyebrow" data-en="Result and technical implementation">Результат и техническая реализация</p>
+  <h2 data-en="The model labels. The code counts and verifies.">Модель размечает. Код считает и проверяет.</h2></div>
+  <div class="body">
+    <div class="pipe">
+      <div class="step"><span class="n">01</span><h3 data-en="Clauses">Пункты</h3><p data-en="Word, PDF and Excel split into clauses with an address: page, line, cell">Word, PDF и Excel режутся на пункты с адресом: страница, строка, ячейка</p><div class="who-tags"><span class="wt code" data-en="code">код</span></div></div>
+      <div class="step"><span class="n">02</span><h3 data-en="Structure">Структура</h3><p data-en="units before and after are diffed; the model assesses successors">подразделения «до» и «после» сравниваются; преемников оценивает модель</p><div class="who-tags"><span class="wt code" data-en="code">код</span><span class="wt model" data-en="model">модель</span></div></div>
+      <div class="step"><span class="n">03</span><h3 data-en="Functions">Функции</h3><p data-en="duties labelled clause by clause: owner, substance, category">обязанности размечаются по пунктам: исполнитель, суть, категория</p><div class="who-tags"><span class="wt model" data-en="model">модель</span></div></div>
+      <div class="step"><span class="n">04</span><h3 data-en="Compare">Сравнение</h3><p data-en="code picks candidates, a model judge decides; code counts the risks; norms from acts in force">кандидатов подбирает код, решает модель-судья; риски считает код; нормы из действующих актов</p><div class="who-tags"><span class="wt code" data-en="code">код</span><span class="wt model" data-en="model">модель</span></div></div>
+      <div class="step"><span class="n">05</span><h3 data-en="Conclusion">Заключение</h3><p data-en="built by code from verified findings only">собирает код только из проверенных выводов</p><div class="who-tags"><span class="wt code" data-en="code">код</span></div></div>
+    </div>
+    <div class="rule"><span class="warn" aria-hidden="true">⚠</span><span data-en="Quote not found in its clause → finding dropped. Only confirmed findings reach the report.">Цитата не найдена в своём пункте → вывод отброшен. В отчёт попадает только подтверждённое.</span></div>
+    <p class="checks-h" data-en="Control pair: found in every control run">Контрольная пара: находится в каждом контрольном запуске</p>
+    <div class="checks">
+      <div class="check"><b data-en="Lost function">Потеря функции</b><span data-en="before · clause 5.6.2">до · п. 5.6.2</span></div>
+      <div class="check"><b data-en="Duplication">Дублирование</b><span data-en="after · clauses 5.4.3 and 5.5.8">после · п. 5.4.3 и 5.5.8</span></div>
+      <div class="check"><b data-en="Conflict of interest">Конфликт интересов</b><span data-en="ДККМ · after · clause 5.5.2">ДККМ · после · п. 5.5.2</span></div>
+      <div class="check"><b data-en="20 legal bases">20 правовых оснований</b><span data-en="from 3 acts in force, adilet.zan.kz">из 3 действующих актов, adilet.zan.kz</span></div>
+    </div>
+    <p class="stack" data-en="Docker Compose · Caddy · Node 22 + Express · Vue 3 · Python 3.12 + FastAPI · MongoDB 8 · OpenAI-compatible API · smoke.sh: 36 HTTP checks · runs from a clean clone">Docker Compose · Caddy · Node 22 + Express · Vue 3 · Python 3.12 + FastAPI · MongoDB 8 · OpenAI-совместимый API · smoke.sh: 36 HTTP-проверок · запуск с чистого клона</p>
+  </div>
+</section>
+
+<!-- 5 · Innovation · ~20 s -->
+<section class="slide" id="s5">
+  <div><p class="eyebrow" data-en="Innovation · how it differs">Инновационность · чем отличаемся</p>
+  <h2 data-en="Not a chatbot’s answer, a verified finding.">Не ответ чат-бота, а проверенный вывод.</h2></div>
+  <div class="body">
+    <div class="tablewrap"><table class="cmp">
+      <tr><th></th><th data-en="Manual comparison">Ручная сверка</th><th data-en="Asking a chat model">Запрос к чат-модели</th><th class="us">OrgScope</th></tr>
+      <tr><td data-en="Source of a finding">Источник вывода</td><td data-en="yes, after hours of work">есть, но после часов работы</td><td data-en="often none, sometimes invented">часто нет, бывает выдуман</td><td class="us" data-en="clause and quote, verified by code">пункт и цитата, проверены кодом</td></tr>
+      <tr><td data-en="The numbers">Числа</td><td data-en="counted by a person">считает человек</td><td data-en="the model, no guarantee">модель, без гарантии</td><td class="us" data-en="code, reproducible">код, воспроизводимо</td></tr>
+      <tr><td data-en="The law">Закон</td><td data-en="a separate job for a lawyer">отдельная работа юриста</td><td data-en="from the model’s memory">по памяти модели</td><td class="us" data-en="only acts in force from adilet.zan.kz">только действующие акты с adilet.zan.kz</td></tr>
+      <tr><td data-en="The data">Данные</td><td data-en="inside the company">в компании</td><td data-en="with an external service">у внешнего сервиса</td><td class="us" data-en="inside the company: Docker, any compatible API">в контуре: Docker, любой совместимый API</td></tr>
+    </table></div>
+    <div class="finding">
+      <span class="badge" data-en="Possible function loss · ДККМ">Возможная потеря функции · ДККМ</span>
+      <span class="verified" data-en="✓ Quote verified by code against the source text">✓ Цитата проверена кодом по тексту источника</span>
+      <div class="ftitle" data-en="The right to form quality-control teams is not found in the new edition">Право формировать группы контроля качества не найдено в новой редакции</div>
+      <span class="src" data-en="before · redakciya_8.pdf · clause 5.6.2, p. 10, lines 11–12">до · redakciya_8.pdf · п. 5.6.2, стр. 10, строки 11–12</span>
+      <div class="quote">«формировать группы контроля качества с привлечением работников БВА в соответствии с ресурсным планом и бюджетом затрат БВА;»</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · Potential for growth and scaling · ~20 s -->
+<section class="slide" id="s6">
+  <div><p class="eyebrow" data-en="Potential for growth and scaling">Потенциал развития и масштабирования</p>
+  <h2 data-en="One method for any documents where a duty needs an owner.">Один метод — для любых документов, где у обязанности должен быть владелец.</h2></div>
+  <div class="body">
+    <div class="pill"><span data-en="extract with an address → label → match → verify quotes → conclusion → check against norms">извлечь с адресом → разметить → сопоставить → проверить цитаты → заключение → сверить с нормами</span><span data-en="only the labelling changes">меняется только разметка</span></div>
+    <div class="tiles">
+      <div class="tile done"><h3 data-en="Org structure">Оргструктура</h3><p data-en="regulations before and after a reorganization">положения «до» и «после» реорганизации</p><span class="tag" data-en="works today">работает сегодня</span></div>
+      <div class="tile"><h3 data-en="Job descriptions">Должностные инструкции</h3><p data-en="a job description against its unit’s regulation">инструкция ↔ положение о подразделении</p><span class="tag" data-en="new labelling prompt">новый промпт разметки</span></div>
+      <div class="tile"><h3 data-en="Mergers and acquisitions">Слияния и поглощения</h3><p data-en="two companies’ structures into one">структуры двух компаний в одну</p><span class="tag" data-en="new labelling prompt">новый промпт разметки</span></div>
+      <div class="tile"><h3 data-en="Internal rules vs. the law">Регламенты ↔ законы</h3><p data-en="internal documents against the acts of Kazakhstan">внутренние документы против актов РК</p><span class="tag" data-en="extend the corpus of acts">расширить корпус актов</span></div>
+      <div class="tile"><h3 data-en="Contracts and standards">Договоры и стандарты</h3><p data-en="edition N against edition N+1, obligations">редакция N ↔ редакция N+1, обязательства</p><span class="tag" data-en="new labelling prompt">новый промпт разметки</span></div>
+      <div class="tile"><h3 data-en="Public and quasi-public sector">Госорганы и квазигоссектор</h3><p data-en="regulations of agencies and funds">положения о ведомствах и фондах</p><span class="tag" data-en="a different corpus of acts">другой корпус актов</span></div>
+    </div>
+    <div class="why">
+      <div class="card"><h3 data-en="Already in the code">Уже есть в коде</h3><p data-en="matching, counting and quote checks do not depend on the domain; the analysis API is open for integration">сопоставление, подсчёт и проверка цитат не зависят от области; API анализа открыт для интеграции</p></div>
+      <div class="card"><h3 data-en="Runs inside the company">Разворачивается в контуре</h3><p data-en="one docker compose command; any OpenAI-compatible model">одна команда docker compose; любая OpenAI-совместимая модель</p></div>
+      <div class="card"><h3 data-en="Next steps">Следующие шаги</h3><p data-en="OCR and legacy .doc · all acts of Kazakhstan in force · a pilot on one company’s real documents">OCR и старый .doc · все действующие акты РК · пилот на реальных документах одной компании</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · The generated video · 46 s -->
+<section class="slide video" id="s7" aria-label="Видео OrgScope">
+  <video id="pv" playsinline preload="auto" poster="video/orgscope-ru.jpg" src="video/orgscope-ru.mp4" data-src-ru="video/orgscope-ru.mp4" data-src-en="video/orgscope-en.mp4" data-poster-ru="video/orgscope-ru.jpg" data-poster-en="video/orgscope-en.jpg"></video>
+  <button type="button" id="playBtn" aria-label="Воспроизвести видео"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></button>
+  <div id="vbar" aria-hidden="true"></div>
+</section>
+
+</div>
+</div>
+
+<div class="hud" id="hud">
+  <a id="home" href="index.html" target="_top" data-en="Home">Главная</a>
+  <button type="button" id="prev" aria-label="Предыдущий слайд">←</button>
+  <span id="counter">1 / 7</span>
+  <button type="button" id="next" aria-label="Следующий слайд">→</button>
+  <button type="button" id="lang" class="lang" aria-label="Переключить язык">EN</button>
+  <button type="button" id="fs" class="fs" title="F" data-en="Full screen">Во весь экран</button>
+</div>
+
+<script>
+(function(){
+  const root=document.documentElement, stage=document.getElementById('stage'), hud=document.getElementById('hud');
+  const slides=[...document.querySelectorAll('.slide')];
+  const v=document.getElementById('pv'), playBtn=document.getElementById('playBtn'), vbar=document.getElementById('vbar');
+  const VIDEO=slides.findIndex(s=>s.classList.contains('video'));
+  let i=0, lang='ru';
+  document.querySelectorAll('[data-en]').forEach(el=>{el.dataset.ru=el.textContent;});
+  const isDoc=()=>root.classList.contains('doc');
+
+  function setVideoLang(){
+    const key=lang==='en'?'En':'Ru', src=v.dataset['src'+key];
+    if(v.getAttribute('src')===src)return;
+    const t=v.currentTime, playing=!v.paused;
+    v.setAttribute('poster',v.dataset['poster'+key]); v.setAttribute('src',src); v.load();
+    if(t)v.addEventListener('loadedmetadata',()=>{v.currentTime=t;},{once:true});
+    if(playing)play();
+  }
+  function applyLang(){
+    document.querySelectorAll('[data-en]').forEach(el=>{el.textContent=lang==='en'?el.dataset.en:el.dataset.ru;});
+    root.lang=lang;
+    document.getElementById('lang').textContent=lang==='en'?'RU':'EN';
+    setVideoLang();
+    try{localStorage.setItem('orgscope-lang',lang)}catch(e){}
+  }
+
+  // Video: starts on entering the last slide; click or Space pauses; a play button appears if the browser blocks autoplay.
+  function play(){v.play().then(()=>playBtn.classList.remove('on')).catch(()=>{if(!isDoc())playBtn.classList.add('on');});}
+  v.addEventListener('pause',()=>{if(!v.ended&&!isDoc()&&i===VIDEO)playBtn.classList.add('on');hud.classList.remove('dim');});
+  v.addEventListener('play',()=>playBtn.classList.remove('on'));
+  v.addEventListener('timeupdate',()=>{vbar.style.width=(v.duration?100*v.currentTime/v.duration:0)+'%';});
+  v.addEventListener('ended',()=>{playBtn.classList.remove('on');hud.classList.remove('dim');});
+  v.addEventListener('click',e=>{if(isDoc())return;e.stopPropagation();v.paused?play():v.pause();});
+  playBtn.addEventListener('click',e=>{e.stopPropagation();play();});
+
+  function fit(){
+    const vw=root.clientWidth, vh=root.clientHeight, s=Math.min(vw/1920,vh/1080), doc=s<0.5, was=isDoc();
+    root.classList.toggle('doc',doc);
+    if(!doc){stage.style.transform=`scale(${s})`;stage.style.left=((vw-1920*s)/2)+'px';stage.style.top=((vh-1080*s)/2)+'px';}
+    else{stage.style.transform='';stage.style.left='';stage.style.top='';}
+    if(was!==doc)render();
+  }
+  function render(){
+    if(isDoc()){slides.forEach(s=>s.classList.add('on'));v.controls=true;playBtn.classList.remove('on');hud.classList.remove('dim');}
+    else{v.controls=false;slides.forEach((s,k)=>s.classList.toggle('on',k===i));}
+    applyLang();
+  }
+  function show(n){
+    const prev=i; i=Math.max(0,Math.min(slides.length-1,n));
+    if(isDoc()){render();return;}
+    slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+    document.getElementById('counter').textContent=`${i+1} / ${slides.length}`;
+    document.getElementById('prev').disabled=i===0;
+    document.getElementById('next').disabled=i===slides.length-1;
+    applyLang();
+    if(i===VIDEO&&prev!==VIDEO){v.currentTime=0;vbar.style.width='0';play();hud.classList.add('dim');}
+    if(i!==VIDEO){v.pause();playBtn.classList.remove('on');hud.classList.remove('dim');}
+  }
+
+  try{const saved=localStorage.getItem('orgscope-lang');if(saved==='en'||saved==='ru')lang=saved;}catch(e){}
+  if(location.hash==='#en')lang='en'; if(location.hash==='#ru')lang='ru';
+  addEventListener('resize',fit); addEventListener('orientationchange',fit); fit(); setTimeout(fit,300);
+
+  addEventListener('keydown',e=>{
+    const k=e.key;
+    if((k===' '||k==='Enter')&&e.target.closest&&e.target.closest('button,a'))return;
+    if(i===VIDEO&&!isDoc()&&(k===' '||k==='k'||k==='K')){e.preventDefault();v.paused?play():v.pause();return;}
+    if(k==='ArrowRight'||k===' '||k==='PageDown'){e.preventDefault();show(i+1);}
+    else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();show(i-1);}
+    else if(k==='l'||k==='L'){lang=lang==='en'?'ru':'en';applyLang();}
+    else if(k==='Home')show(0);
+    else if(k==='End')show(slides.length-1);
+    else if(k==='f'||k==='F')toggleFs();
+  });
+  let tx=null;
+  addEventListener('touchstart',e=>{if(e.target.closest('video,button,a'))return;tx=e.touches[0].clientX;},{passive:true});
+  addEventListener('touchend',e=>{if(tx===null||isDoc())return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>60)show(dx<0?i+1:i-1);},{passive:true});
+  stage.addEventListener('click',e=>{if(e.target.closest('button,video,a')||isDoc())return;show(i+1);});
+  let dimT;
+  addEventListener('mousemove',()=>{if(i!==VIDEO||isDoc())return;hud.classList.remove('dim');clearTimeout(dimT);dimT=setTimeout(()=>{if(!v.paused&&i===VIDEO)hud.classList.add('dim');},1800);});
+  document.getElementById('next').onclick=()=>show(i+1);
+  document.getElementById('prev').onclick=()=>show(i-1);
+  document.getElementById('lang').onclick=()=>{lang=lang==='en'?'ru':'en';applyLang();};
+
+  const fsBtn=document.getElementById('fs');
+  function toggleFs(){if(!document.fullscreenEnabled)return;if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});else root.requestFullscreen().catch(()=>{});}
+  if(!document.fullscreenEnabled)fsBtn.hidden=true;
+  else{fsBtn.onclick=toggleFs;document.addEventListener('fullscreenchange',()=>{fsBtn.dataset.en=document.fullscreenElement?'Exit full screen':'Full screen';fsBtn.dataset.ru=document.fullscreenElement?'Выйти из полного экрана':'Во весь экран';applyLang();setTimeout(fit,100);});}
+  show(0);
+})();
+</script>
+</body>
+</html>
