@@ -56,6 +56,27 @@ text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
 .hole-glow{animation:crack 8s linear 1s infinite}
 .conf-hands{animation:hands 8s linear 5s infinite}
 .dup-glow{animation:glow 8s linear 3s infinite}
+/* ---------- 5 structure (lines step by step, 10s) ---------- */
+.s5 path{stroke-dasharray:1700;stroke-dashoffset:1700;fill:none;stroke-width:5;stroke-linecap:round}
+@keyframes s5l1{0%,6%{stroke-dashoffset:1700}12%,100%{stroke-dashoffset:0}}
+@keyframes s5l2{0%,14%{stroke-dashoffset:1700}20%,100%{stroke-dashoffset:0}}
+@keyframes s5l3{0%,22%{stroke-dashoffset:1700}28%,100%{stroke-dashoffset:0}}
+@keyframes s5l4{0%,30%{stroke-dashoffset:1700}36%,100%{stroke-dashoffset:0}}
+@keyframes s5l5{0%,40%{stroke-dashoffset:1700}47%,100%{stroke-dashoffset:0}}
+@keyframes s5l6{0%,48%{stroke-dashoffset:1700}55%,100%{stroke-dashoffset:0}}
+@keyframes s5l7{0%,58%{stroke-dashoffset:1700}65%,100%{stroke-dashoffset:0}}
+@keyframes s5b1{0%,11%{opacity:0;transform:translateX(24px)}14%,100%{opacity:1;transform:translateX(0)}}
+@keyframes s5b2{0%,19%{opacity:0;transform:translateX(24px)}22%,100%{opacity:1;transform:translateX(0)}}
+@keyframes s5b5{0%,27%{opacity:0;transform:translateX(24px)}30%,100%{opacity:1;transform:translateX(0)}}
+@keyframes s5b6{0%,35%{opacity:0;transform:translateX(24px)}38%,100%{opacity:1;transform:translateX(0)}}
+@keyframes s5b3{0%,46%{opacity:0;transform:scale(.6)}50%{opacity:1;transform:scale(1.08)}53%,100%{opacity:1;transform:scale(1)}}
+@keyframes s5b4{0%,54%{opacity:0;transform:scale(.6)}58%{opacity:1;transform:scale(1.08)}61%,100%{opacity:1;transform:scale(1)}}
+@keyframes s5hi{0%,64%{opacity:0}67%,100%{opacity:1}}
+@keyframes s5leg{0%,68%{opacity:0}73%,100%{opacity:1}}
+.s5-l1{animation:s5l1 10s linear infinite}.s5-l2{animation:s5l2 10s linear infinite}.s5-l3{animation:s5l3 10s linear infinite}.s5-l4{animation:s5l4 10s linear infinite}.s5-l5{animation:s5l5 10s linear infinite}.s5-l6{animation:s5l6 10s linear infinite}.s5-l7{animation:s5l7 10s linear infinite}
+.s5-b1{animation:s5b1 10s linear infinite}.s5-b2{animation:s5b2 10s linear infinite}.s5-b5{animation:s5b5 10s linear infinite}.s5-b6{animation:s5b6 10s linear infinite}
+.s5-b3{animation:s5b3 10s linear infinite;transform-origin:center;transform-box:fill-box}.s5-b4{animation:s5b4 10s linear infinite;transform-origin:center;transform-box:fill-box}
+.s5-hi{animation:s5hi 10s linear infinite}.s5-leg{animation:s5leg 10s linear infinite}
 /* ---------- 11 difference (three tracks) ---------- */
 @keyframes walk{0%{transform:translateX(0)}100%{transform:translateX(230px)}}
 .s11-w{animation:walk 4s linear infinite}.s11-w1{animation-duration:9s}.s11-w2{animation-duration:3s}.s11-w3{animation-duration:3.2s}
@@ -90,13 +111,8 @@ text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
 .foot b{color:var(--page);font-weight:600}
 
 /* 4 · solution and benefit */
-.split{display:flex;gap:40px;align-items:flex-start;min-height:0}
-.split .shot{width:1000px;flex:none}
-.benefits{display:flex;flex-direction:column;gap:16px;flex:1;min-width:0}
-.benefit{display:flex;flex-direction:column;gap:6px;background:var(--panel);border:1px solid var(--line);border-left:8px solid var(--accent);border-radius:14px;padding:20px 24px}
-.benefit h3{margin:0;font-size:28px;font-weight:600;line-height:1.2}
-.benefit p{margin:0;font-size:21px;line-height:1.38;color:var(--ink-2)}
-.benefit.big h3{font-family:var(--display);font-size:52px;line-height:1;color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:12px}
+.chips .chip{font-size:20px;padding:9px 16px}
 
 /* 7 · legal check: real norm card, the adilet button called out as a big dialog */
 .legal{display:flex;gap:40px;align-items:flex-start;min-height:0;flex:1}
@@ -182,11 +198,10 @@ html.doc .stack{font-size:13px}
 html.doc .art{flex:none;width:100%;min-height:0;aspect-ratio:1664/640}
 html.doc .full .art{position:relative;inset:auto;aspect-ratio:16/9}
 html.doc .tiles,html.doc .why{grid-template-columns:1fr;gap:10px}
-html.doc .card,html.doc .benefit,html.doc .tile{padding:14px 16px}
-html.doc .card h3,html.doc .benefit h3,html.doc .tile h3,html.doc .why .card h3{font-size:18px}
-html.doc .benefit.big h3{font-size:32px}
-html.doc .card p,html.doc .benefit p,html.doc .tile p,html.doc .why .card p{font-size:15px}
-html.doc .split{flex-direction:column;gap:16px}html.doc .split .shot{width:100%}
+html.doc .card,html.doc .tile{padding:14px 16px}
+html.doc .card h3,html.doc .tile h3,html.doc .why .card h3{font-size:18px}
+html.doc .card p,html.doc .tile p,html.doc .why .card p{font-size:15px}
+html.doc .chips{gap:8px}html.doc .chips .chip{font-size:13px;padding:6px 10px}
 html.doc .legal{flex-direction:column;gap:16px}html.doc .lcol{width:100%;gap:10px}html.doc .rcol{gap:10px}html.doc .larrow{display:none}
 html.doc .modal{margin-top:6px;padding:16px;gap:8px;opacity:1;transform:none;animation:none;box-shadow:0 10px 30px rgba(14,31,69,.15)}
 html.doc .meyebrow{font-size:12px;letter-spacing:2px}html.doc .mtitle{font-size:24px}
@@ -300,19 +315,39 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
   </div>
 </section>
 
-<!-- 4 · Value · solution and benefit · 0:50 · real screen -->
+<!-- 4 · Value · solution and benefit · 0:50 · artifact «Кто кем стал» -->
 <section class="slide" id="s4">
   <div><p class="eyebrow" data-en="Value · the solution and the benefit">Ценность · решение и польза</p>
   <h2 data-en="Upload “before” and “after”. Minutes later, a report with evidence.">Загрузите «до» и «после». Через несколько минут — отчёт с доказательствами.</h2></div>
-  <div class="split">
-    <img class="shot" src="img/overview.png" width="1220" height="760" alt="Экран «Обзор» OrgScope: два подразделения созданы, семь функций могли быть утрачены; 11 потерь, 5 дублирований, 1 конфликт интересов">
-    <div class="benefits">
-      <div class="benefit big"><h3 data-en="3.5 min">3,5 мин</h3><p data-en="the full analysis of the control pair: two regulations of 25 pages each">полный анализ контрольной пары: два положения по 25 страниц</p></div>
-      <div class="benefit"><h3 data-en="Who became whom">Кто кем стал</h3><p data-en="units created, reorganized, kept or abolished">созданные, реорганизованные, сохранённые и упразднённые подразделения</p></div>
-      <div class="benefit"><h3 data-en="Risks with a source">Риски с источником</h3><p data-en="losses, duplications, conflicts of interest: document, clause, verbatim quote">потери, дублирования, конфликты интересов: документ, пункт, дословная цитата</p></div>
-      <div class="benefit"><h3 data-en="A ready conclusion">Готовое заключение</h3><p data-en="recommendations to accept or reject, a check against the laws of Kazakhstan, DOCX and PDF">рекомендации принять или отклонить, сверка с законами РК, DOCX и PDF</p></div>
-    </div>
+  <p class="human" data-en="Two documents in, a verified list out: who became whom, risks with a source, a ready conclusion.">Два документа на входе, проверенный список на выходе: кто кем стал, риски с источником, готовое заключение.</p>
+  <div class="art">
+  <svg viewBox="0 0 1664 640" class="s5" aria-label="Шесть подразделений до и шесть после; линии по очереди соединяют старые с новыми, созданные появляются когда к ним приходит линия">
+    <text x="130" y="60" font-size="17" fill="#6B6A66" letter-spacing="3" data-en="BEFORE · EDITION 8">БЫЛО · РЕДАКЦИЯ 8</text><text x="1150" y="60" font-size="17" fill="#6B6A66" letter-spacing="3" data-en="AFTER · EDITION 9">СТАЛО · РЕДАКЦИЯ 9</text>
+    <g font-size="22" font-weight="600" fill="#1F1E1D">
+      <g transform="translate(130,90)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">БВА</text></g>
+      <g transform="translate(130,176)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40" data-en="Chief auditor">Главный аудитор</text></g>
+      <g transform="translate(130,262)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40" data-en="ICS monitoring department">Департамент мониторинга СВК</text></g>
+      <g transform="translate(130,348)"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">ДККМ</text></g>
+      <g transform="translate(130,434)"><rect width="380" height="64" rx="10" fill="#E6F3F6" stroke="#0E8FA8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#0E8FA8"/><text x="28" y="40" data-en="Internal audit directorate">Направление внутреннего аудита</text></g>
+      <g transform="translate(130,520)"><rect width="380" height="64" rx="10" fill="#E6F3F6" stroke="#0E8FA8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#0E8FA8"/><text x="28" y="40" data-en="ICS monitoring directorate">Направление мониторинга СВК</text></g>
+      <g transform="translate(1150,90)"><g class="s5-b1"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">БВА</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#4A5872" data-en="kept">сохранено</text></g></g>
+      <g transform="translate(1150,176)"><g class="s5-b2"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40" data-en="Chief auditor">Главный аудитор</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#4A5872" data-en="kept">сохранено</text></g></g>
+      <g transform="translate(1150,262)"><g class="s5-b3"><rect width="380" height="64" rx="10" fill="#E4F2E8" stroke="#2F7D4F" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#2F7D4F"/><text x="28" y="40">ДИТААД</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#256840" data-en="created">создано</text></g></g>
+      <g transform="translate(1150,348)"><g class="s5-b4"><rect width="380" height="64" rx="10" fill="#E4F2E8" stroke="#2F7D4F" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#2F7D4F"/><text x="28" y="40">ДОА</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#256840" data-en="created">создано</text></g></g>
+      <g transform="translate(1150,434)"><g class="s5-b5"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">ДНМ</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#4A5872" data-en="kept">сохранено</text><g class="s5-hi"><rect x="-2" y="-2" width="384" height="68" rx="11" fill="none" stroke="#0E8FA8" stroke-width="3"/><text x="352" y="22" text-anchor="end" font-size="13" fill="#0B6F84" data-en="+ monitoring directorate">+ направление мониторинга</text></g></g></g>
+      <g transform="translate(1150,520)"><g class="s5-b6"><rect width="380" height="64" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="8" height="64" rx="4" fill="#4A5872"/><text x="28" y="40">ДККМ</text><text x="352" y="40" text-anchor="end" font-size="15" fill="#4A5872" data-en="kept">сохранено</text></g></g>
+    </g>
+    <path class="s5-l1" d="M510 122 C 830 122, 830 122, 1150 122" stroke="#4A5872"/>
+    <path class="s5-l2" d="M510 208 C 830 208, 830 208, 1150 208" stroke="#4A5872"/>
+    <path class="s5-l3" d="M510 294 C 830 294, 830 466, 1150 466" stroke="#4A5872"/>
+    <path class="s5-l4" d="M510 380 C 830 380, 830 552, 1150 552" stroke="#4A5872"/>
+    <path class="s5-l5" d="M510 466 C 830 466, 830 294, 1150 294" stroke="#0E8FA8"/>
+    <path class="s5-l6" d="M510 466 C 830 466, 830 380, 1150 380" stroke="#0E8FA8"/>
+    <path class="s5-l7" d="M510 552 C 830 552, 830 466, 1150 466" stroke="#0E8FA8"/>
+    <g class="s5-leg" font-size="17" font-weight="600"><rect x="640" y="606" width="14" height="14" rx="3" fill="#4A5872"/><text x="662" y="619" fill="#1F1E1D" data-en="kept">сохранено</text><rect x="790" y="606" width="14" height="14" rx="3" fill="#0E8FA8"/><text x="812" y="619" fill="#1F1E1D" data-en="reorganized">реорганизовано</text><rect x="980" y="606" width="14" height="14" rx="3" fill="#2F7D4F"/><text x="1002" y="619" fill="#1F1E1D" data-en="created">создано</text></g>
+  </svg>
   </div>
+  <div class="chips"><span class="chip" data-en="3.5 min for a pair of 25-page regulations">3,5 мин на пару положений по 25 страниц</span><span class="chip" data-en="Who became whom">Кто кем стал</span><span class="chip" data-en="Risks: document, clause, verbatim quote">Риски: документ, пункт, дословная цитата</span><span class="chip" data-en="Conclusion: accept or reject, DOCX and PDF">Заключение: принять или отклонить, DOCX и PDF</span></div>
 </section>
 
 <!-- 5 · Result and technical implementation · roles separated · 1:05 · artifact «Конвейер агентов» -->
