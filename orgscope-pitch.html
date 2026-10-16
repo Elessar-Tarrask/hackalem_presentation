@@ -164,6 +164,10 @@ text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
 .tiles.six{flex:1;grid-template-rows:repeat(2,1fr);gap:22px}
 .tiles.six .tile{padding:28px 30px;justify-content:space-between}
 .tiles.six .tile h3{font-size:34px}.tiles.six .tile p{font-size:25px;flex:none}
+.tile{position:relative;overflow:hidden}
+.tile>*:not(.bg){position:relative;z-index:1}
+.tile .bg{position:absolute;right:-22px;bottom:-26px;width:210px;height:210px;color:var(--accent);opacity:.09;pointer-events:none}
+.tile.done .bg{color:var(--page);opacity:.18}
 
 /* 8 · team on the brand teal */
 .team .eyebrow{color:var(--accent-soft)}
@@ -171,9 +175,10 @@ text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
 .person{background:rgba(245,244,239,.08);border:1px solid rgba(188,214,211,.35);border-radius:20px;padding:36px 32px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
 .photo{width:240px;height:240px;border-radius:50%;object-fit:cover;border:5px solid var(--page);box-shadow:0 16px 40px rgba(0,0,0,.25);margin-bottom:12px;background:#2A6E6B}
 .person b{font-size:34px;font-weight:600;color:var(--page);line-height:1.15}
-.uni{display:inline-flex;flex-direction:column;align-items:center;gap:2px;margin-top:10px;padding:10px 18px 9px;border:4px solid var(--page);border-radius:10px;outline:2px solid var(--page);outline-offset:-10px;transform:rotate(-5deg);transform-origin:left center;color:var(--page);background:rgba(245,244,239,.06)}
-.uni b{font-size:30px;font-weight:800;letter-spacing:.16em;line-height:1;color:var(--page)}
-.uni small{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-soft);max-width:300px;text-align:center;line-height:1.2}
+.uni{display:inline-flex;align-items:center;justify-content:center;margin-top:12px;padding:16px 24px;background:#fff;border:4px solid var(--page);border-radius:10px;outline:2px solid var(--accent);outline-offset:-10px;transform:rotate(-5deg);transform-origin:left center;box-shadow:0 12px 30px rgba(0,0,0,.22)}
+.uni img{display:block;width:auto;height:64px}
+.uni img.l-kaist{height:88px}
+.uni img.l-kbtu{height:52px}
 
 /* 9 · the project video, full-bleed */
 .slide.video{padding:0;background:#000}
@@ -219,8 +224,8 @@ html.doc .risklegend{flex-wrap:wrap;gap:8px}html.doc .rl{flex:1 1 45%;font-size:
 html.doc .bullets{flex-direction:column;gap:8px}html.doc .bullet{font-size:15px;padding:10px 14px;gap:10px}html.doc .bullet i{width:12px;height:12px}
 html.doc .art{flex:none;width:100%;min-height:0;aspect-ratio:1664/640}
 html.doc .full .art{position:relative;inset:auto;aspect-ratio:16/9}
-html.doc .tiles{grid-template-columns:1fr;gap:10px}html.doc .tiles.six .tile{padding:14px 16px}html.doc .tiles.six .tile h3{font-size:18px}html.doc .tiles.six .tile p{font-size:15px}
-html.doc .people{grid-template-columns:1fr;gap:12px;margin-top:16px}html.doc .person{padding:18px;gap:6px}html.doc .photo{width:96px;height:96px;border-width:3px;margin-bottom:4px}html.doc .person b{font-size:20px}html.doc .uni{padding:6px 10px 5px;border-width:3px;outline-offset:-7px;margin-top:4px}html.doc .uni b{font-size:18px}html.doc .uni small{font-size:9px;max-width:200px}
+html.doc .tiles{grid-template-columns:1fr;gap:10px}html.doc .tiles.six .tile{padding:14px 16px}html.doc .tiles.six .tile h3{font-size:18px}html.doc .tiles.six .tile p{font-size:15px}html.doc .tile .bg{width:110px;height:110px;right:-12px;bottom:-14px}
+html.doc .people{grid-template-columns:1fr;gap:12px;margin-top:16px}html.doc .person{padding:18px;gap:6px}html.doc .photo{width:96px;height:96px;border-width:3px;margin-bottom:4px}html.doc .person b{font-size:20px}html.doc .uni{padding:8px 12px;border-width:3px;outline-offset:-7px;margin-top:6px}html.doc .uni img{height:34px}html.doc .uni img.l-kaist{height:46px}html.doc .uni img.l-kbtu{height:28px}
 html.doc .card,html.doc .tile{padding:14px 16px}
 html.doc .card h3,html.doc .tile h3{font-size:18px}
 html.doc .card p,html.doc .tile p{font-size:15px}
@@ -468,12 +473,12 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
   <div class="body">
     <div class="pill"><span data-en="extract with an address → label → match → verify quotes → conclusion → check against norms">извлечь с адресом → разметить → сопоставить → проверить цитаты → заключение → сверить с нормами</span><span data-en="a new area takes minimal edits">новая область — минимальные правки</span></div>
     <div class="tiles six">
-      <div class="tile done"><h3 data-en="Org structure">Оргструктура</h3><p data-en="regulations before and after a reorganization">положения «до» и «после» реорганизации</p><span class="tag" data-en="works today">работает сегодня</span></div>
-      <div class="tile"><h3 data-en="Job descriptions">Должностные инструкции</h3><p data-en="a job description against its unit’s regulation">инструкция ↔ положение о подразделении</p><span class="tag" data-en="scaling · minimal edits">масштабирование · минимальные правки</span></div>
-      <div class="tile"><h3 data-en="Mergers and acquisitions">Слияния и поглощения</h3><p data-en="two companies’ structures into one">структуры двух компаний в одну</p><span class="tag" data-en="scaling · minimal edits">масштабирование · минимальные правки</span></div>
-      <div class="tile"><h3 data-en="Internal rules vs. the law">Регламенты ↔ законы</h3><p data-en="internal documents against the acts of Kazakhstan">внутренние документы против актов РК</p><span class="tag" data-en="scaling · minimal edits">масштабирование · минимальные правки</span></div>
-      <div class="tile"><h3 data-en="Contracts and standards">Договоры и стандарты</h3><p data-en="edition N against edition N+1, obligations">редакция N ↔ редакция N+1, обязательства</p><span class="tag" data-en="scaling · minimal edits">масштабирование · минимальные правки</span></div>
-      <div class="tile"><h3 data-en="Public and quasi-public sector">Госорганы и квазигоссектор</h3><p data-en="regulations of agencies and funds">положения о ведомствах и фондах</p><span class="tag" data-en="scaling · minimal edits">масштабирование · минимальные правки</span></div>
+      <div class="tile done"><svg class="bg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="4" rx="1"/><rect x="2" y="15" width="6" height="4" rx="1"/><rect x="9" y="15" width="6" height="4" rx="1"/><rect x="16" y="15" width="6" height="4" rx="1"/><path d="M12 7v4M5 15v-4h14v4M12 11v4"/></svg><h3 data-en="Org structure">Оргструктура</h3><p data-en="regulations before and after a reorganization">положения «до» и «после» реорганизации</p><span class="tag" data-en="works today">работает сегодня</span></div>
+      <div class="tile"><svg class="bg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M7 18c1-3.5 9-3.5 10 0M9 3v2M15 3v2"/></svg><h3 data-en="Job descriptions">Должностные инструкции</h3><p data-en="a job description against its unit’s regulation">инструкция ↔ положение о подразделении</p><span class="tag" data-en="scaling · minimal edits">масштабирование · минимальные правки</span></div>
+      <div class="tile"><svg class="bg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg><h3 data-en="Mergers and acquisitions">Слияния и поглощения</h3><p data-en="two companies’ structures into one">структуры двух компаний в одну</p><span class="tag" data-en="scaling · minimal edits">масштабирование · минимальные правки</span></div>
+      <div class="tile"><svg class="bg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M8 21h8M4 7h16M6 7l-3 7a3 3 0 0 0 6 0zM18 7l-3 7a3 3 0 0 0 6 0z"/></svg><h3 data-en="Internal rules vs. the law">Регламенты ↔ законы</h3><p data-en="internal documents against the acts of Kazakhstan">внутренние документы против актов РК</p><span class="tag" data-en="scaling · minimal edits">масштабирование · минимальные правки</span></div>
+      <div class="tile"><svg class="bg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M8 16c1-2.5 2 2.5 3 0s2 2.5 3 0s1.5-1 2 0"/></svg><h3 data-en="Contracts and standards">Договоры и стандарты</h3><p data-en="edition N against edition N+1, obligations">редакция N ↔ редакция N+1, обязательства</p><span class="tag" data-en="scaling · minimal edits">масштабирование · минимальные правки</span></div>
+      <div class="tile"><svg class="bg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M4 10h16M12 3 3 8h18zM6 10v11M10 10v11M14 10v11M18 10v11"/></svg><h3 data-en="Public and quasi-public sector">Госорганы и квазигоссектор</h3><p data-en="regulations of agencies and funds">положения о ведомствах и фондах</p><span class="tag" data-en="scaling · minimal edits">масштабирование · минимальные правки</span></div>
     </div>
   </div>
 </section>
@@ -485,9 +490,9 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
     <p class="eyebrow" data-en="Team">Команда</p>
     <h1 class="hero">Optimus</h1>
     <div class="people">
-      <div class="person"><img class="photo" src="img/team/ashim-kairat.jpg" width="640" height="640" alt="Ашим Кайрат"><b data-en="Kairat Ashim">Ашим Кайрат</b><span class="uni"><b>MIT</b><small>Massachusetts Institute of Technology</small></span></div>
-      <div class="person"><img class="photo" src="img/team/ashim-bolat.jpg" width="640" height="640" alt="Ашим Болат"><b data-en="Bolat Ashim">Ашим Болат</b><span class="uni"><b>KAIST</b><small>Korea Advanced Institute of Science and Technology</small></span></div>
-      <div class="person"><img class="photo" src="img/team/zhientayev-khazretsultan.jpg" width="640" height="640" alt="Жиентаев Хазретсултан"><b data-en="Khazretsultan Zhientayev">Жиентаев Хазретсултан</b><span class="uni"><b>KBTU</b><small>Kazakh-British Technical University</small></span></div>
+      <div class="person"><img class="photo" src="img/team/ashim-kairat.jpg" width="640" height="640" alt="Ашим Кайрат"><b data-en="Kairat Ashim">Ашим Кайрат</b><span class="uni"><img src="img/team/mit.svg" alt="MIT" class="l-mit"></span></div>
+      <div class="person"><img class="photo" src="img/team/ashim-bolat.jpg" width="640" height="640" alt="Ашим Болат"><b data-en="Bolat Ashim">Ашим Болат</b><span class="uni"><img src="img/team/kaist.svg" alt="KAIST" class="l-kaist"></span></div>
+      <div class="person"><img class="photo" src="img/team/zhientayev-khazretsultan.jpg" width="640" height="640" alt="Жиентаев Хазретсултан"><b data-en="Khazretsultan Zhientayev">Жиентаев Хазретсултан</b><span class="uni"><img src="img/team/kbtu.png" alt="KBTU" class="l-kbtu"></span></div>
     </div>
   </div>
   <div class="foot"><span data-en="Optimus · HackAlem AI 2026 · Task 1 · Kazakhtelecom">Optimus · HackAlem AI 2026 · задача 1 · Казахтелеком</span><b>Demo Day</b></div>
