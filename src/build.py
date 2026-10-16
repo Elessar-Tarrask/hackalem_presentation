@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build presentation.html (standalone) and orgscope-classic.html (artifact fragment) from src/classic.html.
+"""Build presentation-full.html (standalone) and orgscope-classic.html (artifact fragment) from src/classic.html.
 
 Screens are embedded as base64 from the folder given as the first argument (files <name>.b64).
 Run from the presentation folder:  python3 src/build.py /path/to/deckimg
@@ -29,5 +29,5 @@ for ph, name in PLACEHOLDERS:
     frag = frag.replace(ph, 'data:image/png;base64,' + b64)
 open('orgscope-classic.html', 'w', encoding='utf8').write(frag)
 i = frag.index('</style>') + len('</style>')
-open('presentation.html', 'w', encoding='utf8').write(HEAD + frag[:i] + '\n</head>\n<body>\n' + frag[i:] + '\n</body>\n</html>\n')
-print('built presentation.html', os.path.getsize('presentation.html'), 'bytes')
+open('presentation-full.html', 'w', encoding='utf8').write(HEAD + frag[:i] + '\n</head>\n<body>\n' + frag[i:] + '\n</body>\n</html>\n')
+print('built presentation-full.html', os.path.getsize('presentation-full.html'), 'bytes')
