@@ -3,31 +3,87 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="OrgScope · 3-minute Demo Day pitch · HackAlem AI 2026, task 1">
+<meta name="description" content="ИИ-агент «Анализ организационной структуры и функционала» · 3-minute Demo Day pitch · HackAlem AI 2026, task 1">
 <meta name="robots" content="noindex">
 <title>OrgScope Pitch</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: 3-minute pitch, seven fixed 1920×1080 stages scaled to the viewport; one slide per jury criterion, the generated video closes it full-bleed. */
+/* Layout: 3-minute pitch, ten fixed 1920×1080 stages scaled to the viewport; one slide per pitch moment, animated artifacts and real screens, the project video closes it full-bleed. */
 :root{
   --page:#F5F4EF;--panel:#FFFFFF;--line:#E3E0D8;--chip:#EFEDE7;--ink:#1F1E1D;--ink-2:#4F4E4A;--muted:#6B6A66;
-  --accent:#0F5C5A;--accent-deep:#0B3F3E;--accent-soft:#BCD6D3;--orange:#FF8A00;
-  --loss:#B3362B;--loss-ink:#A12A22;--loss-bg:#FBE7E4;--dup:#B8730F;--dup-ink:#8A5A0C;--conf:#6B4FB3;--conf-ink:#5F3BB0;--ok-ink:#256840;
+  --accent:#0F5C5A;--accent-deep:#0B3F3E;--accent-soft:#BCD6D3;--orange:#FF8A00;--mark:#FFF1C2;
+  --loss:#B3362B;--loss-ink:#A12A22;--loss-bg:#FBE7E4;--dup:#B8730F;--dup-ink:#8A5A0C;--conf:#6B4FB3;--conf-ink:#5F3BB0;--ok:#2F7D4F;--ok-ink:#256840;--ok-bg:#E4F2E8;
+  --ui-blue:#0A6FE0;--ui-blue-line:#BFD6F7;--ui-blue-bg:#F3F7FF;
   --display:'Lora',Georgia,serif;--sans:'Golos Text','Segoe UI',Arial,sans-serif;color-scheme:light;
 }
 html,body{height:100%;margin:0}
 body{background:var(--ink);color:var(--ink);font-family:var(--sans);overflow:hidden}
 #viewport{position:fixed;inset:0;overflow:hidden;background:var(--ink)}
 #stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:var(--page);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
-.slide{position:absolute;inset:0;display:none;padding:88px 128px 96px;flex-direction:column;gap:32px}
+.slide{position:absolute;inset:0;display:none;padding:88px 128px 96px;flex-direction:column;gap:28px}
 .slide.on{display:flex}
+.slide.full{padding:0;background:var(--accent)}
 .eyebrow{font-size:22px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
 h2{font-family:var(--display);font-size:62px;font-weight:600;line-height:1.08;margin:0;text-wrap:balance;max-width:1560px}
-.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:28px}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:24px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px 28px;display:flex;flex-direction:column;gap:8px;min-width:0}
 .card h3{margin:0;font-size:30px;font-weight:600;line-height:1.2}
 .card p{margin:0;font-size:22px;color:var(--ink-2);line-height:1.4}
 .shot{display:block;max-width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 14px 40px rgba(14,31,69,.12);background:#fff}
+.human{font-size:28px;color:var(--ink-2);margin:0}
+.note{display:flex;align-items:center;gap:18px;background:var(--chip);border-radius:12px;padding:16px 26px;font-size:26px;font-weight:600;color:var(--ink)}
+.stack{margin:0;font-size:19px;color:var(--muted);line-height:1.5}
+
+/* artifacts: SVG stages inside a slide */
+.art{position:relative;flex:1;min-height:0;container-type:inline-size}
+.art>svg{width:100%;height:100%;display:block}
+.full .art{position:absolute;inset:0}
+text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
+.serif{font-family:'Lora',Georgia,serif}
+/* ---------- 2 problem (the move) ---------- */
+.mv{offset-rotate:0deg;opacity:0}
+@keyframes flyA{0%{offset-distance:0%;opacity:0}4%{opacity:1}92%{opacity:1}100%{offset-distance:100%;opacity:0}}
+@keyframes flyDrop{0%{offset-distance:0%;opacity:0}5%{opacity:1}55%{offset-distance:55%}100%{offset-distance:100%;opacity:1}}
+@keyframes popTwin{0%,45%{opacity:0;transform:scale(.4)}55%{opacity:1;transform:scale(1.15)}65%{transform:scale(1)}100%{opacity:1;transform:scale(1)}}
+@keyframes glow{0%,100%{opacity:0}50%{opacity:1}}
+@keyframes crack{0%,50%{opacity:0}60%,100%{opacity:1}}
+@keyframes hands{0%,60%{opacity:0}70%,100%{opacity:1}}
+.c1{offset-path:path("M460 320 Q 830 150 1200 330");animation:flyA 4s linear 0s infinite}
+.c2{offset-path:path("M460 380 Q 830 200 1200 390");animation:flyA 4s linear .7s infinite}
+.c3{offset-path:path("M460 440 Q 830 260 1200 450");animation:flyA 4s linear 1.4s infinite}
+.c4{offset-path:path("M460 350 Q 830 180 1200 360");animation:flyA 4s linear 2.3s infinite}
+.c5{offset-path:path("M460 500 Q 830 330 1200 500");animation:flyA 4s linear 3.1s infinite}
+.lost{offset-path:path("M460 300 Q 650 170 810 300 L 810 760");animation:flyDrop 8s ease-in 1s infinite}
+.dupA{offset-path:path("M460 420 Q 830 250 1200 420");animation:flyA 8s linear 3s infinite}
+.dupB{animation:popTwin 8s linear 3s infinite;transform-origin:center;transform-box:fill-box}
+.confA{offset-path:path("M460 360 Q 760 150 1040 470");animation:flyA 8s linear 5s infinite}
+.confB{offset-path:path("M460 460 Q 760 250 1040 470");animation:flyA 8s linear 5.4s infinite}
+.hole-glow{animation:crack 8s linear 1s infinite}
+.conf-hands{animation:hands 8s linear 5s infinite}
+.dup-glow{animation:glow 8s linear 3s infinite}
+/* ---------- 11 difference (three tracks) ---------- */
+@keyframes walk{0%{transform:translateX(0)}100%{transform:translateX(230px)}}
+.s11-w{animation:walk 4s linear infinite}.s11-w1{animation-duration:9s}.s11-w2{animation-duration:3s}.s11-w3{animation-duration:3.2s}
+/* ---------- 13 final (ring) ---------- */
+@keyframes s13go{0%{transform:translateX(0)}100%{transform:translateX(1480px)}}
+@keyframes s13chk{0%,49%{opacity:0;transform:scale(.3)}53%,100%{opacity:1;transform:scale(1)}}
+.s13-c{animation:s13go 7s linear infinite}.s13-k{animation:s13chk 7s linear infinite;transform-origin:center;transform-box:fill-box}
+.s13-d1{animation-delay:-1.4s}.s13-d2{animation-delay:-2.8s}.s13-d3{animation-delay:-4.2s}.s13-d4{animation-delay:-5.6s}
+/* ---------- new pitch artifacts ---------- */
+@keyframes mkUp{0%{opacity:0;transform:translateY(24px)}100%{opacity:1;transform:translateY(0)}}
+.mk{opacity:0;animation:mkUp .7s ease forwards}.mk2{animation-delay:.5s}.mk3{animation-delay:1s}
+.kt{opacity:0;animation:mkUp .6s ease forwards}.kt1{animation-delay:1.4s}.kt2{animation-delay:2s}.kt3{animation-delay:2.6s}
+@keyframes cvMove{0%{transform:translate(0,0);opacity:0}3%{opacity:1}8%{transform:translate(110px,0)}18%{transform:translate(110px,0)}24%{transform:translate(380px,0)}34%{transform:translate(380px,0)}40%{transform:translate(650px,0)}50%{transform:translate(650px,0)}56%{transform:translate(920px,0)}66%{transform:translate(920px,0)}72%{transform:translate(1190px,0)}84%{transform:translate(1190px,0);opacity:1}92%{transform:translate(1460px,-96px);opacity:1}96%{opacity:0}100%{transform:translate(1460px,-96px);opacity:0}}
+.cv-card{animation:cvMove 12s linear infinite}
+@keyframes bd1{0%,8%{opacity:0;transform:scale(.4)}11%{opacity:1;transform:scale(1.1)}13%,100%{opacity:1;transform:scale(1)}}
+@keyframes bd2{0%,24%{opacity:0;transform:scale(.4)}27%{opacity:1;transform:scale(1.1)}29%,100%{opacity:1;transform:scale(1)}}
+@keyframes bd3{0%,40%{opacity:0;transform:scale(.4)}43%{opacity:1;transform:scale(1.1)}45%,100%{opacity:1;transform:scale(1)}}
+@keyframes bd4{0%,56%{opacity:0;transform:scale(.4)}59%{opacity:1;transform:scale(1.1)}61%,100%{opacity:1;transform:scale(1)}}
+@keyframes bd5{0%,72%{opacity:0;transform:rotate(-8deg) scale(.4)}75%{opacity:1;transform:rotate(-8deg) scale(1.15)}77%,100%{opacity:1;transform:rotate(-8deg) scale(1)}}
+.bd{transform-origin:center;transform-box:fill-box;opacity:0}
+.bd1{animation:bd1 12s linear infinite}.bd2{animation:bd2 12s linear infinite}.bd3{animation:bd3 12s linear infinite}.bd4{animation:bd4 12s linear infinite}.bd5{animation:bd5 12s linear infinite}
+@keyframes cvSheet{0%,88%{opacity:.35}94%,100%{opacity:1}}
+.cv-sheet{animation:cvSheet 12s linear infinite}
 
 /* 1 · title on the brand teal */
 .slide.teal{background:var(--accent);color:var(--page);justify-content:space-between;padding:96px 128px}
@@ -38,36 +94,7 @@ h2{font-family:var(--display);font-size:62px;font-weight:600;line-height:1.08;ma
 .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;font-size:22px;color:var(--accent-soft)}
 .foot b{color:var(--page);font-weight:600}
 
-/* 2 · problem */
-.docs{display:grid;grid-template-columns:1fr 220px 1fr;align-items:center}
-.doc{display:flex;gap:22px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px 30px;box-shadow:0 10px 30px rgba(14,31,69,.06)}
-.doc .ico{width:64px;height:64px;border-radius:14px;background:var(--accent);display:grid;place-items:center;flex:none}
-.doc.after .ico{background:var(--ink)}
-.doc .ico svg{width:30px;height:30px}
-.doc .tag{display:inline-block;font-size:17px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-deep);background:var(--accent-soft);padding:4px 12px;border-radius:6px}
-.doc .name{font-size:28px;font-weight:600;margin:10px 0 4px}
-.doc .meta{font-size:20px;color:var(--muted);margin:0}
-.nums{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-.nums span{font-size:21px;font-weight:600;background:var(--chip);padding:6px 14px;border-radius:999px}
-.gap{display:grid;place-items:center;position:relative;height:100%}
-.gap::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:3px dashed var(--accent)}
-.gap i{position:relative;width:76px;height:76px;border-radius:50%;background:var(--page);border:3px solid var(--accent);display:grid;place-items:center;font-style:normal;font-family:var(--display);font-size:40px;font-weight:700;color:var(--accent)}
-.risks{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.risk{background:var(--panel);border:1px solid var(--line);border-top:10px solid var(--loss);border-radius:16px;padding:24px 28px;display:flex;flex-direction:column;gap:10px}
-.risk.dup{border-top-color:var(--dup)}.risk.conf{border-top-color:var(--conf)}
-.risk h3{margin:0;font-size:30px;font-weight:600;color:var(--loss-ink)}
-.risk.dup h3{color:var(--dup-ink)}.risk.conf h3{color:var(--conf-ink)}
-.risk p{margin:0;font-size:23px;line-height:1.35;color:var(--ink-2)}
-.who{display:flex;gap:18px;align-items:baseline;background:var(--chip);border-radius:14px;padding:20px 26px;font-size:25px;line-height:1.4;color:var(--ink-2)}
-.who b{color:var(--ink);font-weight:600;white-space:nowrap}
-/* slide-level sizing for the projector only; document mode keeps its own sizes */
-html:not(.doc) #s2 .body,html:not(.doc) #s5 .body{justify-content:center;gap:36px}
-html:not(.doc) #s2 .doc{padding:32px 34px}html:not(.doc) #s2 .doc .name{font-size:32px}html:not(.doc) #s2 .doc .meta{font-size:22px}html:not(.doc) #s2 .nums span{font-size:23px}
-html:not(.doc) #s2 .risk{padding:28px 32px}html:not(.doc) #s2 .risk h3{font-size:34px}html:not(.doc) #s2 .risk p{font-size:26px}
-html:not(.doc) #s2 .who{font-size:27px;padding:24px 30px}
-html:not(.doc) #s5 table.cmp{font-size:27px}html:not(.doc) #s5 table.cmp th,html:not(.doc) #s5 table.cmp td{padding:18px 24px}
-
-/* 3 · solution and benefit */
+/* 4 · solution and benefit */
 .split{display:flex;gap:40px;align-items:flex-start;min-height:0}
 .split .shot{width:1000px;flex:none}
 .benefits{display:flex;flex-direction:column;gap:16px;flex:1;min-width:0}
@@ -76,45 +103,31 @@ html:not(.doc) #s5 table.cmp{font-size:27px}html:not(.doc) #s5 table.cmp th,html
 .benefit p{margin:0;font-size:21px;line-height:1.38;color:var(--ink-2)}
 .benefit.big h3{font-family:var(--display);font-size:52px;line-height:1;color:var(--accent)}
 
-/* 4 · how it works, on ink */
-.slide.dark{background:var(--ink)}
-.slide.dark h2{color:var(--page)}.slide.dark .eyebrow{color:var(--accent-soft)}
-.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
-.step{position:relative;background:#2A2927;border-radius:16px;padding:22px 24px 24px;display:flex;flex-direction:column;gap:10px;color:var(--page)}
-.step:not(:last-child)::after{content:"→";position:absolute;right:-17px;top:30px;font-size:26px;color:var(--accent-soft);z-index:1}
-.step .n{font-size:18px;font-weight:700;color:var(--accent-soft);letter-spacing:.1em}
-.step h3{margin:0;font-size:30px;font-weight:600}
-.step p{margin:0;font-size:21px;line-height:1.38;color:#D9D7D0;flex:1}
-.who-tags{display:flex;gap:8px;flex-wrap:wrap}
-.wt{font-size:17px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:6px}
-.wt.code{background:var(--accent-soft);color:var(--accent-deep)}
-.wt.model{background:var(--orange);color:var(--ink)}
-.rule{display:flex;align-items:center;gap:18px;background:var(--page);border-radius:12px;padding:18px 26px;font-size:28px;font-weight:600;color:var(--ink)}
-.rule .warn{color:var(--loss-ink)}
-.checks-h{margin:0;font-size:22px;font-weight:600;letter-spacing:.04em;color:var(--accent-soft)}
-.checks{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.check{background:#2A2927;border-radius:14px;padding:18px 22px;display:flex;flex-direction:column;gap:6px;color:var(--page)}
-.check b{font-size:23px;font-weight:600}
-.check b::before{content:"✓ ";color:#7FC79A}
-.check span{font-size:20px;color:#D9D7D0}
-.stack{margin:0;font-size:21px;color:var(--accent-soft);line-height:1.5}
+/* 7 · legal check: real norm card, the adilet button called out as a big dialog */
+.legal{display:flex;gap:40px;align-items:flex-start;min-height:0;flex:1}
+.lcol{width:1000px;flex:none;position:relative;display:flex;flex-direction:column;gap:14px}
+.rcol{flex:1;min-width:0;display:flex;flex-direction:column;gap:16px}
+.laws{display:flex;flex-direction:column;gap:12px}
+.law{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 22px;font-size:25px;font-weight:600}
+.law i{font-style:normal;margin-left:auto;font-size:18px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ok-ink);background:var(--ok-bg);padding:6px 12px;border-radius:6px}
+.chip{align-self:flex-start;font-size:20px;color:var(--accent);background:var(--accent-soft);padding:8px 14px;border-radius:8px}
+.larrow{position:absolute;left:0;top:276px;width:1000px;height:90px;overflow:visible;pointer-events:none}
+.larrow path{stroke:var(--accent);stroke-width:4;fill:none;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;animation:larrow .7s ease-out .8s forwards}
+.larrow .head{fill:var(--accent);opacity:0;animation:fadeIn .2s ease-out 1.4s forwards}
+@keyframes larrow{to{stroke-dashoffset:0}}
+@keyframes fadeIn{to{opacity:1}}
+.modal{margin-top:44px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px 36px 24px;box-shadow:0 30px 70px rgba(14,31,69,.22),0 0 0 6px rgba(15,92,90,.08);display:flex;flex-direction:column;gap:8px;opacity:0;transform:scale(.94);animation:modalIn .5s ease-out 1.5s forwards}
+@keyframes modalIn{to{opacity:1;transform:scale(1)}}
+.meyebrow{margin:0;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent)}
+.mtitle{margin:0;font-family:var(--display);font-size:40px;font-weight:600;line-height:1.1}
+.hugebtn{display:inline-flex;align-items:center;gap:22px;align-self:flex-start;margin-top:8px;padding:20px 40px;border:3px solid var(--ui-blue-line);border-radius:16px;background:var(--ui-blue-bg);color:var(--ui-blue);font-size:46px;font-weight:700;text-decoration:none;line-height:1}
+.hugebtn svg{width:54px;height:54px;flex:none}
+.hugebtn:hover{background:#E6EFFD}
+.hugebtn:focus-visible{outline:4px solid var(--orange);outline-offset:4px}
+.mmeta{margin:4px 0 0;font-size:21px;color:var(--ink-2)}.mmeta b{color:var(--ink);font-weight:600;margin-right:10px}
+.moff{margin:0;font-size:18px;color:var(--muted);line-height:1.35}
 
-/* 5 · innovation */
-table.cmp{border-collapse:collapse;width:100%;font-size:25px;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-table.cmp th,table.cmp td{text-align:left;padding:16px 22px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.3}
-table.cmp tr:last-child td{border-bottom:none}
-table.cmp th{background:var(--chip);font-size:19px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
-table.cmp td:first-child{font-weight:600;width:22%}
-table.cmp th.us{color:var(--accent)}
-table.cmp td.us{color:var(--ok-ink);font-weight:600;background:#F3F8F6}
-.finding{background:var(--panel);border:1px solid var(--line);border-left:10px solid var(--loss);border-radius:16px;padding:24px 30px;display:grid;grid-template-columns:1fr auto;gap:12px 28px;align-items:start}
-.badge{display:inline-block;justify-self:start;font-size:17px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:6px;color:var(--loss-ink);background:var(--loss-bg)}
-.ftitle{font-size:28px;font-weight:600;line-height:1.25;grid-column:1/-1}
-.src{display:inline-block;justify-self:start;grid-column:1/-1;font-size:19px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:6px}
-.quote{grid-column:1/-1;font-family:var(--display);font-size:24px;line-height:1.45;background:#FAF9F5;border-left:4px solid var(--accent-soft);padding:12px 18px;border-radius:0 10px 10px 0}
-.verified{font-size:20px;color:var(--ok-ink);font-weight:600;justify-self:end;align-self:center}
-
-/* 6 · potential */
+/* 8 · potential */
 .pill{display:flex;align-items:center;flex-wrap:wrap;gap:8px 24px;background:var(--ink);border-radius:20px;padding:18px 28px;color:var(--page);font-size:24px;font-weight:600}
 .pill span:last-child{margin-left:auto;color:var(--accent-soft);font-weight:400;font-size:21px}
 .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -129,7 +142,7 @@ table.cmp td.us{color:var(--ok-ink);font-weight:600;background:#F3F8F6}
 .why .card{border-left:8px solid var(--accent-soft)}
 .why .card h3{font-size:25px}.why .card p{font-size:20px}
 
-/* 7 · the generated video, full-bleed */
+/* 10 · the project video, full-bleed */
 .slide.video{padding:0;background:#000}
 .slide.video video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;cursor:pointer}
 #playBtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:50%;border:0;background:rgba(15,92,90,.92);color:var(--page);display:none;place-items:center;cursor:pointer;box-shadow:0 20px 60px rgba(0,0,0,.4)}
@@ -148,7 +161,7 @@ table.cmp td.us{color:var(--ok-ink);font-weight:600;background:#F3F8F6}
 .hud .lang{min-width:64px;font-weight:700}
 .hud .fs{font-weight:600}
 .hud [hidden]{display:none}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.mv{opacity:1;offset-distance:60%}.modal{opacity:1;transform:none}.larrow path{stroke-dashoffset:0}.larrow .head{opacity:1}}
 
 /* ---------- document mode: phones and portrait tablets ---------- */
 .mobnote{display:none}
@@ -159,6 +172,7 @@ html.doc #stage{position:static;width:100%;height:auto;transform:none!important;
 html.doc .mobnote{display:block;margin:0;padding:12px 16px;background:var(--chip);color:var(--ink-2);font-size:13px;line-height:1.4;border-bottom:1px solid var(--line)}
 html.doc .slide{position:static;display:flex;padding:28px 16px 32px;gap:16px;border-bottom:1px solid var(--line)}
 html.doc .slide.teal{padding:32px 16px;gap:28px}
+html.doc .slide.full{padding:0}
 html.doc .slide.video{padding:0;aspect-ratio:16/9;position:relative;border-bottom:0;margin-bottom:72px}
 html.doc .eyebrow{font-size:clamp(11px,3vw,14px);letter-spacing:2px;margin-bottom:8px}
 html.doc h2{font-size:clamp(24px,6.5vw,40px)}
@@ -167,33 +181,23 @@ html.doc .hero{font-size:clamp(34px,10vw,64px)}
 html.doc .hero-sub{font-size:clamp(16px,4.4vw,22px);margin-top:14px}
 html.doc .foot{font-size:13px;flex-direction:column;align-items:flex-start;gap:6px}
 html.doc .body{gap:14px}
-html.doc .docs{grid-template-columns:1fr}
-html.doc .gap{height:44px}
-html.doc .gap::before{left:50%;right:auto;top:0;bottom:0;border-top:0;border-left:3px dashed var(--accent)}
-html.doc .gap i{width:40px;height:40px;font-size:22px}
-html.doc .doc{padding:16px 18px;gap:14px}html.doc .doc .ico{width:44px;height:44px}html.doc .doc .ico svg{width:22px;height:22px}
-html.doc .doc .name{font-size:18px}html.doc .doc .meta{font-size:14px}html.doc .doc .tag{font-size:12px}
-html.doc .nums span{font-size:14px;padding:4px 10px}
-html.doc .risks,html.doc .pipe,html.doc .checks,html.doc .tiles,html.doc .why{grid-template-columns:1fr;gap:10px}
-html.doc .pipe{gap:22px}
-html.doc .risk,html.doc .card,html.doc .benefit,html.doc .step,html.doc .check,html.doc .tile,html.doc .finding{padding:14px 16px}
-html.doc .risk h3,html.doc .card h3,html.doc .benefit h3,html.doc .step h3,html.doc .tile h3,html.doc .why .card h3{font-size:18px}
+html.doc .human{font-size:15px}
+html.doc .note{font-size:15px;padding:12px 14px}
+html.doc .stack{font-size:13px}
+html.doc .art{flex:none;width:100%;min-height:0;aspect-ratio:1664/640}
+html.doc .full .art{position:relative;inset:auto;aspect-ratio:16/9}
+html.doc .tiles,html.doc .why{grid-template-columns:1fr;gap:10px}
+html.doc .card,html.doc .benefit,html.doc .tile{padding:14px 16px}
+html.doc .card h3,html.doc .benefit h3,html.doc .tile h3,html.doc .why .card h3{font-size:18px}
 html.doc .benefit.big h3{font-size:32px}
-html.doc .risk p,html.doc .card p,html.doc .benefit p,html.doc .step p,html.doc .tile p,html.doc .why .card p,html.doc .check span{font-size:15px}
-html.doc .check b{font-size:16px}
-html.doc .who{font-size:15px;flex-direction:column;gap:4px;padding:14px 16px}
+html.doc .card p,html.doc .benefit p,html.doc .tile p,html.doc .why .card p{font-size:15px}
 html.doc .split{flex-direction:column;gap:16px}html.doc .split .shot{width:100%}
-html.doc .step:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-22px;font-size:18px;transform:translateX(-50%)}
-html.doc .wt{font-size:12px}
-html.doc .rule{font-size:16px;padding:12px 14px}
-html.doc .checks-h,html.doc .stack{font-size:14px}
-html.doc .tablewrap{overflow-x:auto;border-radius:14px}
-html.doc table.cmp{font-size:13px;min-width:600px}
-html.doc table.cmp th,html.doc table.cmp td{padding:8px 10px}
-html.doc table.cmp th{font-size:11px}
-html.doc .finding{grid-template-columns:1fr}
-html.doc .badge{font-size:11px;padding:4px 8px}html.doc .ftitle{font-size:18px}html.doc .src{font-size:12px;padding:4px 8px}
-html.doc .quote{font-size:15px;padding:10px 12px}html.doc .verified{font-size:14px;justify-self:start}
+html.doc .legal{flex-direction:column;gap:16px}html.doc .lcol{width:100%;gap:10px}html.doc .rcol{gap:10px}html.doc .larrow{display:none}
+html.doc .modal{margin-top:6px;padding:16px;gap:8px;opacity:1;transform:none;animation:none;box-shadow:0 10px 30px rgba(14,31,69,.15)}
+html.doc .meyebrow{font-size:12px;letter-spacing:2px}html.doc .mtitle{font-size:24px}
+html.doc .hugebtn{font-size:20px;padding:12px 18px;gap:10px;border-width:2px;margin-top:4px}html.doc .hugebtn svg{width:24px;height:24px}
+html.doc .mmeta{font-size:14px}html.doc .moff{font-size:13px}
+html.doc .law{font-size:15px;padding:10px 14px}html.doc .law i{font-size:11px;padding:4px 8px}html.doc .chip{font-size:13px;padding:6px 10px}
 html.doc .pill{font-size:15px;padding:12px 16px}html.doc .pill span:last-child{margin-left:0;font-size:14px}
 html.doc .tile .tag{font-size:13px}
 html.doc #playBtn,html.doc #vbar{display:none}
@@ -206,8 +210,17 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
 <div id="stage">
 <p class="mobnote" data-en="Mobile view: slides follow one another. The full experience is on a wider screen.">Мобильный режим: слайды идут подряд. Полный вид — на широком экране.</p>
 
-<!-- 1 · Title · ~10 s -->
-<section class="slide teal on" id="s1" aria-label="OrgScope">
+<!-- hidden sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="g-card"><rect x="-38" y="-24" width="76" height="48" rx="7"/><rect x="-26" y="-10" width="52" height="5" rx="2.5" fill="#F5F4EF" opacity=".9"/><rect x="-26" y="2" width="36" height="5" rx="2.5" fill="#F5F4EF" opacity=".9"/></g>
+  <g id="g-check"><circle r="16" fill="#2F7D4F"/><path d="M-8 0 L -2 6 L 9 -7" stroke="#F5F4EF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g id="g-stamp"><rect x="-90" y="-24" width="180" height="48" rx="8" fill="rgba(228,242,232,.92)" stroke="#2F7D4F" stroke-width="4"/><text y="8" text-anchor="middle" font-size="18" font-weight="800" fill="#2F7D4F" letter-spacing="2" data-en="VERIFIED">ПРОВЕРЕНО</text></g>
+  <g id="g-docCard"><rect x="0" y="0" width="150" height="90" rx="10"/><rect x="18" y="20" width="114" height="8" rx="4" fill="#1F1E1D" opacity=".35"/><rect x="18" y="38" width="90" height="8" rx="4" fill="#1F1E1D" opacity=".35"/><rect x="18" y="56" width="104" height="8" rx="4" fill="#1F1E1D" opacity=".35"/></g>
+  <g id="g-cardShape"><rect x="-38" y="-24" width="76" height="48" rx="7"/><rect x="-26" y="-10" width="52" height="5" rx="2.5" fill="#F5F4EF" opacity=".9"/><rect x="-26" y="2" width="36" height="5" rx="2.5" fill="#F5F4EF" opacity=".9"/></g>
+</defs></svg>
+
+<!-- 1 · Title · ~5 s -->
+<section class="slide teal on" id="s1" aria-label="ИИ-агент «Анализ организационной структуры и функционала»">
   <div class="brand"><svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="30" fill="#F5F4EF"/><g fill="none" stroke="#0F5C5A" stroke-width="3" stroke-linecap="round"><path d="M9 21c9-5 33-5 42 0"/><path d="M6 30c12-5 36-5 48 0"/><path d="M9 39c9-5 33-5 42 0"/></g><circle cx="43" cy="16" r="5" fill="#FF8A00" stroke="#F5F4EF" stroke-width="2"/></svg>ORGSCOPE</div>
   <div>
     <h1 class="hero" data-en="AI agent “Analysis of organizational structure and functions”">ИИ-агент «Анализ организационной структуры и функционала»</h1>
@@ -216,31 +229,86 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
   <div class="foot"><span data-en="Optimus · HackAlem AI 2026 · Task 1 · Kazakhtelecom">Optimus · HackAlem AI 2026 · задача 1 · Казахтелеком</span><b>Demo Day</b></div>
 </section>
 
-<!-- 2 · Value · the problem · ~25 s -->
+<!-- 2 · Value · the problem · 0:00 · artifact «Переезд» -->
 <section class="slide" id="s2">
   <div><p class="eyebrow" data-en="Value · the problem">Ценность · какую проблему решаем</p>
   <h2 data-en="A reorganization rewrites the documents. Duties get lost silently.">Реорганизация переписывает документы. Обязанности теряются молча.</h2></div>
-  <div class="body">
-    <div class="docs">
-      <div class="doc"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#F5F4EF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div>
-        <div><span class="tag" data-en="before">до</span><p class="name">redakciya_8.pdf</p><p class="meta" data-en="Regulation on internal audit, edition 8">Положение о внутреннем аудите, ред. 8</p>
-        <div class="nums"><span data-en="25 pages">25 страниц</span><span data-en="450 clauses">450 пунктов</span><span data-en="254 functions">254 функции</span></div></div></div>
-      <div class="gap" aria-hidden="true"><i>?</i></div>
-      <div class="doc after"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#F5F4EF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div>
-        <div><span class="tag" data-en="after">после</span><p class="name">redakciya_9.pdf</p><p class="meta" data-en="Regulation on internal audit, edition 9">Положение о внутреннем аудите, ред. 9</p>
-        <div class="nums"><span data-en="25 pages">25 страниц</span><span data-en="453 clauses">453 пункта</span><span data-en="250 functions">250 функций</span></div></div></div>
-    </div>
-    <div class="risks">
-      <div class="risk"><h3 data-en="Loss">Потеря</h3><p data-en="a duty from the old edition has no owner in the new one">обязанность из старой редакции не получила владельца в новой</p></div>
-      <div class="risk dup"><h3 data-en="Duplication">Дублирование</h3><p data-en="the same duty is assigned to two units">одна обязанность закреплена за двумя подразделениями</p></div>
-      <div class="risk conf"><h3 data-en="Conflict of interest">Конфликт интересов</h3><p data-en="a unit performs the work and controls its quality">подразделение выполняет работу и само контролирует её качество</p></div>
-    </div>
-    <div class="who"><b data-en="Who it is for:">Для кого:</b><span data-en="the people who run a reorganization: org design, HR, internal audit, compliance. Today they compare regulations by hand, clause by clause, and what they miss surfaces later, in an audit or a dispute.">те, кто проводит реорганизацию: оргразвитие, HR, внутренний аудит, комплаенс. Сегодня они сверяют положения вручную, пункт за пунктом, а пропущенное всплывает позже, на аудите или в споре.</span></div>
+  <p class="human" data-en="In a reorganization, duties get lost, duplicated, or land in the same hands.">При реорганизации обязанности теряются, двоятся и попадают в одни руки.</p>
+  <div class="art">
+  <svg viewBox="0 0 1664 640" aria-label="Обязанности переходят из старой структуры в новую: одна карточка падает в щель, одна раздваивается, две попадают одному человеку">
+    <rect x="0" y="600" width="1664" height="40" fill="#E6E3DA"/>
+    <path d="M760 600 L 790 640 L 850 640 L 870 600 Z" fill="#1F1E1D"/>
+    <path class="hole-glow" d="M740 600 L 890 600 L 870 640 L 790 640 Z" fill="#B3362B" opacity="0"/>
+    <rect x="80" y="110" width="380" height="490" rx="10" fill="#1F1E1D"/>
+    <g fill="#F5F4EF" opacity=".55"><rect x="120" y="160" width="60" height="44" rx="4"/><rect x="200" y="160" width="60" height="44" rx="4"/><rect x="280" y="160" width="60" height="44" rx="4"/><rect x="360" y="160" width="60" height="44" rx="4"/><rect x="120" y="230" width="60" height="44" rx="4"/><rect x="200" y="230" width="60" height="44" rx="4"/><rect x="280" y="230" width="60" height="44" rx="4"/><rect x="360" y="230" width="60" height="44" rx="4"/><rect x="120" y="300" width="60" height="44" rx="4"/><rect x="200" y="300" width="60" height="44" rx="4"/><rect x="280" y="300" width="60" height="44" rx="4"/><rect x="360" y="300" width="60" height="44" rx="4"/></g>
+    <rect x="220" y="470" width="100" height="130" rx="6" fill="#F5F4EF" opacity=".25"/>
+    <text x="270" y="430" text-anchor="middle" font-size="30" font-weight="700" fill="#F5F4EF" letter-spacing="4" data-en="BEFORE">БЫЛО</text>
+    <text x="270" y="462" text-anchor="middle" font-size="20" fill="#BCD6D3" data-en="edition 8 · 254 duties">редакция 8 · 254 обязанности</text>
+    <rect x="1200" y="110" width="384" height="490" rx="10" fill="#0F5C5A"/>
+    <g fill="#F5F4EF" opacity=".55"><rect x="1240" y="160" width="60" height="44" rx="4"/><rect x="1320" y="160" width="60" height="44" rx="4"/><rect x="1400" y="160" width="60" height="44" rx="4"/><rect x="1480" y="160" width="60" height="44" rx="4"/><rect x="1240" y="230" width="60" height="44" rx="4"/><rect x="1320" y="230" width="60" height="44" rx="4"/><rect x="1400" y="230" width="60" height="44" rx="4"/><rect x="1480" y="230" width="60" height="44" rx="4"/><rect x="1240" y="300" width="60" height="44" rx="4"/><rect x="1320" y="300" width="60" height="44" rx="4"/><rect x="1400" y="300" width="60" height="44" rx="4"/><rect x="1480" y="300" width="60" height="44" rx="4"/></g>
+    <rect x="1342" y="470" width="100" height="130" rx="6" fill="#F5F4EF" opacity=".25"/>
+    <text x="1392" y="430" text-anchor="middle" font-size="30" font-weight="700" fill="#F5F4EF" letter-spacing="4" data-en="AFTER">СТАЛО</text>
+    <text x="1392" y="462" text-anchor="middle" font-size="20" fill="#BCD6D3" data-en="edition 9 · 250 duties">редакция 9 · 250 обязанностей</text>
+    <g transform="translate(1040,540)"><circle cx="0" cy="-70" r="26" fill="#1F1E1D"/><path d="M-34 60 C -34 -10, 34 -10, 34 60 Z" fill="#1F1E1D"/><g class="conf-hands" opacity="0"><rect x="-110" y="-60" width="76" height="48" rx="7" fill="#6B4FB3" transform="rotate(-20 -72 -36)"/><rect x="34" y="-60" width="76" height="48" rx="7" fill="#6B4FB3" transform="rotate(20 72 -36)"/><circle cx="0" cy="-70" r="34" fill="none" stroke="#6B4FB3" stroke-width="5"/></g></g>
+    <use href="#g-cardShape" class="mv c1" fill="#8A94A6"/><use href="#g-cardShape" class="mv c2" fill="#8A94A6"/><use href="#g-cardShape" class="mv c3" fill="#8A94A6"/><use href="#g-cardShape" class="mv c4" fill="#8A94A6"/><use href="#g-cardShape" class="mv c5" fill="#8A94A6"/>
+    <use href="#g-cardShape" class="mv lost" fill="#B3362B"/>
+    <use href="#g-cardShape" class="mv dupA" fill="#B8730F"/>
+    <g class="dupB" opacity="0"><use href="#g-cardShape" fill="#B8730F" x="1120" y="470"/><use href="#g-cardShape" fill="#B8730F" x="1150" y="500"/></g>
+    <rect class="dup-glow" x="1070" y="430" width="140" height="110" rx="12" fill="none" stroke="#B8730F" stroke-width="4" opacity="0"/>
+    <use href="#g-cardShape" class="mv confA" fill="#6B4FB3"/><use href="#g-cardShape" class="mv confB" fill="#6B4FB3"/>
+    <g font-size="22" font-weight="600"><rect x="560" y="48" width="20" height="20" rx="4" fill="#B3362B"/><text x="592" y="65" fill="#1F1E1D" data-en="lost">потерялась</text><rect x="760" y="48" width="20" height="20" rx="4" fill="#B8730F"/><text x="792" y="65" fill="#1F1E1D" data-en="duplicated">задвоилась</text><rect x="960" y="48" width="20" height="20" rx="4" fill="#6B4FB3"/><text x="992" y="65" fill="#1F1E1D" data-en="same hands">в одних руках</text></g>
+  </svg>
   </div>
 </section>
 
-<!-- 3 · Value · solution and benefit · ~25 s -->
+<!-- 3 · Value · who needs it and what a mistake costs · 0:20 · artifact «Три числа и линия Казахтелекома» -->
 <section class="slide" id="s3">
+  <div><p class="eyebrow" data-en="Value · who needs it and what a mistake costs">Ценность · кому это нужно и сколько стоит ошибка</p>
+  <h2 data-en="Every large company has such regulations. A mistake in them is expensive.">У каждой крупной компании такие положения есть. Ошибка в них стоит дорого.</h2></div>
+  <div class="art">
+  <svg viewBox="0 0 1664 640" aria-label="Три числа о рынке и линия Казахтелекома: укрупнение филиалов, продажа Tele2 и Altel, подготовка к SPO; на каждом шаге положения переписаны">
+  <g class="mk mk1">
+    <text x="277" y="150" text-anchor="middle" class="serif" font-size="96" font-weight="700" fill="#1F1E1D" data-en="2,568">2 568</text>
+    <text x="277" y="196" text-anchor="middle" font-size="24" font-weight="600" fill="#1F1E1D" data-en="large companies in Kazakhstan">крупных компаний в Казахстане</text>
+    <text x="277" y="228" text-anchor="middle" font-size="17" fill="#9A9890" data-en="Bureau of National Statistics · 2025">Бюро национальной статистики · 2025</text>
+  </g>
+  <g class="mk mk2">
+    <text x="832" y="150" text-anchor="middle" class="serif" font-size="96" font-weight="700" fill="#B8730F">23 %</text>
+    <text x="832" y="196" text-anchor="middle" font-size="24" font-weight="600" fill="#1F1E1D" data-en="of reorganizations reach their goals">реорганизаций достигают целей</text>
+    <text x="832" y="228" text-anchor="middle" font-size="17" fill="#9A9890">McKinsey Global Survey</text>
+  </g>
+  <g class="mk mk3">
+    <text x="1387" y="150" text-anchor="middle" class="serif" font-weight="700" fill="#B3362B"><tspan font-size="96">122</tspan><tspan font-size="40" dx="10" data-en="bn ₸">млрд ₸</tspan></text>
+    <text x="1387" y="196" text-anchor="middle" font-size="24" font-weight="600" fill="#1F1E1D" data-en="inefficient spending, Samruk-Kazyna group">неэффективно, группа «Самрук-Қазына»</text>
+    <text x="1387" y="228" text-anchor="middle" font-size="17" fill="#9A9890" data-en="Supreme Audit Chamber · 2025">Высшая аудиторская палата · 2025</text>
+  </g>
+  <line x1="80" y1="280" x2="1584" y2="280" stroke="#E3E0D8" stroke-width="2"/>
+  <text x="80" y="346" class="serif" font-size="34" font-weight="700" fill="#1F1E1D" data-en="Kazakhtelecom">Казахтелеком</text>
+  <text x="80" y="380" font-size="19" fill="#6B6A66" data-en="each step rewrites">каждый шаг переписывает</text>
+  <text x="80" y="406" font-size="19" fill="#6B6A66" data-en="the unit regulations">положения о подразделениях</text>
+  <line x1="420" y1="400" x2="1584" y2="400" stroke="#BCD6D3" stroke-width="6" stroke-linecap="round"/>
+  <g class="kt kt1">
+    <circle cx="560" cy="400" r="16" fill="#0F5C5A"/>
+    <text x="560" y="360" text-anchor="middle" font-size="22" font-weight="600" fill="#1F1E1D" data-en="merging branches">укрупнение филиалов</text>
+    <g transform="translate(485,432)"><use href="#g-docCard" fill="#FBE7E4"/><text x="75" y="118" text-anchor="middle" font-size="17" font-weight="700" fill="#A12A22" data-en="regulations rewritten">положения переписаны</text></g>
+  </g>
+  <g class="kt kt2">
+    <circle cx="980" cy="400" r="16" fill="#0F5C5A"/>
+    <text x="980" y="360" text-anchor="middle" font-size="22" font-weight="600" fill="#1F1E1D" data-en="sale of Tele2 and Altel · $1 bn">продажа Tele2 и Altel · 1 млрд $</text>
+    <g transform="translate(905,432)"><use href="#g-docCard" fill="#FBE7E4"/><text x="75" y="118" text-anchor="middle" font-size="17" font-weight="700" fill="#A12A22" data-en="regulations rewritten">положения переписаны</text></g>
+  </g>
+  <g class="kt kt3">
+    <circle cx="1400" cy="400" r="16" fill="#0F5C5A"/>
+    <text x="1400" y="360" text-anchor="middle" font-size="22" font-weight="600" fill="#1F1E1D" data-en="preparing for an SPO">подготовка к SPO</text>
+    <g transform="translate(1325,432)"><use href="#g-docCard" fill="#FBE7E4"/><text x="75" y="118" text-anchor="middle" font-size="17" font-weight="700" fill="#A12A22" data-en="regulations rewritten">положения переписаны</text></g>
+  </g>
+  <text x="1584" y="622" text-anchor="end" font-size="15" fill="#9A9890">informburo.kz · kapital.kz · stat.gov.kz · inform.kz</text>
+</svg>
+  </div>
+</section>
+
+<!-- 4 · Value · solution and benefit · 0:50 · real screen -->
+<section class="slide" id="s4">
   <div><p class="eyebrow" data-en="Value · the solution and the benefit">Ценность · решение и польза</p>
   <h2 data-en="Upload “before” and “after”. Minutes later, a report with evidence.">Загрузите «до» и «после». Через несколько минут — отчёт с доказательствами.</h2></div>
   <div class="split">
@@ -254,54 +322,97 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
   </div>
 </section>
 
-<!-- 4 · Result and technical implementation · ~30 s -->
-<section class="slide dark" id="s4">
-  <div><p class="eyebrow" data-en="Result and technical implementation">Результат и техническая реализация</p>
-  <h2 data-en="The model labels. The code counts and verifies.">Модель размечает. Код считает и проверяет.</h2></div>
-  <div class="body">
-    <div class="pipe">
-      <div class="step"><span class="n">01</span><h3 data-en="Clauses">Пункты</h3><p data-en="Word, PDF and Excel split into clauses with an address: page, line, cell">Word, PDF и Excel режутся на пункты с адресом: страница, строка, ячейка</p><div class="who-tags"><span class="wt code" data-en="code">код</span></div></div>
-      <div class="step"><span class="n">02</span><h3 data-en="Structure">Структура</h3><p data-en="units before and after are diffed; the model assesses successors">подразделения «до» и «после» сравниваются; преемников оценивает модель</p><div class="who-tags"><span class="wt code" data-en="code">код</span><span class="wt model" data-en="model">модель</span></div></div>
-      <div class="step"><span class="n">03</span><h3 data-en="Functions">Функции</h3><p data-en="duties labelled clause by clause: owner, substance, category">обязанности размечаются по пунктам: исполнитель, суть, категория</p><div class="who-tags"><span class="wt model" data-en="model">модель</span></div></div>
-      <div class="step"><span class="n">04</span><h3 data-en="Compare">Сравнение</h3><p data-en="code picks candidates, a model judge decides; code counts the risks; norms from acts in force">кандидатов подбирает код, решает модель-судья; риски считает код; нормы из действующих актов</p><div class="who-tags"><span class="wt code" data-en="code">код</span><span class="wt model" data-en="model">модель</span></div></div>
-      <div class="step"><span class="n">05</span><h3 data-en="Conclusion">Заключение</h3><p data-en="built by code from verified findings only">собирает код только из проверенных выводов</p><div class="who-tags"><span class="wt code" data-en="code">код</span></div></div>
-    </div>
-    <div class="rule"><span class="warn" aria-hidden="true">⚠</span><span data-en="Quote not found in its clause → finding dropped. Only confirmed findings reach the report.">Цитата не найдена в своём пункте → вывод отброшен. В отчёт попадает только подтверждённое.</span></div>
-    <p class="checks-h" data-en="Control pair: found in every control run">Контрольная пара: находится в каждом контрольном запуске</p>
-    <div class="checks">
-      <div class="check"><b data-en="Lost function">Потеря функции</b><span data-en="before · clause 5.6.2">до · п. 5.6.2</span></div>
-      <div class="check"><b data-en="Duplication">Дублирование</b><span data-en="after · clauses 5.4.3 and 5.5.8">после · п. 5.4.3 и 5.5.8</span></div>
-      <div class="check"><b data-en="Conflict of interest">Конфликт интересов</b><span data-en="ДККМ · after · clause 5.5.2">ДККМ · после · п. 5.5.2</span></div>
-      <div class="check"><b data-en="20 legal bases">20 правовых оснований</b><span data-en="from 3 acts in force, adilet.zan.kz">из 3 действующих актов, adilet.zan.kz</span></div>
-    </div>
-    <p class="stack" data-en="Docker Compose · Caddy · Node 22 + Express · Vue 3 · Python 3.12 + FastAPI · MongoDB 8 · OpenAI-compatible API · smoke.sh: 36 HTTP checks · runs from a clean clone">Docker Compose · Caddy · Node 22 + Express · Vue 3 · Python 3.12 + FastAPI · MongoDB 8 · OpenAI-совместимый API · smoke.sh: 36 HTTP-проверок · запуск с чистого клона</p>
-  </div>
-</section>
-
-<!-- 5 · Innovation · ~20 s -->
+<!-- 5 · Result and technical implementation · roles separated · 1:05 · artifact «Конвейер агентов» -->
 <section class="slide" id="s5">
-  <div><p class="eyebrow" data-en="Innovation · how it differs">Инновационность · чем отличаемся</p>
+  <div><p class="eyebrow" data-en="Result and technical implementation · the roles are separated">Результат и техническая реализация · роли разделены</p>
+  <h2 data-en="The model labels. The code counts and verifies.">Модель размечает. Код считает и проверяет.</h2></div>
+  <div class="art">
+  <svg viewBox="0 0 1664 640" aria-label="Конвейер из пяти агентов: экстрактор режет документ на пункты, разметчик-модель вешает ярлык, сопоставитель-код подбирает кандидатов и считает, судья-модель решает, инспектор-код сверяет цитату и ставит печать; карточка едет по ленте к заключению">
+  <!-- stations -->
+  <g transform="translate(60,90)"><rect width="220" height="180" rx="12" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="220" height="40" rx="12" fill="#0F5C5A"/><rect y="20" width="220" height="20" fill="#0F5C5A"/><text x="110" y="27" text-anchor="middle" font-size="15" font-weight="700" fill="#F5F4EF" letter-spacing="3" data-en="CODE">КОД</text>
+    <g transform="translate(78,64)"><rect width="64" height="88" rx="6" fill="#F5F4EF" stroke="#CFCBC0" stroke-width="2"/><g fill="#CFCBC0"><rect x="10" y="14" width="44" height="6" rx="3"/><rect x="10" y="28" width="34" height="6" rx="3"/><rect x="10" y="58" width="44" height="6" rx="3"/><rect x="10" y="72" width="30" height="6" rx="3"/></g><line x1="-10" y1="44" x2="74" y2="44" stroke="#0F5C5A" stroke-width="3" stroke-dasharray="6 5"/><g transform="translate(-22,44)" stroke="#0F5C5A" stroke-width="3" fill="none"><circle cx="-6" cy="-9" r="6"/><circle cx="-6" cy="9" r="6"/><path d="M-1 -5 L 14 6 M-1 5 L 14 -6"/></g></g></g>
+  <g transform="translate(330,90)"><rect width="220" height="180" rx="12" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="220" height="40" rx="12" fill="#FF8A00"/><rect y="20" width="220" height="20" fill="#FF8A00"/><text x="110" y="27" text-anchor="middle" font-size="15" font-weight="700" fill="#1F1E1D" letter-spacing="3" data-en="MODEL">МОДЕЛЬ</text>
+    <g transform="translate(62,96)"><path d="M0 0 h78 l20 20 l-20 20 h-78 z" fill="#FF8A00"/><circle cx="84" cy="20" r="5" fill="#FFFFFF"/><rect x="12" y="15" width="44" height="10" rx="5" fill="#1F1E1D" opacity=".45"/></g></g>
+  <g transform="translate(600,90)"><rect width="220" height="180" rx="12" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="220" height="40" rx="12" fill="#0F5C5A"/><rect y="20" width="220" height="20" fill="#0F5C5A"/><text x="110" y="27" text-anchor="middle" font-size="15" font-weight="700" fill="#F5F4EF" letter-spacing="3" data-en="CODE">КОД</text>
+    <g transform="translate(36,76)"><rect width="52" height="68" rx="5" fill="#F5F4EF" stroke="#CFCBC0" stroke-width="2"/><rect x="96" width="52" height="68" rx="5" fill="#F5F4EF" stroke="#CFCBC0" stroke-width="2"/><path d="M58 34 h32" stroke="#0F5C5A" stroke-width="4"/><path d="M62 26 l-8 8 l8 8 M86 26 l8 8 l-8 8" stroke="#0F5C5A" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="74" y="-8" text-anchor="middle" font-size="15" font-weight="700" fill="#0F5C5A">254 ↔ 250</text></g></g>
+  <g transform="translate(870,90)"><rect width="220" height="180" rx="12" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="220" height="40" rx="12" fill="#FF8A00"/><rect y="20" width="220" height="20" fill="#FF8A00"/><text x="110" y="27" text-anchor="middle" font-size="15" font-weight="700" fill="#1F1E1D" letter-spacing="3" data-en="MODEL">МОДЕЛЬ</text>
+    <g transform="translate(110,120)"><rect x="-34" y="-62" width="56" height="26" rx="5" fill="#FF8A00" transform="rotate(-35)"/><rect x="-6" y="-44" width="12" height="60" rx="5" fill="#1F1E1D" transform="rotate(-35)"/><rect x="-46" y="22" width="92" height="10" rx="5" fill="#1F1E1D"/></g></g>
+  <g transform="translate(1140,90)"><rect width="220" height="180" rx="12" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><rect width="220" height="40" rx="12" fill="#0F5C5A"/><rect y="20" width="220" height="20" fill="#0F5C5A"/><text x="110" y="27" text-anchor="middle" font-size="15" font-weight="700" fill="#F5F4EF" letter-spacing="3" data-en="CODE">КОД</text>
+    <g transform="translate(100,112)"><circle r="26" fill="none" stroke="#0F5C5A" stroke-width="7"/><path d="M19 19 L 42 42" stroke="#0F5C5A" stroke-width="9" stroke-linecap="round"/><path d="M-11 0 L -3 8 L 12 -9" stroke="#2F7D4F" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></g>
+  <!-- conclusion sheet -->
+  <g class="cv-sheet" transform="translate(1440,150)" opacity=".35"><rect width="190" height="150" rx="10" fill="#FFFFFF" stroke="#E3E0D8" stroke-width="2"/><text x="95" y="34" text-anchor="middle" font-size="19" font-weight="700" fill="#0F5C5A" data-en="Conclusion">Заключение</text><g fill="#E6E3DA"><rect x="22" y="56" width="146" height="9" rx="4"/><rect x="22" y="80" width="110" height="9" rx="4"/><rect x="22" y="104" width="130" height="9" rx="4"/></g></g>
+  <!-- belt -->
+  <rect x="50" y="392" width="1380" height="14" rx="7" fill="#CFCBC0"/>
+  <g fill="#B6B3AA"><circle cx="70" cy="399" r="10"/><circle cx="1410" cy="399" r="10"/></g>
+  <!-- badges above the belt, one per station -->
+  <g transform="translate(170,318)"><g class="bd bd1"><rect x="-100" y="-17" width="200" height="34" rx="8" fill="#BCD6D3"/><text y="6" text-anchor="middle" font-size="15" font-weight="700" fill="#0B3F3E" data-en="clause 5.6.2 · p. 10 · lines 11–12">п. 5.6.2 · стр. 10 · строки 11–12</text></g></g>
+  <g transform="translate(440,318)"><g class="bd bd2"><rect x="-80" y="-17" width="160" height="34" rx="8" fill="#FF8A00"/><text y="6" text-anchor="middle" font-size="15" font-weight="700" fill="#1F1E1D" data-en="function · ДККМ">функция · ДККМ</text></g></g>
+  <g transform="translate(710,318)"><g class="bd bd3"><rect x="-96" y="-17" width="192" height="34" rx="8" fill="#BCD6D3"/><text y="6" text-anchor="middle" font-size="15" font-weight="700" fill="#0B3F3E" data-en="3 candidates in edition 9">3 кандидата в редакции 9</text></g></g>
+  <g transform="translate(980,318)"><g class="bd bd4"><rect x="-86" y="-17" width="172" height="34" rx="8" fill="#FF8A00"/><text y="6" text-anchor="middle" font-size="15" font-weight="700" fill="#1F1E1D" data-en="verdict: not found">вердикт: не найдена</text></g></g>
+  <g transform="translate(1250,318)"><g class="bd bd5"><use href="#g-stamp"/></g></g>
+  <!-- the card -->
+  <g transform="translate(60,368)"><g class="cv-card"><use href="#g-cardShape" fill="#8A94A6"/></g></g>
+  <!-- labels -->
+  <g font-size="22" font-weight="700" fill="#1F1E1D" text-anchor="middle"><text x="170" y="460" data-en="Extractor · code">Экстрактор · код</text><text x="440" y="460" data-en="Labeller · model">Разметчик · модель</text><text x="710" y="460" data-en="Matcher · code">Сопоставитель · код</text><text x="980" y="460" data-en="Judge · model">Судья · модель</text><text x="1250" y="460" data-en="Inspector · code">Инспектор · код</text></g>
+  <g font-size="18" fill="#6B6A66" text-anchor="middle"><text x="170" y="492" data-en="cuts the document into clauses">режет документ на пункты</text><text x="170" y="516" data-en="with an address: page, line">с адресом: страница, строка</text><text x="440" y="492" data-en="adds a label: owner,">вешает ярлык: исполнитель,</text><text x="440" y="516" data-en="substance, category">суть, категория</text><text x="710" y="492" data-en="picks the candidates">подбирает кандидатов</text><text x="710" y="516" data-en="and counts every number">и считает все числа</text><text x="980" y="492" data-en="decides: the same duty?">решает: та же обязанность?</text><text x="980" y="516" data-en="only yes or no">только да или нет</text><text x="1250" y="492" data-en="checks the quote">сверяет цитату</text><text x="1250" y="516" data-en="against the source text">с текстом источника</text></g>
+  <rect x="80" y="560" width="1504" height="60" rx="12" fill="#EFEDE7"/>
+  <text x="832" y="599" text-anchor="middle" font-size="25" font-weight="600" fill="#1F1E1D" data-en="Every number is computed by code. The model only labels and judges.">Все числа считает код. Модель только размечает и судит.</text>
+</svg>
+  </div>
+  <p class="stack" data-en="Docker Compose · Caddy · Node 22 + Express · Vue 3 · Python 3.12 + FastAPI · MongoDB 8 · OpenAI-compatible API · smoke.sh: 36 HTTP checks · runs from a clean clone">Docker Compose · Caddy · Node 22 + Express · Vue 3 · Python 3.12 + FastAPI · MongoDB 8 · OpenAI-совместимый API · smoke.sh: 36 HTTP-проверок · запуск с чистого клона</p>
+</section>
+
+<!-- 6 · Innovation · why it beats the alternatives · 1:35 · artifact «Три дорожки» -->
+<section class="slide" id="s6">
+  <div><p class="eyebrow" data-en="Innovation · why it beats the alternatives">Инновационность · чем мы лучше альтернатив</p>
   <h2 data-en="Not a chatbot’s answer, a verified finding.">Не ответ чат-бота, а проверенный вывод.</h2></div>
-  <div class="body">
-    <div class="tablewrap"><table class="cmp">
-      <tr><th></th><th data-en="Manual comparison">Ручная сверка</th><th data-en="Asking a chat model">Запрос к чат-модели</th><th class="us">OrgScope</th></tr>
-      <tr><td data-en="Source of a finding">Источник вывода</td><td data-en="yes, after hours of work">есть, но после часов работы</td><td data-en="often none, sometimes invented">часто нет, бывает выдуман</td><td class="us" data-en="clause and quote, verified by code">пункт и цитата, проверены кодом</td></tr>
-      <tr><td data-en="The numbers">Числа</td><td data-en="counted by a person">считает человек</td><td data-en="the model, no guarantee">модель, без гарантии</td><td class="us" data-en="code, reproducible">код, воспроизводимо</td></tr>
-      <tr><td data-en="The law">Закон</td><td data-en="a separate job for a lawyer">отдельная работа юриста</td><td data-en="from the model’s memory">по памяти модели</td><td class="us" data-en="only acts in force from adilet.zan.kz">только действующие акты с adilet.zan.kz</td></tr>
-      <tr><td data-en="The data">Данные</td><td data-en="inside the company">в компании</td><td data-en="with an external service">у внешнего сервиса</td><td class="us" data-en="inside the company: Docker, any compatible API">в контуре: Docker, любой совместимый API</td></tr>
-    </table></div>
-    <div class="finding">
-      <span class="badge" data-en="Possible function loss · ДККМ">Возможная потеря функции · ДККМ</span>
-      <span class="verified" data-en="✓ Quote verified by code against the source text">✓ Цитата проверена кодом по тексту источника</span>
-      <div class="ftitle" data-en="The right to form quality-control teams is not found in the new edition">Право формировать группы контроля качества не найдено в новой редакции</div>
-      <span class="src" data-en="before · redakciya_8.pdf · clause 5.6.2, p. 10, lines 11–12">до · redakciya_8.pdf · п. 5.6.2, стр. 10, строки 11–12</span>
-      <div class="quote">«формировать группы контроля качества с привлечением работников БВА в соответствии с ресурсным планом и бюджетом затрат БВА;»</div>
+  <div class="art">
+  <svg viewBox="0 0 1664 640" aria-label="Три дорожки к одному финишу: ручная дорожка длинная, дорожка чата обрывается, дорожка OrgScope короткая и с печатью">
+    <g font-size="22" font-weight="700" fill="#1F1E1D"><text x="120" y="150" data-en="by hand">вручную</text><text x="120" y="330" data-en="ask a chatbot">спросить чат</text><text x="120" y="510">OrgScope</text></g>
+    <rect x="340" y="140" width="1100" height="12" rx="6" fill="#E6E3DA"/><rect x="340" y="320" width="600" height="12" rx="6" fill="#E6E3DA"/><rect x="340" y="500" width="1100" height="12" rx="6" fill="#BCD6D3"/>
+    <g transform="translate(1460,146)"><use href="#g-check" transform="scale(1.3)"/></g><g transform="translate(1460,506)"><use href="#g-check" transform="scale(1.3)"/></g>
+    <g transform="translate(940,326)"><circle r="22" fill="#B3362B"/><path d="M-9 -9 L 9 9 M 9 -9 L -9 9" stroke="#F5F4EF" stroke-width="5" stroke-linecap="round"/><text x="40" y="8" font-size="18" fill="#A12A22" font-weight="700" data-en="quote not confirmed">цитата не подтвердилась</text></g>
+    <g transform="translate(360,146)"><circle class="s11-w s11-w1" r="16" fill="#4A5872"/></g>
+    <g transform="translate(360,326)"><circle class="s11-w s11-w2" r="16" fill="#B8730F"/></g>
+    <g transform="translate(360,506)"><circle class="s11-w s11-w3" r="16" fill="#0F5C5A"/></g>
+    <g transform="translate(1200,560)"><use href="#g-stamp" transform="rotate(-8)"/></g>
+    <g font-size="18" fill="#6B6A66"><text x="340" y="190" data-en="slow · clause by clause">долго · сверка пункт за пунктом</text><text x="340" y="370" data-en="minutes · no source, sometimes invented">минуты · без источника, иногда с выдумкой</text><text x="340" y="550" data-en="minutes · every finding with a clause and a quote">минуты · каждый вывод с пунктом и цитатой</text></g>
+  </svg>
+  </div>
+  <div class="note"><span aria-hidden="true">🔒</span><span data-en="Everything runs inside the company: Docker, any OpenAI-compatible model, the documents never leave.">Всё работает внутри компании: Docker, любая OpenAI-совместимая модель, документы не уходят наружу.</span></div>
+</section>
+
+<!-- 7 · Result · legal check · 1:55 · real norm card, the adilet button called out -->
+<section class="slide" id="s7">
+  <div><p class="eyebrow" data-en="Result · legal check · adilet.zan.kz">Результат · сверка с законодательством · adilet.zan.kz</p>
+  <h2 data-en="Norms come only from acts in force.">Нормы — только из действующих актов.</h2></div>
+  <div class="legal">
+    <div class="lcol">
+      <img class="shot" src="img/reg-fn.png" width="1000" height="140" alt="Карточка функции из интерфейса: после · п. 1.5, Главный аудитор в функциональном подчинении Совета директоров">
+      <img class="shot" src="img/reg-norm.png" width="1000" height="144" alt="Карточка нормы из интерфейса: Закон «Об акционерных обществах», статья 61, ред. от 13.08.2026, кнопка «Открыть на adilet.zan.kz»">
+      <svg class="larrow" viewBox="0 0 1000 90" aria-hidden="true"><path d="M877 4 C 877 52, 770 50, 704 74"/><polygon class="head" points="0,-8 16,0 0,8" transform="translate(704,74) rotate(160)"/></svg>
+      <div class="modal" role="group" aria-label="Сверка с законом">
+        <p class="meyebrow" data-en="Legal check">Сверка с законом</p>
+        <p class="mtitle" data-en="Every norm has a button to the official source.">У каждой нормы кнопка к официальному источнику.</p>
+        <a class="hugebtn" href="https://old.adilet.zan.kz/rus/docs/Z030000415_#z713" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14 21 3"/></svg><span data-en="Open on adilet.zan.kz">Открыть на adilet.zan.kz</span></a>
+        <p class="mmeta"><b data-en="Article 61">Статья 61</b><span data-en="On Joint-Stock Companies · edition of 13.08.2026 · the link opens this very article">Об акционерных обществах · ред. от 13.08.2026 · ссылка ведёт на эту статью</span></p>
+        <p class="moff" data-en="adilet.zan.kz is the official legal information system of the Republic of Kazakhstan, run by the Ministry of Justice. The quote stays in the app: the finding is verifiable even when the site is down.">adilet.zan.kz — официальная информационно-правовая система НПА Республики Казахстан (Министерство юстиции). Цитата остаётся в приложении: вывод проверяем, даже если сайт недоступен.</p>
+      </div>
+    </div>
+    <div class="rcol">
+      <p class="human" style="font-size:24px" data-en="On the control pair: 11 possible losses, 5 duplications, 1 conflict of interest. Then a separate module checks the functions against the acts in force: 477 norms exported from adilet.zan.kz, 20 legal bases in this analysis.">На контрольной паре: 11 возможных потерь, 5 дублирований, 1 конфликт интересов. Затем отдельный модуль сверяет функции с действующими актами: 477 норм, выгруженных с adilet.zan.kz, 20 нормативных оснований в этом анализе.</p>
+      <div class="laws">
+        <div class="law"><span data-en="On Joint-Stock Companies">Об акционерных обществах</span><i data-en="in force">действует</i></div>
+        <div class="law"><span data-en="On the National Welfare Fund">О Фонде национального благосостояния</span><i data-en="in force">действует</i></div>
+        <div class="law"><span data-en="On Combating Corruption">О противодействии коррупции</span><i data-en="in force">действует</i></div>
+      </div>
+      <span class="chip" style="white-space:normal" data-en="+ your own laws and standards via the “regulations” upload">+ ваши законы и стандарты через поле «regulations»</span>
     </div>
   </div>
 </section>
 
-<!-- 6 · Potential for growth and scaling · ~20 s -->
-<section class="slide" id="s6">
+<!-- 8 · Potential for growth and scaling · one sentence -->
+<section class="slide" id="s8">
   <div><p class="eyebrow" data-en="Potential for growth and scaling">Потенциал развития и масштабирования</p>
   <h2 data-en="One method for any documents where a duty needs an owner.">Один метод — для любых документов, где у обязанности должен быть владелец.</h2></div>
   <div class="body">
@@ -322,8 +433,32 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
   </div>
 </section>
 
-<!-- 7 · The generated video · 46 s -->
-<section class="slide video" id="s7" aria-label="Видео OrgScope">
+<!-- 9 · Final · artifact «Кольцо» -->
+<section class="slide full" id="s9" aria-label="Реорганизуйте уверенно">
+  <div class="art">
+  <svg viewBox="0 0 1920 1080" aria-label="Небольшие карточки проходят сквозь кольцо со знаком OrgScope и выходят с галочкой">
+    <rect width="1920" height="1080" fill="#0F5C5A"/>
+    <text x="960" y="300" text-anchor="middle" class="serif" font-size="96" font-weight="600" fill="#F5F4EF" data-en="Reorganize with confidence.">Реорганизуйте уверенно.</text>
+    <text x="960" y="380" text-anchor="middle" font-size="36" fill="#BCD6D3" data-en="No function gets lost unnoticed.">Ни одна функция не потеряется незамеченной.</text>
+    <defs><clipPath id="s13clip"><rect x="128" y="520" width="1664" height="260"/></clipPath></defs>
+    <g transform="translate(128,220)"><g clip-path="url(#s13clipInner)">
+      <defs><clipPath id="s13clipInner"><rect x="0" y="300" width="1664" height="260"/></clipPath></defs>
+      <g transform="translate(90,430)"><g class="s13-c"><use href="#g-card" fill="#F5F4EF"/><g transform="translate(30,-20)"><g class="s13-k"><use href="#g-check" transform="scale(.8)"/></g></g></g></g>
+      <g transform="translate(90,430)"><g class="s13-c s13-d1"><use href="#g-card" fill="#F5F4EF"/><g transform="translate(30,-20)"><g class="s13-k s13-d1"><use href="#g-check" transform="scale(.8)"/></g></g></g></g>
+      <g transform="translate(90,430)"><g class="s13-c s13-d2"><use href="#g-card" fill="#F5F4EF"/><g transform="translate(30,-20)"><g class="s13-k s13-d2"><use href="#g-check" transform="scale(.8)"/></g></g></g></g>
+      <g transform="translate(90,430)"><g class="s13-c s13-d3"><use href="#g-card" fill="#F5F4EF"/><g transform="translate(30,-20)"><g class="s13-k s13-d3"><use href="#g-check" transform="scale(.8)"/></g></g></g></g>
+      <g transform="translate(90,430)"><g class="s13-c s13-d4"><use href="#g-card" fill="#F5F4EF"/><g transform="translate(30,-20)"><g class="s13-k s13-d4"><use href="#g-check" transform="scale(.8)"/></g></g></g></g>
+    </g>
+    <g transform="translate(832,430)"><circle r="110" fill="none" stroke="#F5F4EF" stroke-width="10"/><g fill="none" stroke="#F5F4EF" stroke-width="6" stroke-linecap="round" opacity=".9"><path d="M-60 -24 c 26 -13, 94 -13, 120 0"/><path d="M-70 0 c 34 -13, 106 -13, 140 0"/><path d="M-60 24 c 26 -13, 94 -13, 120 0"/></g><circle cx="40" cy="-44" r="12" fill="#FF8A00" stroke="#F5F4EF" stroke-width="5"/></g></g>
+    <text x="960" y="900" text-anchor="middle" font-size="26" fill="#F5F4EF" data-en="Advisory by design. A person makes the final call.">Решение рекомендательное. Последнее слово — за человеком.</text>
+    <text x="960" y="960" text-anchor="middle" font-size="22" fill="#BCD6D3">hackalem-ai-wg.germanywestcentral.cloudapp.azure.com</text>
+    <text x="128" y="1016" font-size="22" fill="#BCD6D3" data-en="Optimus · HackAlem AI 2026 · Task 1 · Kazakhtelecom">Optimus · HackAlem AI 2026 · задача 1 · Казахтелеком</text>
+  </svg>
+  </div>
+</section>
+
+<!-- 10 · The project video · 46 s -->
+<section class="slide video" id="s10" aria-label="Ролик о проекте">
   <video id="pv" playsinline preload="auto" poster="video/orgscope-ru.jpg" src="video/orgscope-ru.mp4" data-src-ru="video/orgscope-ru.mp4" data-src-en="video/orgscope-en.mp4" data-poster-ru="video/orgscope-ru.jpg" data-poster-en="video/orgscope-en.jpg"></video>
   <button type="button" id="playBtn" aria-label="Воспроизвести видео"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></button>
   <div id="vbar" aria-hidden="true"></div>
@@ -335,7 +470,7 @@ html.doc #prev,html.doc #next,html.doc #counter{display:none}
 <div class="hud" id="hud">
   <a id="home" href="index.html" target="_top" data-en="Home">Главная</a>
   <button type="button" id="prev" aria-label="Предыдущий слайд">←</button>
-  <span id="counter">1 / 7</span>
+  <span id="counter">1 / 10</span>
   <button type="button" id="next" aria-label="Следующий слайд">→</button>
   <button type="button" id="lang" class="lang" aria-label="Переключить язык">EN</button>
   <button type="button" id="fs" class="fs" title="F" data-en="Full screen">Во весь экран</button>
