@@ -1,0 +1,431 @@
+<title>OrgScope Demo Day</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: fixed 1920×1080 stages scaled to the viewport; every slide is named after the jury criterion it serves; real product screens, no metaphors; a UI walkthrough video before the closing. */
+:root{
+  --page:#F5F4EF;--panel:#FFFFFF;--line:#E3E0D8;--chip:#EFEDE7;--ink:#1F1E1D;--ink-2:#4F4E4A;--muted:#6B6A66;
+  --accent:#0F5C5A;--accent-soft:#BCD6D3;--orange:#FF8A00;--mark:#FFF1C2;
+  --loss:#B3362B;--loss-bg:#FBE7E4;--dup:#B8730F;--dup-bg:#FBF0DC;--conf:#6B4FB3;--conf-bg:#EFEAFA;--ok:#2F7D4F;--ok-bg:#E4F2E8;--reorg:#0E8FA8;--reorg-bg:#E6F3F6;--kept:#4A5872;--kept-bg:#EEF2F7;
+  --display:'Lora',Georgia,serif;--sans:'Golos Text','Segoe UI',Arial,sans-serif;color-scheme:light;
+}
+html,body{height:100%;margin:0}
+body{background:var(--ink);color:var(--ink);font-family:var(--sans);overflow:hidden;padding-block:0}
+#viewport{position:fixed;inset:0;overflow:hidden;background:var(--ink)}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:var(--page);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.slide{position:absolute;inset:0;display:none;padding:96px 128px;flex-direction:column;gap:28px}
+.slide.on{display:flex}
+.slide.full{padding:0;background:var(--accent)}
+.eyebrow{font-size:22px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin:0}
+.eyebrow b{color:var(--ink);font-weight:700}
+h2{font-family:var(--display);font-size:64px;font-weight:600;line-height:1.08;margin:0;text-wrap:balance;color:var(--ink)}
+.human{font-size:30px;color:var(--ink-2);margin:0;line-height:1.35}
+.art{position:relative;flex:1;min-height:0;container-type:inline-size}
+.full .art{position:absolute;inset:0}
+.full .art>svg{width:100%;height:100%;display:block}
+text{font-family:'Golos Text','Segoe UI',Arial,sans-serif}
+.serif{font-family:'Lora',Georgia,serif}
+.row{display:flex;gap:32px;align-items:flex-start;height:100%}
+.col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.shot{display:block;max-width:100%;height:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 14px 40px rgba(14,31,69,.12);background:#fff;object-fit:contain}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px 28px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{margin:0;font-size:30px;font-weight:600;line-height:1.2}
+.card p{margin:0;font-size:22px;color:var(--ink-2);line-height:1.4}
+.card .big{font-family:var(--display);font-size:92px;font-weight:600;line-height:1;color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:12px}
+.chip{display:inline-flex;align-items:center;gap:10px;background:var(--chip);color:var(--ink);font-size:24px;font-weight:600;padding:12px 20px;border-radius:999px;white-space:nowrap}
+.chip.red{background:var(--loss-bg);color:#A12A22}.chip.amber{background:var(--dup-bg);color:#8A5A0C}.chip.violet{background:var(--conf-bg);color:#5F3BB0}.chip.green{background:var(--ok-bg);color:#256840}.chip.teal{background:var(--reorg-bg);color:#0B6F84}.chip.grey{background:var(--kept-bg);color:#4A5872}
+.chip.dark{background:var(--ink);color:#F5F4EF}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.colcard{border-radius:16px;padding:28px 32px;display:flex;flex-direction:column;gap:12px;background:#2A2927}
+.colcard h3{margin:0;font-size:32px;font-weight:600}
+.colcard p{margin:0;font-size:25px;line-height:1.3;color:#F5F4EF}
+.rule{display:flex;align-items:center;gap:18px;background:#F5F4EF;border-radius:12px;padding:16px 24px;font-size:28px;font-weight:600;color:var(--ink)}
+.finding{background:var(--panel);border:1px solid var(--line);border-left:10px solid var(--loss);border-radius:16px;padding:28px 32px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.finding.violet{border-left-color:var(--conf)}.finding.amber{border-left-color:var(--dup)}.finding.teal{border-left-color:var(--accent)}
+.badge{display:inline-block;font-size:17px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:6px;align-self:flex-start;color:#A12A22;background:var(--loss-bg)}
+.badge.violet{color:#5F3BB0;background:var(--conf-bg)}.badge.amber{color:#8A5A0C;background:var(--dup-bg)}.badge.teal{color:var(--accent);background:var(--accent-soft)}
+.ftitle{font-size:30px;font-weight:600;line-height:1.25}
+.src{display:inline-block;font-size:19px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:6px;align-self:flex-start}
+.quote{font-family:var(--display);font-size:23px;line-height:1.45;background:#FAF9F5;border-left:4px solid var(--accent-soft);padding:12px 18px;border-radius:0 10px 10px 0}
+.verified{display:flex;align-items:center;gap:10px;font-size:20px;color:#256840;font-weight:600}
+table.cmp{border-collapse:collapse;width:100%;font-size:24px;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+table.cmp th,table.cmp td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.3}
+table.cmp th{background:var(--chip);font-size:20px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2)}
+table.cmp td.us{color:#256840;font-weight:600}
+table.cmp th.us{color:var(--accent)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 26px;display:flex;flex-direction:column;gap:8px}
+.tile.done{background:var(--accent);color:#F5F4EF;border-color:var(--accent)}
+.tile h3{margin:0;font-size:27px;font-weight:600}
+.tile p{margin:0;font-size:22px;color:var(--ink-2)}
+.tile.done p{color:var(--accent-soft)}
+.tile .tag{align-self:flex-start;font-size:20px;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:6px}
+.tile.done .tag{background:#2A6E6B;color:#F5F4EF}
+.pill{display:flex;align-items:center;flex-wrap:wrap;gap:8px 24px;background:var(--ink);border-radius:24px;padding:16px 28px;color:#F5F4EF;font-size:23px;font-weight:600}
+.pill span{margin-left:auto;color:var(--accent-soft);font-weight:400;font-size:21px}
+.laws{display:flex;flex-direction:column;gap:12px}
+.law{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 22px;font-size:25px;font-weight:600}
+.law i{font-style:normal;margin-left:auto;font-size:18px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#256840;background:var(--ok-bg);padding:6px 12px;border-radius:6px}
+.kv{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.kv .card{align-items:flex-start}
+.kv .big{font-size:84px}
+.demo{display:flex;flex-direction:column;gap:14px;height:100%}
+.demo video{flex:1;min-height:0;width:100%;background:#000;border-radius:14px;border:1px solid var(--line);object-fit:contain}
+.demo .cap{font-size:22px;color:var(--ink-2);margin:0}
+table.app{border-collapse:collapse;width:100%;font-size:25px;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+table.app th,table.app td{text-align:left;padding:14px 20px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.3}
+table.app th{background:var(--chip);font-size:20px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+table.app td:first-child{width:24%;font-weight:600}
+.hud{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:10px;align-items:center;color:#BCD6D3;font-size:14px;font-family:var(--sans);user-select:none}
+.hud button{background:#2A2927;color:#F5F4EF;border:1px solid #3a3937;border-radius:8px;padding:6px 12px;font:inherit;cursor:pointer}
+.hud button:focus-visible{outline:2px solid var(--accent-soft);outline-offset:2px}
+.hud button.lang{min-width:64px;font-weight:700}
+.hud a.home{color:#F5F4EF;text-decoration:none;background:#2A2927;border:1px solid #3a3937;border-radius:8px;padding:6px 12px;font-weight:600}
+.hud a.home:focus-visible{outline:2px solid var(--accent-soft);outline-offset:2px}
+.hud button.fs{font-weight:600}
+.hud button.fs[hidden]{display:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+/* ---------- document mode: phones and portrait tablets ---------- */
+.mobnote{display:none}
+html.doc,html.doc body{overflow:auto;height:auto}
+html.doc body{background:var(--page)}
+html.doc #viewport{position:static;overflow:visible;background:var(--page)}
+html.doc #stage{position:static;width:100%;height:auto;transform:none!important;left:auto!important;top:auto!important;box-shadow:none}
+html.doc .mobnote{display:block;margin:0;padding:12px 16px;background:var(--chip);color:var(--ink-2);font-size:13px;line-height:1.4;border-bottom:1px solid var(--line)}
+html.doc .slide{position:static;display:flex;padding:26px 16px 32px;gap:12px;border-bottom:1px solid var(--line)}
+html.doc .slide.full{padding:0;border-bottom:none}
+html.doc .eyebrow{font-size:clamp(11px,3vw,14px);letter-spacing:2px}
+html.doc h2{font-size:clamp(24px,6.5vw,40px)}
+html.doc .human{font-size:clamp(15px,4vw,20px)}
+html.doc .art{flex:none;width:100%;min-height:0}
+html.doc .full .art{position:relative;inset:auto;aspect-ratio:16/9}
+html.doc .row{flex-direction:column;height:auto;gap:16px}
+html.doc .two,html.doc .tiles,html.doc .kv{grid-template-columns:1fr;gap:12px}
+html.doc .card h3,html.doc .colcard h3,html.doc .tile h3{font-size:18px}
+html.doc .card p,html.doc .colcard p,html.doc .tile p,html.doc .chip,html.doc .rule,html.doc .pill,html.doc .law,html.doc .cap,html.doc .demo .cap{font-size:15px}
+html.doc .card .big,html.doc .kv .big{font-size:48px}
+html.doc .colcard,html.doc .card,html.doc .tile,html.doc .finding{padding:16px 18px}
+html.doc .chip{padding:8px 14px;white-space:normal}
+html.doc .pill{padding:12px 16px;flex-wrap:wrap}.pill span{white-space:nowrap}
+html.doc .badge{font-size:11px;padding:4px 8px}
+html.doc .ftitle{font-size:18px}
+html.doc .src{font-size:12px;padding:4px 8px}
+html.doc .quote{font-size:15px;padding:10px 12px}
+html.doc .verified{font-size:14px}
+html.doc table.cmp,html.doc table.app{font-size:13px}
+html.doc table.cmp th,html.doc table.cmp td,html.doc table.app th,html.doc table.app td{padding:8px 10px}
+html.doc table.cmp th,html.doc table.app th{font-size:11px}
+html.doc .law{font-size:15px;padding:10px 14px}.law i{font-size:11px}
+html.doc .tile .tag{font-size:13px}
+html.doc .demo{height:auto}html.doc .demo video{aspect-ratio:16/9;flex:none;height:auto}
+html.doc .hud{left:auto;right:12px;transform:none;bottom:12px;flex-wrap:wrap;justify-content:flex-end;max-width:calc(100vw - 24px)}
+html.doc #prev,html.doc #next,html.doc #counter,html.doc #hint{display:none}
+</style>
+
+<div id="viewport">
+<div id="stage">
+<p class="mobnote" data-en="Mobile view: slides follow one another. The full experience is on a wider screen.">Мобильный режим: слайды идут подряд. Полный вид — на широком экране.</p>
+
+<!-- 1 · Титул -->
+<section class="slide on full" id="s1">
+  <div class="art">
+  <svg viewBox="0 0 1920 1080" aria-label="Титульный слайд OrgScope">
+    <rect width="1920" height="1080" fill="#0F5C5A"/>
+    <g transform="translate(128,96)"><circle cx="30" cy="30" r="30" fill="#F5F4EF"/><g fill="none" stroke="#0F5C5A" stroke-width="3" stroke-linecap="round"><path d="M9 21 c 9 -5, 33 -5, 42 0"/><path d="M6 30 c 12 -5, 36 -5, 48 0"/><path d="M9 39 c 9 -5, 33 -5, 42 0"/></g><circle cx="43" cy="16" r="5" fill="#FF8A00" stroke="#F5F4EF" stroke-width="2"/><text x="80" y="40" font-size="28" font-weight="700" fill="#BCD6D3" letter-spacing="6">ORGSCOPE</text></g>
+    <text x="128" y="430" class="serif" font-size="112" font-weight="600" fill="#F5F4EF" data-en="Reorganization">Реорганизация</text>
+    <text x="128" y="550" class="serif" font-size="112" font-weight="600" fill="#F5F4EF" data-en="without lost functions.">без потерянных функций.</text>
+    <text x="128" y="650" font-size="36" fill="#BCD6D3" data-en="An AI agent compares the “before” and “after” documents">ИИ-агент сравнивает документы «до» и «после»</text>
+    <text x="128" y="700" font-size="36" fill="#BCD6D3" data-en="and backs every finding with a quote from the source.">и подтверждает каждый вывод цитатой из источника.</text>
+    <text x="128" y="1016" font-size="22" fill="#BCD6D3" data-en="Optimus · HackAlem AI 2026 · Task 1 · Kazakhtelecom">Optimus · HackAlem AI 2026 · задача 1 · Казахтелеком</text>
+  </svg>
+  </div>
+</section>
+
+<!-- 2 · Ценность · проблема -->
+<section class="slide" id="s2">
+  <div><p class="eyebrow" data-en="Value · the problem it solves">Ценность решения · какую проблему решает</p><h2 data-en="Two regulations. One reorganization. What got lost?">Два положения. Одна реорганизация. Что потерялось?</h2></div>
+  <p class="human" data-en="For whom: the person running an organizational change, who compares regulations, orders and org charts by hand, clause by clause.">Для кого: сотрудник, который проводит реорганизацию и сверяет положения, приказы и оргструктуры вручную, пункт за пунктом.</p>
+  <div class="art">
+    <div class="col" style="gap:28px">
+      <div class="kv">
+        <div class="card"><div class="big">2</div><h3 data-en="documents">документа</h3><p data-en="edition 8 and edition 9 of the internal audit regulation">редакция 8 и редакция 9 положения о внутреннем аудите</p></div>
+        <div class="card"><div class="big">25</div><h3 data-en="pages each">страниц каждый</h3><p data-en="450 and 453 numbered clauses">450 и 453 нумерованных пункта</p></div>
+        <div class="card"><div class="big">254</div><h3 data-en="duties before">обязанности «до»</h3><p data-en="each must find its owner in the new edition">каждая должна найти владельца в новой редакции</p></div>
+        <div class="card"><div class="big">6</div><h3 data-en="units">подразделений</h3><p data-en="created, reorganized, kept or abolished">созданы, реорганизованы, сохранены или упразднены</p></div>
+      </div>
+      <div class="chips">
+        <span class="chip red" data-en="a duty disappears unnoticed">обязанность исчезает незамеченной</span>
+        <span class="chip amber" data-en="the same duty gets two owners">одна обязанность получает двух владельцев</span>
+        <span class="chip violet" data-en="execution and control end up in the same hands">исполнение и контроль оказываются в одних руках</span>
+      </div>
+      <p class="human" style="font-size:26px" data-en="Manual comparison finds some of this. The rest surfaces later, in an audit or a dispute.">Ручная сверка находит часть. Остальное всплывает позже, на аудите или в споре.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · Ценность · решение и польза -->
+<section class="slide" id="s3">
+  <div><p class="eyebrow" data-en="Value · the solution and the benefit">Ценность решения · решение и польза</p><h2 data-en="Upload “before” and “after”. The agent does the rest.">Загрузите «до» и «после». Остальное сделает агент.</h2></div>
+  <div class="art">
+    <div class="row">
+      <img class="shot" style="width:1040px" src="__UPLOAD__" alt="Экран загрузки OrgScope: две зоны, «до» и «после» реорганизации">
+      <div class="col" style="flex:1;gap:14px">
+        <div class="card"><h3 data-en="3–6 minutes">3–6 минут</h3><p data-en="for a 25-page pair; about 60–80 model calls">на паре из 25 страниц; около 60–80 обращений к модели</p></div>
+        <div class="card"><h3 data-en="Document, clause, quote">Документ, пункт, цитата</h3><p data-en="on every finding; no finding without a verified source">у каждого вывода; вывод без проверенного источника не показывается</p></div>
+        <div class="card"><h3 data-en="Accept or reject">Принять или отклонить</h3><p data-en="recommendations the analyst decides on; accepted ones go into the conclusion">рекомендации решает аналитик; принятые попадают в заключение</p></div>
+        <div class="card"><h3 data-en="DOCX and PDF">DOCX и PDF</h3><p data-en="a readable conclusion plus a check against the laws of Kazakhstan">читаемое заключение плюс сверка с законами Казахстана</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · Результат · как работает -->
+<section class="slide" id="s4" style="background:#1F1E1D">
+  <div><p class="eyebrow" style="color:#BCD6D3" data-en="Result and technical implementation · how it works">Результат и реализация · как работает</p><h2 style="color:#F5F4EF" data-en="The model labels. The code counts and verifies.">Модель размечает. Код считает и проверяет.</h2></div>
+  <div class="art">
+    <div class="col" style="gap:24px">
+      <div class="two">
+        <div class="colcard" style="border-top:8px solid #FF8A00"><h3 style="color:#FF8A00" data-en="Model · understands the text">Модель · понимает текст</h3>
+          <p data-en="refines a unit’s type and reporting line">уточняет вид и подчинённость подразделения</p>
+          <p data-en="labels functions clause by clause: owner, substance, category">размечает функции по пунктам: исполнитель, суть, категория</p>
+          <p data-en="judges whether two candidates found by code are the same function">судит, одна ли это функция, для кандидатов, которые нашёл код</p>
+          <p data-en="confirms a conflict of interest on two clauses">подтверждает конфликт интересов по двум пунктам</p>
+          <p data-en="relates a legal norm to a function: basis or contradiction">относит норму закона к функции: основание или противоречие</p></div>
+        <div class="colcard" style="border-top:8px solid #BCD6D3"><h3 style="color:#BCD6D3" data-en="Code · owns the facts">Код · отвечает за факты</h3>
+          <p data-en="splits Word, PDF and Excel into clauses with an address: page, line, cell">режет Word, PDF и Excel на пункты с адресом: страница, строка, ячейка</p>
+          <p data-en="diffs the units before and after by their abbreviations">сравнивает подразделения «до» и «после» по аббревиатурам</p>
+          <p data-en="picks candidates: exact match, lexical, embeddings">подбирает кандидатов: точное совпадение, лексика, эмбеддинги</p>
+          <p data-en="counts every number on screen">считает все числа на экране</p>
+          <p data-en="checks every quote against its clause and builds the conclusion">проверяет каждую цитату по тексту пункта и собирает заключение</p></div>
+      </div>
+      <div class="rule"><span style="color:#A12A22">⚠</span><span data-en="Quote not found in its clause → finding dropped. Only confirmed findings reach the report.">Цитата не найдена в своём пункте → вывод отброшен. В отчёт попадает только подтверждённое.</span></div>
+      <p class="human" style="color:#BCD6D3;font-size:24px" data-en="Caddy · Node 22 + Express · Vue 3 · Python 3.12 + FastAPI extractor · MongoDB 8 · OpenAI-compatible API, gpt-5.6 models, text-embedding-3-small · all calls server-side, the key only in .env">Caddy · Node 22 + Express · Vue 3 · Python 3.12 + FastAPI extractor · MongoDB 8 · OpenAI-совместимый API, модели gpt-5.6, text-embedding-3-small · все вызовы на сервере, ключ только в .env</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · Результат · структура -->
+<section class="slide" id="s5">
+  <div><p class="eyebrow" data-en="Result · structure on the control pair">Результат · структура на контрольной паре</p><h2 data-en="Who became whom.">Кто кем стал.</h2></div>
+  <div class="art">
+    <div class="row">
+      <img class="shot" style="width:1000px" src="__UNITS__" alt="Экран «Структура»: подразделения до и после с линиями преемственности">
+      <div class="col" style="flex:1;gap:14px">
+        <div class="card" style="border-left:8px solid var(--reorg)"><h3 data-en="Reorganized · 2">Реорганизовано · 2</h3><p data-en="Internal audit directorate → ДИТААД + ДОА; ICS monitoring directorate → ДНМ">Направление внутреннего аудита → ДИТААД + ДОА; Направление мониторинга СВК → ДНМ</p></div>
+        <div class="card" style="border-left:8px solid var(--ok)"><h3 data-en="Created · 2">Создано · 2</h3><p>ДИТААД, ДОА</p></div>
+        <div class="card" style="border-left:8px solid var(--kept)"><h3 data-en="Kept · 4">Сохранено · 4</h3><p data-en="БВА, Chief auditor, ДНМ, ДККМ">БВА, Главный аудитор, ДНМ, ДККМ</p></div>
+        <div class="card" style="border-left:8px solid #8A94A6"><h3 data-en="Abolished · 0">Упразднено · 0</h3><p data-en="units are matched by code, successors are assessed by the model and verified against the documents">подразделения сверяет код, преемников оценивает модель и подтверждает по документам</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · Результат · риски -->
+<section class="slide" id="s6">
+  <div><p class="eyebrow" data-en="Result · risks on the control pair">Результат · риски на контрольной паре</p><h2 data-en="The code does the counting, not the model.">Числа считает код, не модель.</h2></div>
+  <div class="art">
+    <div class="col" style="gap:24px">
+      <img class="shot" style="width:1664px" src="__KPI__" alt="Строка плиток рисков с экрана «Обзор»: потеря функций 11, дублирование 5, конфликт интересов 1">
+      <div class="tiles">
+        <div class="card" style="border-top:10px solid var(--loss)"><div class="big" style="color:#A12A22">11</div><h3 data-en="possible function losses">возможных потерь функций</h3><p data-en="7 not found in edition 9, 4 partial · for example clause 5.6.2, the right to form quality-control teams">7 не найдены в редакции 9, 4 частично · например п. 5.6.2, право формировать группы контроля качества</p></div>
+        <div class="card" style="border-top:10px solid var(--dup)"><div class="big" style="color:#8A5A0C">5</div><h3 data-en="possible duplications">возможных дублирований</h3><p data-en="the same duty assigned to two units · for example clauses 5.4.3 and 5.5.8, ДНМ and ДККМ">одна обязанность у двух подразделений · например п. 5.4.3 и 5.5.8, ДНМ и ДККМ</p></div>
+        <div class="card" style="border-top:10px solid var(--conf)"><div class="big" style="color:#5F3BB0">1</div><h3 data-en="potential conflict of interest">потенциальный конфликт интересов</h3><p data-en="ДККМ performs audits (5.3.1) and assesses their quality (5.5.2)">ДККМ проводит проверки (п. 5.3.1) и оценивает их качество (п. 5.5.2)</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · Результат · доказательность -->
+<section class="slide" id="s7">
+  <div><p class="eyebrow" data-en="Result · evidence">Результат · доказательность</p><h2 data-en="Clause. Quote. Verified by code.">Пункт. Цитата. Проверено кодом.</h2></div>
+  <div class="art">
+    <div class="row">
+      <div class="finding" style="width:1000px;flex:none">
+        <span class="badge" data-en="Possible function loss · ДККМ">Возможная потеря функции · ДККМ</span>
+        <div class="ftitle" data-en="The right to form quality-control teams is not found in the new edition">Право формировать группы контроля качества не найдено в новой редакции</div>
+        <span class="src" data-en="before · redakciya_8.pdf · clause 5.6.2, p. 10, lines 11–12">до · redakciya_8.pdf · п. 5.6.2, стр. 10, строки 11–12</span>
+        <div class="quote">«формировать группы контроля качества с привлечением работников БВА в соответствии с ресурсным планом и бюджетом затрат БВА;»</div>
+        <div class="verified">✓ <span data-en="Quote verified by code against the source text">Цитата проверена кодом по тексту источника</span></div>
+      </div>
+      <div class="col" style="flex:1;gap:14px">
+        <img class="shot" src="__CLAUSE__" alt="Окно «Открыть пункт» с полным текстом пункта 1.6 редакции 8">
+        <p class="human" style="font-size:24px" data-en="“Open clause” shows the full text of any clause in one click. A finding without a confirmed quote never reaches the report.">«Открыть пункт» показывает полный текст любого пункта в один клик. Вывод без подтверждённой цитаты в отчёт не попадает.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · Результат · дублирование и конфликт -->
+<section class="slide" id="s8">
+  <div><p class="eyebrow" data-en="Result · duplication and conflict of interest">Результат · дублирование и конфликт интересов</p><h2 data-en="Execution and control in the same hands.">Исполнение и контроль в одних руках.</h2></div>
+  <div class="art">
+    <div class="row">
+      <img class="shot" style="width:980px" src="__DUPS__" alt="Экран «Дублирование и конфликты» с цитатами из редакции 9">
+      <div class="col" style="flex:1;gap:16px">
+        <div class="finding violet">
+          <span class="badge violet" data-en="Potential conflict of interest · ДККМ">Потенциальный конфликт интересов · ДККМ</span>
+          <div class="ftitle" data-en="Performs audits and assesses their quality">Проводит проверки и оценивает их качество</div>
+          <div class="chips"><span class="src" data-en="after · clause 5.3.1, p. 8">после · п. 5.3.1, стр. 8</span><span class="src" data-en="after · clause 5.5.2, p. 9">после · п. 5.5.2, стр. 9</span></div>
+          <p style="margin:0;font-size:21px;color:var(--ink-2)" data-en="confirmed by the model on two clauses, both quotes verified by code">подтверждено моделью по двум пунктам, обе цитаты проверены кодом</p>
+        </div>
+        <div class="finding amber">
+          <span class="badge amber" data-en="Possible duplication · ДНМ, ДККМ">Возможное дублирование · ДНМ, ДККМ</span>
+          <div class="ftitle" data-en="Requesting information from executives is assigned to two units">Запрос информации у Руководителей Общества закреплён за двумя подразделениями</div>
+          <div class="chips"><span class="src" data-en="after · clause 5.4.3, p. 9">после · п. 5.4.3, стр. 9</span><span class="src" data-en="after · clause 5.5.8, p. 10">после · п. 5.5.8, стр. 10</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 · Результат · закон -->
+<section class="slide" id="s9">
+  <div><p class="eyebrow" data-en="Result · legal check · adilet.zan.kz">Результат · сверка с законодательством · adilet.zan.kz</p><h2 data-en="Norms come only from acts in force.">Нормы — только из действующих актов.</h2></div>
+  <div class="art">
+    <div class="row">
+      <div class="col" style="width:1060px;flex:none;gap:14px">
+        <img class="shot" src="__REGFN__" alt="Карточка функции из интерфейса: после · п. 1.5, Главный аудитор в функциональном подчинении Совета директоров">
+        <img class="shot" src="__REGNORM__" alt="Карточка нормы из интерфейса: Закон «Об акционерных обществах», статья 61, ред. от 13.08.2026, кнопка «Открыть на adilet.zan.kz»">
+      </div>
+      <div class="col" style="flex:1;gap:14px">
+        <p class="human" style="font-size:24px" data-en="Corpus shipped with the app: 477 norms with the status “in force”, exported from adilet.zan.kz. 20 legal bases in this analysis. Every norm card links to the article.">Корпус в составе приложения: 477 норм со статусом «действует», выгружены с adilet.zan.kz. 20 нормативных оснований в этом анализе. У каждой нормы кнопка к статье.</p>
+        <div class="laws">
+          <div class="law"><span data-en="On Joint-Stock Companies">Об акционерных обществах</span><i data-en="in force">действует</i></div>
+          <div class="law"><span data-en="On the National Welfare Fund">О Фонде национального благосостояния</span><i data-en="in force">действует</i></div>
+          <div class="law"><span data-en="On Combating Corruption">О противодействии коррупции</span><i data-en="in force">действует</i></div>
+        </div>
+        <span class="chip" style="white-space:normal" data-en="+ your own laws and standards via the “regulations” upload">+ ваши законы и стандарты через поле «regulations»</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · Инновационность -->
+<section class="slide" id="s10">
+  <div><p class="eyebrow" data-en="Innovation · how it differs from existing approaches">Инновационность · чем отличается от существующих подходов</p><h2 data-en="Not a model’s answer, a verified finding.">Не ответ модели, а проверенный вывод.</h2></div>
+  <div class="art">
+    <table class="cmp">
+      <tr><th data-en="What matters">Что важно</th><th data-en="Manual comparison">Ручная сверка</th><th data-en="Asking a chat model">Запрос к чат-модели</th><th class="us">OrgScope</th></tr>
+      <tr><td data-en="A source on every finding">Источник у каждого вывода</td><td data-en="yes, but hours of work">есть, но часы работы</td><td data-en="often none, sometimes invented">часто нет, бывают выдуманные</td><td class="us" data-en="clause and quote, verified by code">пункт и цитата, проверены кодом</td></tr>
+      <tr><td data-en="Who counts the numbers">Кто считает числа</td><td data-en="a person">человек</td><td data-en="the model, no guarantee">модель, без гарантии</td><td class="us" data-en="code, reproducible">код, воспроизводимо</td></tr>
+      <tr><td data-en="Legal check">Сверка с законом</td><td data-en="a separate job for a lawyer">отдельная работа юриста</td><td data-en="from the model’s memory">по памяти модели</td><td class="us" data-en="only acts in force from adilet.zan.kz">только действующие акты с adilet.zan.kz</td></tr>
+      <tr><td data-en="Where the data lives">Где данные</td><td data-en="inside the company">в компании</td><td data-en="with an external service">у внешнего сервиса</td><td class="us" data-en="on premises: Docker, any compatible API">в контуре: Docker, любой совместимый API</td></tr>
+      <tr><td data-en="Other document types">Другие типы документов</td><td data-en="again by hand">заново вручную</td><td data-en="again from scratch">заново с нуля</td><td class="us" data-en="same pipeline, different labelling">тот же конвейер, другая разметка</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 11 · Потенциал -->
+<section class="slide" id="s11">
+  <div><p class="eyebrow" data-en="Potential for growth and scaling">Потенциал развития и масштабирования</p><h2 data-en="One method, many domains.">Один метод — много областей.</h2></div>
+  <div class="art">
+    <div class="col" style="gap:20px">
+      <div class="pill"><span style="margin:0;color:#F5F4EF" data-en="extract with an address → label entities → match → verify quotes → conclusion → check against norms">извлечь с адресом → разметить сущности → сопоставить → проверить цитаты → заключение → сверить с нормами</span><span data-en="only the entity labelling changes">меняется только разметка сущностей</span></div>
+      <div class="tiles">
+        <div class="tile done"><h3 data-en="Org structure · done">Оргструктура · сделано</h3><p data-en="regulations before and after a reorganization">положения «до» и «после» реорганизации</p><span class="tag" data-en="works today">работает сегодня</span></div>
+        <div class="tile"><h3 data-en="Job descriptions">Должностные инструкции</h3><p data-en="a job description against its unit’s regulation">инструкция ↔ положение о подразделении</p><span class="tag" data-en="new labelling prompt">новый промпт разметки</span></div>
+        <div class="tile"><h3 data-en="Mergers and acquisitions">Слияния и поглощения</h3><p data-en="two companies’ structures into one">структуры двух компаний в одну</p><span class="tag" data-en="new labelling prompt">новый промпт разметки</span></div>
+        <div class="tile"><h3 data-en="Internal rules vs. the law">Регламенты ↔ законы</h3><p data-en="internal documents against the acts of Kazakhstan">внутренние документы против актов РК</p><span class="tag" data-en="extend the corpus of acts">расширить корпус актов</span></div>
+        <div class="tile"><h3 data-en="Contracts and standards">Договоры и стандарты</h3><p data-en="edition N against edition N+1, obligations">редакция N ↔ редакция N+1, обязательства</p><span class="tag" data-en="new labelling prompt">новый промпт разметки</span></div>
+        <div class="tile"><h3 data-en="Public and quasi-public sector">Госорганы и квазигоссектор</h3><p data-en="regulations of agencies and funds">положения о ведомствах и фондах</p><span class="tag" data-en="a different corpus of acts">другой корпус актов</span></div>
+      </div>
+      <p class="human" style="font-size:24px" data-en="Already in the code: the extractor reads Word, PDF and Excel; matching, counting and quote verification are domain-independent; the analysis API is open for integration.">Уже есть в коде: extractor читает Word, PDF и Excel; сопоставление, подсчёт и проверка цитат не зависят от предметной области; API анализа открыт для интеграции.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12 · Демонстрация -->
+<section class="slide" id="s12">
+  <div><p class="eyebrow" data-en="Presentation and demo · the product in use">Презентация и демо · продукт в работе</p><h2 data-en="One minute of the interface: from upload to the conclusion.">Минута интерфейса: от загрузки до заключения.</h2></div>
+  <div class="art">
+    <div class="demo">
+      <video id="demoVideo" controls playsinline preload="metadata" poster="video/orgscope-ui-ru.jpg" src="video/orgscope-ui-ru.mp4" data-src-ru="video/orgscope-ui-ru.mp4" data-src-en="video/orgscope-ui-en.mp4" data-poster-ru="video/orgscope-ui-ru.jpg" data-poster-en="video/orgscope-ui-en.jpg"></video>
+      <p class="cap" data-en="Recorded on the deployed version with the finished analysis of the control pair: sign-in, upload, overview, structure, lost functions with the full clause text, duplications, recommendations, legal check, conclusion.">Записано на развёрнутой версии с готовым анализом контрольной пары: вход, загрузка, обзор, структура, потеря функций с полным текстом пункта, дублирование, рекомендации, закон, заключение.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 13 · Финал -->
+<section class="slide full" id="s13">
+  <div class="art">
+  <svg viewBox="0 0 1920 1080" aria-label="Финальный слайд">
+    <rect width="1920" height="1080" fill="#0F5C5A"/>
+    <g transform="translate(128,96)"><circle cx="30" cy="30" r="30" fill="#F5F4EF"/><g fill="none" stroke="#0F5C5A" stroke-width="3" stroke-linecap="round"><path d="M9 21 c 9 -5, 33 -5, 42 0"/><path d="M6 30 c 12 -5, 36 -5, 48 0"/><path d="M9 39 c 9 -5, 33 -5, 42 0"/></g><circle cx="43" cy="16" r="5" fill="#FF8A00" stroke="#F5F4EF" stroke-width="2"/><text x="80" y="40" font-size="28" font-weight="700" fill="#BCD6D3" letter-spacing="6">ORGSCOPE</text></g>
+    <text x="128" y="460" class="serif" font-size="112" font-weight="600" fill="#F5F4EF" data-en="Reorganize with confidence.">Реорганизуйте уверенно.</text>
+    <text x="128" y="560" font-size="40" fill="#BCD6D3" data-en="No function gets lost unnoticed.">Ни одна функция не потеряется незамеченной.</text>
+    <text x="128" y="620" font-size="40" fill="#BCD6D3" data-en="The same method for any documents">Тот же метод — для любых документов,</text>
+    <text x="128" y="672" font-size="40" fill="#BCD6D3" data-en="where a duty needs an owner and a basis.">где у обязанности должен быть владелец и основание.</text>
+    <rect x="128" y="760" width="900" height="70" rx="12" fill="#F5F4EF"/><text x="156" y="805" font-size="26" fill="#1F1E1D" data-en="Advisory by design. A person makes the final call.">Решение рекомендательное. Последнее слово — за человеком.</text>
+    <text x="128" y="900" font-size="26" fill="#BCD6D3">hackalem-ai-wg.germanywestcentral.cloudapp.azure.com · demo@example.com</text>
+    <text x="128" y="1016" font-size="22" fill="#BCD6D3" data-en="Optimus · HackAlem AI 2026 · Task 1 · Kazakhtelecom">Optimus · HackAlem AI 2026 · задача 1 · Казахтелеком</text>
+  </svg>
+  </div>
+</section>
+
+<!-- 14 · Приложение -->
+<section class="slide" id="s14">
+  <div><p class="eyebrow" data-en="Appendix · for the jury’s questions">Приложение · для вопросов жюри</p><h2 data-en="How to run it, and what is not done yet.">Как это запустить и что ещё не сделано.</h2></div>
+  <div class="art">
+    <table class="app">
+      <tr><th data-en="Topic">Тема</th><th data-en="Fact">Факт</th></tr>
+      <tr><td data-en="Run">Запуск</td><td data-en="cp .env.example .env && docker compose up --build -d --wait · UI on localhost:3000 · only Git and Docker on the host">cp .env.example .env && docker compose up --build -d --wait · интерфейс на localhost:3000 · на хосте только Git и Docker</td></tr>
+      <tr><td data-en="Checks">Проверки</td><td data-en="smoke.sh: 36 HTTP checks with a model, 19 without a key · backend and extractor tests · clean-test.sh on a fresh clone · verify-control.py checks the control set">smoke.sh: 36 HTTP-проверок с моделью, 19 без ключа · тесты backend и extractor · clean-test.sh на чистом клоне · verify-control.py проверяет контрольный набор</td></tr>
+      <tr><td data-en="Jury access">Доступ для жюри</td><td data-en="demo@example.com on the deployed version · the analysis API is open without an account">demo@example.com на развёрнутой версии · анализ по API открыт без аккаунта</td></tr>
+      <tr><td data-en="Limits">Ограничения</td><td data-en="legal corpus: three acts, no Constitution · no OCR or legacy .doc · one best match per function · accuracy on arbitrary documents not measured">корпус законов: три акта, Конституции нет · OCR и старый .doc не поддерживаются · одно лучшее соответствие на функцию · точность на произвольных документах не измерена</td></tr>
+      <tr><td data-en="Where the code changes">Где меняется код</td><td data-en="entity labelling: text prompts in src/prompts · matching, counting, quote verification: src/pipeline, domain-independent · corpus of acts: data/regulatory">разметка сущностей: промпты в src/prompts · сопоставление, подсчёт, проверка цитат: src/pipeline, не зависят от области · корпус актов: data/regulatory</td></tr>
+    </table>
+  </div>
+</section>
+
+</div>
+</div>
+
+<div class="hud">
+  <a class="home" id="home" href="index.html" target="_top" data-en="Home">Главная</a>
+  <button type="button" id="prev" aria-label="Предыдущий слайд">←</button>
+  <span id="counter">1 / 14</span>
+  <button type="button" id="next" aria-label="Следующий слайд">→</button>
+  <button type="button" id="lang" class="lang" aria-label="Переключить язык">EN</button>
+  <button type="button" id="fs" class="fs" aria-label="Во весь экран" title="F" data-en="Full screen">Во весь экран</button>
+  <span style="opacity:.6" id="hint">стрелки · клик · L</span>
+</div>
+
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0, lang='ru';
+  document.querySelectorAll('[data-en]').forEach(el=>{el.dataset.ru=el.textContent;});
+  function applyLang(){
+    document.querySelectorAll('[data-en]').forEach(el=>{el.textContent=lang==='en'?el.dataset.en:el.dataset.ru;});
+    document.documentElement.lang=lang;
+    document.getElementById('lang').textContent=lang==='en'?'RU':'EN';
+    document.getElementById('hint').textContent=lang==='en'?'arrows · click · L':'стрелки · клик · L';
+    const v=document.getElementById('demoVideo');if(v){const src=v.dataset['src'+(lang==='en'?'En':'Ru')],poster=v.dataset['poster'+(lang==='en'?'En':'Ru')];if(v.getAttribute('src')!==src){const t=v.currentTime,playing=!v.paused;v.setAttribute('poster',poster);v.setAttribute('src',src);v.load();if(playing){v.currentTime=t;v.play().catch(()=>{});}}}
+    try{localStorage.setItem('orgscope-lang',lang)}catch(e){}
+  }
+  function fit(){const vw=document.documentElement.clientWidth,vh=document.documentElement.clientHeight,s=Math.min(vw/1920,vh/1080),st=document.getElementById('stage');const doc=s<0.5;const was=document.documentElement.classList.contains('doc');document.documentElement.classList.toggle('doc',doc);if(!doc){st.style.transform=`scale(${s})`;st.style.left=((vw-1920*s)/2)+'px';st.style.top=((vh-1080*s)/2)+'px';}else{st.style.transform='';st.style.left='';st.style.top='';}if(was!==doc)render();}
+  function isDoc(){return document.documentElement.classList.contains('doc');}
+  function render(){if(isDoc()){slides.forEach(s=>s.classList.add('on'));applyLang();}else{slides.forEach((s,k)=>s.classList.toggle('on',k===i));}}
+  function show(n){
+    i=(n+slides.length)%slides.length;
+    if(isDoc()){render();return;}
+    slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+    document.getElementById('counter').textContent=`${i+1} / ${slides.length}`;
+    applyLang();
+    const v=document.getElementById('demoVideo');if(v&&slides[i].id!=='s12'&&!v.paused)v.pause();
+  }
+  try{const saved=localStorage.getItem('orgscope-lang');if(saved==='en'||saved==='ru')lang=saved;}catch(e){}
+  if(location.hash==='#en')lang='en'; if(location.hash==='#ru')lang='ru';
+  addEventListener('resize',fit);addEventListener('orientationchange',fit);fit();setTimeout(fit,300);
+  let tx=null;addEventListener('touchstart',e=>{if(e.target.closest('video'))return;tx=e.touches[0].clientX;},{passive:true});addEventListener('touchend',e=>{if(tx===null||isDoc())return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>60)show(dx<0?i+1:i-1);},{passive:true});
+  addEventListener('keydown',e=>{if(e.target.closest&&e.target.closest('video'))return;if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();show(i+1);}if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(i-1);}if(e.key==='l'||e.key==='L'){lang=lang==='en'?'ru':'en';show(i);}if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1);if(e.key==='f'||e.key==='F')toggleFs();});
+  document.getElementById('next').onclick=()=>show(i+1);
+  document.getElementById('prev').onclick=()=>show(i-1);
+  document.getElementById('lang').onclick=()=>{lang=lang==='en'?'ru':'en';show(i);};
+  document.getElementById('stage').addEventListener('click',e=>{if(e.target.closest('button,video,a')||isDoc())return;show(i+1);});
+  const fsBtn=document.getElementById('fs');
+  function toggleFs(){if(!document.fullscreenEnabled)return;if(document.fullscreenElement){document.exitFullscreen().catch(()=>{});}else{document.documentElement.requestFullscreen().catch(()=>{});}}
+  if(!document.fullscreenEnabled){fsBtn.hidden=true;}else{fsBtn.onclick=toggleFs;document.addEventListener('fullscreenchange',()=>{fsBtn.dataset.en=document.fullscreenElement?'Exit full screen':'Full screen';fsBtn.dataset.ru=document.fullscreenElement?'Выйти из полного экрана':'Во весь экран';applyLang();setTimeout(fit,100);});}
+  show(0);
+})();
+</script>
